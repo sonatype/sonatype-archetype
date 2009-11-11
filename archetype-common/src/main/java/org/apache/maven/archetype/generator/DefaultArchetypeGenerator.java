@@ -37,6 +37,8 @@ import org.apache.maven.archetype.exception.PomFileExists;
 import org.apache.maven.archetype.exception.ProjectDirectoryExists;
 import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
@@ -50,21 +52,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-/** @plexus.component */
+@Component(role=ArchetypeGenerator.class)
 public class DefaultArchetypeGenerator
     extends AbstractLogEnabled
     implements ArchetypeGenerator
 {
-    /** @plexus.requirement */
+    @Requirement
     private ArchetypeRegistryManager archetypeRegistryManager;
 
-    /** @plexus.requirement */
+    @Requirement
     private ArchetypeArtifactManager archetypeArtifactManager;
 
-    /** @plexus.requirement */
+    @Requirement
     private FilesetArchetypeGenerator filesetGenerator;
 
-    /** @plexus.requirement */
+    @Requirement
     private OldArchetype oldArchetype;
 
     private void generateArchetype(

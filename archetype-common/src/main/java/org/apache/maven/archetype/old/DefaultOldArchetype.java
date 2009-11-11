@@ -30,6 +30,8 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.context.Context;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
@@ -63,10 +65,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @plexus.component
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
- * @version $Id: DefaultOldArchetype.java 668260 2008-06-16 18:52:02Z rafale $
  */
+@Component(role=OldArchetype.class)
 public class DefaultOldArchetype
     extends AbstractLogEnabled
     implements OldArchetype
@@ -83,12 +84,10 @@ public class DefaultOldArchetype
     // Components
     // ----------------------------------------------------------------------
 
-    /**
-     * @plexus.requirement
-     */
+    @Requirement
     private VelocityComponent velocity;
 
-    /** @plexus.requirement */
+    @Requirement
     private ArchetypeArtifactManager archetypeArtifactManager;
 
     // ----------------------------------------------------------------------

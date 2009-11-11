@@ -27,6 +27,8 @@ import org.apache.maven.archetype.exception.ArchetypeNotConfigured;
 import org.apache.maven.archetype.exception.ArchetypeNotDefined;
 import org.apache.maven.archetype.exception.TemplateCreationException;
 import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.components.interactivity.PrompterException;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.StringUtils;
@@ -44,18 +46,18 @@ import java.util.List;
 import java.util.Properties;
 import org.codehaus.plexus.util.IOUtil;
 
-/** @plexus.component */
+@Component(role=ArchetypeCreationConfigurator.class)
 public class DefaultArchetypeCreationConfigurator
     extends AbstractLogEnabled
     implements ArchetypeCreationConfigurator
 {
-    /** @plexus.requirement */
+    @Requirement
     private ArchetypeCreationQueryer archetypeCreationQueryer;
 
-    /** @plexus.requirement */
+    @Requirement
     private ArchetypeFactory archetypeFactory;
 
-    /** @plexus.requirement */
+    @Requirement
     private ArchetypeFilesResolver archetypeFilesResolver;
 
     public Properties configureArchetypeCreation(

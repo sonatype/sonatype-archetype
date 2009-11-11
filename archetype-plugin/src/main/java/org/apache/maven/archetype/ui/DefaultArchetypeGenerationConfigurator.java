@@ -32,6 +32,8 @@ import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.archetype.old.OldArchetype;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.components.interactivity.PrompterException;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 
@@ -46,36 +48,24 @@ import java.util.Properties;
 import org.codehaus.plexus.util.StringUtils;
 
 // TODO: this seems to have more responsibilities than just a configurator
-/**
- * @plexus.component
- */
+@Component(role=ArchetypeGenerationConfigurator.class)
 public class DefaultArchetypeGenerationConfigurator
 extends AbstractLogEnabled
 implements ArchetypeGenerationConfigurator
 {
-    /**
-     * @plexus.requirement
-     */
+    @Requirement
     OldArchetype oldArchetype;
 
-    /**
-     * @plexus.requirement
-     */
+    @Requirement
     private ArchetypeArtifactManager archetypeArtifactManager;
 
-    /**
-     * @plexus.requirement
-     */
+    @Requirement
     private ArchetypeFactory archetypeFactory;
 
-    /**
-     * @plexus.requirement
-     */
+    @Requirement
     private ArchetypeGenerationQueryer archetypeGenerationQueryer;
 
-    /**
-     * @plexus.requirement
-     */
+    @Requirement
     private ArchetypeRegistryManager archetypeRegistryManager;
 
     public void setArchetypeArtifactManager( ArchetypeArtifactManager archetypeArtifactManager )

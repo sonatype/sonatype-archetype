@@ -20,6 +20,7 @@
 package org.apache.maven.archetype.source;
 
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
+import org.codehaus.plexus.component.annotations.Component;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -28,8 +29,8 @@ import java.util.Properties;
 
 /**
  * @author Jason van Zyl
- * @plexus.component role-hint="internal-catalog"
  */
+@Component(role=CatalogArchetypeDataSource.class, hint="internal-catalog")
 public class InternalCatalogArchetypeDataSource
     extends CatalogArchetypeDataSource
 {

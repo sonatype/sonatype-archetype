@@ -24,14 +24,13 @@ import org.apache.maven.archetype.common.ArchetypeDefinition;
 import org.apache.maven.archetype.common.Constants;
 import org.apache.maven.project.MavenProject;
 
+import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 
 import java.util.Iterator;
 import java.util.Properties;
 
-/**
- * @plexus.component
- */
+@Component(role=ArchetypeFactory.class)
 public class DefaultArchetypeFactory
 extends AbstractLogEnabled
 implements ArchetypeFactory

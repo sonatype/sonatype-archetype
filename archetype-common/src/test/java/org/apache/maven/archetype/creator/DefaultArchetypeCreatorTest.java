@@ -28,6 +28,7 @@ import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
+import org.apache.maven.project.ProjectBuilder;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.PropertyUtils;
@@ -50,6 +51,7 @@ public class DefaultArchetypeCreatorTest
     private List filtereds;
 
     private List languages;
+    
     private DefaultArtifactRepository localRepository;
 
     private List repositories;
@@ -60,7 +62,7 @@ public class DefaultArchetypeCreatorTest
     {
         System.out.println( "testCreateFilesetArchetype" );
 
-        MavenProjectBuilder builder = (MavenProjectBuilder) lookup( MavenProjectBuilder.ROLE );
+        ProjectBuilder builder = lookup( ProjectBuilder.class );
 
         String project = "create-3";
 

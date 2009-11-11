@@ -25,6 +25,8 @@ import org.apache.maven.archetype.generator.ArchetypeGenerator;
 import org.apache.maven.archetype.source.ArchetypeDataSource;
 import org.apache.maven.archetype.source.ArchetypeDataSourceException;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 
 import java.io.File;
@@ -38,19 +40,19 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * @author Jason van Zyl
- * @plexus.component
  */
+@Component(role=Archetype.class)
 public class DefaultArchetype
     extends AbstractLogEnabled
     implements Archetype
 {
-    /** @plexus.requirement role-hint="fileset" */
+    @Requirement(hint="fileset")
     private ArchetypeCreator creator;
 
-    /** @plexus.requirement */
+    @Requirement
     private ArchetypeGenerator generator;
 
-    /** @plexus.requirement role="org.apache.maven.archetype.source.ArchetypeDataSource" */
+    @Requirement
     private Map archetypeSources;
 
     public ArchetypeCreationResult createArchetypeFromProject( ArchetypeCreationRequest request )

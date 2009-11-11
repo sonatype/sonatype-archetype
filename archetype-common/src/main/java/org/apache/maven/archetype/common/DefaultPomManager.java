@@ -34,6 +34,7 @@ import org.apache.maven.model.Reporting;
 import org.apache.maven.model.ReportPlugin;
 import org.apache.maven.model.BuildBase;
 import org.apache.maven.model.Plugin;
+import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
@@ -64,7 +65,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.*;
 
-/** @plexus.component */
+@Component(role=PomManager.class)
 public class DefaultPomManager
     extends AbstractLogEnabled
     implements PomManager

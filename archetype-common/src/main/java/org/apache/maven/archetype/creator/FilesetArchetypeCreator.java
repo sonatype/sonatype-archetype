@@ -46,6 +46,8 @@ import org.apache.maven.model.Profile;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.ProjectBuildingException;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.FileUtils;
@@ -75,18 +77,18 @@ import org.apache.maven.shared.invoker.DefaultInvoker;
 import org.apache.maven.shared.invoker.InvocationRequest;
 import org.apache.maven.shared.invoker.Invoker;
 
-/** @plexus.component role-hint="fileset" */
+@Component(role=ArchetypeCreator.class, hint="fileset")
 public class FilesetArchetypeCreator
     extends AbstractLogEnabled
     implements ArchetypeCreator
 {
-    /** @plexus.requirement */
+    @Requirement
     private ArchetypeFilesResolver archetypeFilesResolver;
 
-    /** @plexus.requirement */
+    @Requirement
     private PomManager pomManager;
 
-    /** @plexus.requirement */
+    @Requirement
     private MavenProjectBuilder projectBuilder;
 
     public void createArchetype( ArchetypeCreationRequest request,

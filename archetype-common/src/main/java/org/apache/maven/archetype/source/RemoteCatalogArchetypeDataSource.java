@@ -29,15 +29,17 @@ import java.io.FileReader;
 import java.util.List;
 import java.util.Properties;
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 
 /**
- * @plexus.component role-hint="remote-catalog"
  * @author Jason van Zyl
  */
+@Component(role=CatalogArchetypeDataSource.class, hint="remote-catalog")
 public class RemoteCatalogArchetypeDataSource
     extends CatalogArchetypeDataSource
 {
-    /** @plexus.requirement */
+    @Requirement
     private WagonManager wagonManager;
 
     public static String REPOSITORY_PROPERTY = "repository";

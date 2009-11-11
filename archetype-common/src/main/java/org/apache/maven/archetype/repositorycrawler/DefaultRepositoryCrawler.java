@@ -29,6 +29,8 @@ import org.apache.maven.archetype.common.ArchetypeArtifactManager;
 import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.model.Model;
 
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
@@ -41,15 +43,13 @@ import java.util.Iterator;
 
 /**
  * @author            rafale
- * @plexus.component
  */
+@Component(role=RepositoryCrawler.class)
 public class DefaultRepositoryCrawler
 extends AbstractLogEnabled
 implements RepositoryCrawler
 {
-    /**
-     * @plexus.requirement
-     */
+    @Requirement
     private ArchetypeArtifactManager archetypeArtifactManager;
 
     public ArchetypeCatalog crawl ( File repository )
