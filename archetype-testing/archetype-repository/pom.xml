@@ -31,7 +31,7 @@ under the License.
 
   <artifactId>archetype-repository</artifactId>
 
-  <name>Maven Archetype Webapp Repository</name>
+  <name>Maven Archetype Testing :: Webapp Repository</name>
   <packaging>war</packaging>
 
   <dependencies>

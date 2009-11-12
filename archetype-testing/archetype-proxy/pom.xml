@@ -31,7 +31,7 @@ under the License.
 
   <artifactId>archetype-proxy</artifactId>
 
-  <name>Maven Archetype Webapp Proxy</name>
+  <name>Maven Archetype Testing :: Webapp Proxy</name>
   <packaging>war</packaging>
 
   <dependencies>

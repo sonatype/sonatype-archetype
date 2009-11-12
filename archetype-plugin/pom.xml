@@ -76,6 +76,11 @@ under the License.
       <version>2.0.10</version>
     </dependency>
     <dependency>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-interactivity-api</artifactId>
+        <version>1.0-alpha-7-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>easymock</groupId>
       <artifactId>easymock</artifactId>
       <version>1.2_Java1.3</version><!-- with 2.0 compilation failure -->
