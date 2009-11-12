@@ -56,18 +56,18 @@ public class CreateFromProjectMojo
     /** @component */
     ArchetypeCreationConfigurator configurator;
 
+    /** @component */
+    ArchetypeRegistryManager archetypeRegistryManager;
+
+    /** @component */
+    Archetype archetype;
+
     /**
      * Enable the interactive mode to define the archetype from the project.
      *
      * @parameter expression="${interactive}" default-value="false"
      */
     private boolean interactive;
-
-    /** @component */
-    ArchetypeRegistryManager archetypeRegistryManager;
-
-    /** @component */
-    Archetype archetype;
 
     /**
      * File extensions which are checked for project's text files (vs binary files).
@@ -102,7 +102,7 @@ public class CreateFromProjectMojo
      *
      * @parameter expression="${archetype.partialArchetype}"
      */
-    private boolean partialArchetype = false;
+    private boolean partialArchetype;
 
     /**
      * Create pom's velocity templates with CDATA preservasion. This uses the String replaceAll
@@ -110,7 +110,7 @@ public class CreateFromProjectMojo
      *
      * @parameter expression="${archetype.preserveCData}"
      */
-    private boolean preserveCData = false;
+    private boolean preserveCData;
 
     /** @parameter expression="${localRepository}" */
     private ArtifactRepository localRepository;
@@ -147,18 +147,24 @@ public class CreateFromProjectMojo
      */
     private String archetypePostPhase;
 
-    /** @parameter expression="${project.build.directory}" */
+    /**
+     * @parameter expression="${project.build.directory}"
+     */
     private File outputDirectory;
 
-    /** @parameter expression="${testMode}" */
+    /**
+     * @parameter expression="${testMode}"
+     */
     private boolean testMode;
 
-    /** @parameter expression="${packageName}" */
-    private String packageName;//Find a better way to resolve the package!!! enforce usage of the configurator
+    /**
+     * @parameter expression="${packageName}"
+     */
+    private String packageName; //Find a better way to resolve the package!!! enforce usage of the configurator
 
     /** 
-     *  @parameter expression="${session}" 
-     *  @readonly
+     * @parameter expression="${session}"
+     * @readonly
      */
     private MavenSession session;
 
