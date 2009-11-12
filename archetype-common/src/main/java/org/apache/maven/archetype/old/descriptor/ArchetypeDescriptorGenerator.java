@@ -23,6 +23,7 @@ package org.apache.maven.archetype.old.descriptor;
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  * @version $Id: ArchetypeDescriptorGenerator.java 596042 2007-11-18 03:19:28Z jvanzyl $
  */
+@Deprecated
 public class ArchetypeDescriptorGenerator
 {
 }

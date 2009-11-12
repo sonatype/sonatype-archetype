@@ -50,7 +50,7 @@ import java.util.Properties;
  * @execute phase="generate-sources"
  * @aggregator
  */
-public class CreateArchetypeFromProjectMojo
+public class CreateFromProjectMojo
     extends AbstractMojo
 {
     /** @component */

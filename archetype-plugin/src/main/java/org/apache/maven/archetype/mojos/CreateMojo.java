@@ -49,7 +49,7 @@ import java.util.Map;
  * @goal create
  * @deprecated Please use the generate mojo instead.
  */
-public class MavenArchetypeMojo
+public class CreateMojo
     extends AbstractMojo
 {
     /**

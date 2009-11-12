@@ -26,6 +26,7 @@ import java.util.Map;
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  * @version $Id: OldArchetype.java 668260 2008-06-16 18:52:02Z rafale $
  */
+@Deprecated
 public interface OldArchetype
 {
     String ROLE = OldArchetype.class.getName();

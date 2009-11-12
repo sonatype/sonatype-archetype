@@ -35,7 +35,7 @@ import java.io.File;
  * @requiresProject  false
  * @goal             crawl
  */
-public class CrawlRepositoryMojo
+public class CrawlMojo
 extends AbstractMojo
 {
     /**

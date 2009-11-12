@@ -67,6 +67,7 @@ import java.util.Set;
 /**
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  */
+@Deprecated
 @Component(role=OldArchetype.class)
 public class DefaultOldArchetype
     implements OldArchetype

@@ -26,6 +26,7 @@ import java.io.Writer;
 import java.util.Iterator;
 
 /** @author rafale */
+@Deprecated
 public class OldArchetypeDescriptorXpp3Writer
 {
     private String NAMESPACE;

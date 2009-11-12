@@ -45,7 +45,7 @@ import java.util.Properties;
  * @goal generate
  * @execute phase="generate-sources"
  */
-public class CreateProjectFromArchetypeMojo
+public class GenerateMojo
     extends AbstractMojo
     implements ContextEnabled
 {

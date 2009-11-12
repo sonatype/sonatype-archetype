@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** @author rafale */
+@Deprecated
 public class OldArchetypeDescriptor
 {
     private String id;

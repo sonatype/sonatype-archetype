@@ -25,6 +25,7 @@ import java.nio.charset.UnsupportedCharsetException;
  * Contains the attributes of an archetype's template (either a source or resource file).
  * The attributes indicate if the template should be filtered and it's encoding.
  */
+@Deprecated
 public class TemplateDescriptor
 {
 

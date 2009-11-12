@@ -29,6 +29,7 @@ import java.nio.charset.UnsupportedCharsetException;
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  * @version $Id: ArchetypeDescriptorBuilder.java 596042 2007-11-18 03:19:28Z jvanzyl $
  */
+@Deprecated
 public class ArchetypeDescriptorBuilder
 {
     public ArchetypeDescriptor build( Reader reader )

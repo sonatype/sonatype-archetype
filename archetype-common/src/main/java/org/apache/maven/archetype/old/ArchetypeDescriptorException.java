@@ -22,6 +22,7 @@ import org.apache.maven.archetype.exception.ArchetypeGenerationFailure;
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  * @version $Id: ArchetypeDescriptorException.java 668260 2008-06-16 18:52:02Z rafale $
  */
+@Deprecated
 public class ArchetypeDescriptorException
     extends ArchetypeGenerationFailure
 {
