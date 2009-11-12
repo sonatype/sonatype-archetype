@@ -16,12 +16,12 @@ package org.apache.maven.archetype.old;
  * limitations under the License.
  */
 
+import org.apache.maven.archetype.common.ArchetypeArtifactManager;
+import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.archetype.old.descriptor.ArchetypeDescriptor;
 import org.apache.maven.archetype.old.descriptor.ArchetypeDescriptorBuilder;
 import org.apache.maven.archetype.old.descriptor.TemplateDescriptor;
 import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.archetype.common.ArchetypeArtifactManager;
-import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.model.Build;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Parent;
@@ -32,7 +32,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.context.Context;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
@@ -69,7 +69,6 @@ import java.util.Set;
  */
 @Component(role=OldArchetype.class)
 public class DefaultOldArchetype
-    extends AbstractLogEnabled
     implements OldArchetype
 {
     private static final String DEFAULT_TEST_RESOURCE_DIR = "/src/test/resources";
@@ -84,6 +83,9 @@ public class DefaultOldArchetype
     // Components
     // ----------------------------------------------------------------------
 
+    @Requirement
+    private Logger log;
+    
     @Requirement
     private VelocityComponent velocity;
 
@@ -127,16 +129,16 @@ public class DefaultOldArchetype
         // ---------------------------------------------------------------------
         // Get Logger and display all parameters used
         // ---------------------------------------------------------------------
-        if ( getLogger().isInfoEnabled() )
+        if ( log.isInfoEnabled() )
         {
             if ( !parameters.isEmpty() )
             {
-                getLogger().info( "----------------------------------------------------------------------------" );
+                log.info( "----------------------------------------------------------------------------" );
 
-                getLogger().info( "Using following parameters for creating OldArchetype: " + archetypeArtifactId + ":" +
+                log.info( "Using following parameters for creating OldArchetype: " + archetypeArtifactId + ":" +
                     archetypeVersion );
 
-                getLogger().info( "----------------------------------------------------------------------------" );
+                log.info( "----------------------------------------------------------------------------" );
 
                 Set keys = parameters.keySet();
 
@@ -148,12 +150,12 @@ public class DefaultOldArchetype
 
                     String parameterValue = (String) parameters.get( parameterName );
 
-                    getLogger().info( "Parameter: " + parameterName + ", Value: " + parameterValue );
+                    log.info( "Parameter: " + parameterName + ", Value: " + parameterValue );
                 }
             }
             else
             {
-                getLogger().info( "No Parameters found for creating OldArchetype" );
+                log.info( "No Parameters found for creating OldArchetype" );
             }
         }
 
@@ -394,9 +396,9 @@ public class DefaultOldArchetype
         // ----------------------------------------------------------------------
         // Log message on OldArchetype creation
         // ----------------------------------------------------------------------
-        if ( getLogger().isInfoEnabled() )
+        if ( log.isInfoEnabled() )
         {
-            getLogger().info( "OldArchetype created in dir: " + outputDirectory );
+            log.info( "OldArchetype created in dir: " + outputDirectory );
         }
 
     }
@@ -558,23 +560,23 @@ public class DefaultOldArchetype
 
         boolean foundBuildElement = build != null;
 
-        if ( getLogger().isDebugEnabled() )
+        if ( log.isDebugEnabled() )
         {
-            getLogger().debug(
+            log.debug(
                 "********************* Debug info for resources created from generated Model ***********************" );
         }
 
-        if ( getLogger().isDebugEnabled() )
+        if ( log.isDebugEnabled() )
         {
-            getLogger().debug( "Was build element found in generated POM?: " + foundBuildElement );
+            log.debug( "Was build element found in generated POM?: " + foundBuildElement );
         }
 
         // create source directory if specified in POM
         if ( foundBuildElement && null != build.getSourceDirectory() )
         {
-            if ( getLogger().isDebugEnabled() )
+            if ( log.isDebugEnabled() )
             {
-                getLogger().debug( "Overriding default source directory " );
+                log.debug( "Overriding default source directory " );
             }
 
             overrideSrcDir = true;
@@ -589,9 +591,9 @@ public class DefaultOldArchetype
         // create script source directory if specified in POM
         if ( foundBuildElement && null != build.getScriptSourceDirectory() )
         {
-            if ( getLogger().isDebugEnabled() )
+            if ( log.isDebugEnabled() )
             {
-                getLogger().debug( "Overriding default script source directory " );
+                log.debug( "Overriding default script source directory " );
             }
 
             String scriptSourceDirectory = build.getScriptSourceDirectory();
@@ -604,9 +606,9 @@ public class DefaultOldArchetype
         // create resource director(y/ies) if specified in POM
         if ( foundBuildElement && build.getResources().size() > 0 )
         {
-            if ( getLogger().isDebugEnabled() )
+            if ( log.isDebugEnabled() )
             {
-                getLogger().info( "Overriding default resource directory " );
+                log.info( "Overriding default resource directory " );
             }
 
             overrideResourceDir = true;
@@ -627,9 +629,9 @@ public class DefaultOldArchetype
         // create test source directory if specified in POM
         if ( foundBuildElement && null != build.getTestSourceDirectory() )
         {
-            if ( getLogger().isDebugEnabled() )
+            if ( log.isDebugEnabled() )
             {
-                getLogger().debug( "Overriding default test directory " );
+                log.debug( "Overriding default test directory " );
             }
 
             overrideTestSrcDir = true;
@@ -644,9 +646,9 @@ public class DefaultOldArchetype
         // create test resource directory if specified in POM
         if ( foundBuildElement && build.getTestResources().size() > 0 )
         {
-            if ( getLogger().isDebugEnabled() )
+            if ( log.isDebugEnabled() )
             {
-                getLogger().debug( "Overriding default test resource directory " );
+                log.debug( "Overriding default test resource directory " );
             }
 
             overrideTestResourceDir = true;
@@ -665,7 +667,7 @@ public class DefaultOldArchetype
             }
         }
 
-        getLogger().info(
+        log.info(
             "********************* End of debug info from resources from generated POM ***********************" );
 
         // ----------------------------------------------------------------------

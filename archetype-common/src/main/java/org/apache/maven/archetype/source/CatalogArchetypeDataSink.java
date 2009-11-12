@@ -3,7 +3,6 @@ package org.apache.maven.archetype.source;
 import org.apache.maven.archetype.catalog.Archetype;
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import org.apache.maven.archetype.catalog.io.xpp3.ArchetypeCatalogXpp3Writer;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.IOUtil;
 
 import java.io.IOException;
@@ -14,7 +13,6 @@ import java.util.Properties;
 
 /** @author Jason van Zyl */
 public class CatalogArchetypeDataSink
-    extends AbstractLogEnabled
     implements ArchetypeDataSink
 {
     private ArchetypeCatalogXpp3Writer catalogWriter = new ArchetypeCatalogXpp3Writer();

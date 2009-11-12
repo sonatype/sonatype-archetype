@@ -19,14 +19,15 @@
 
 package org.apache.maven.archetype.mojos;
 
-import java.io.IOException;
+import org.apache.maven.archetype.Archetype;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+
 import java.io.File;
-import org.apache.maven.archetype.Archetype;
+import java.io.IOException;
 
 /**
  * @author           rafale

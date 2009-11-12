@@ -25,13 +25,11 @@ import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.components.interactivity.Prompter;
 import org.codehaus.plexus.components.interactivity.PrompterException;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
 
 import java.util.Iterator;
 
 @Component(role=ArchetypeCreationQueryer.class)
 public class DefaultArchetypeCreationQueryer
-    extends AbstractLogEnabled
     implements ArchetypeCreationQueryer
 {
     @Requirement

@@ -30,7 +30,8 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.components.interactivity.PrompterException;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.logging.Logger;
+import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
@@ -44,13 +45,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import org.codehaus.plexus.util.IOUtil;
 
 @Component(role=ArchetypeCreationConfigurator.class)
 public class DefaultArchetypeCreationConfigurator
-    extends AbstractLogEnabled
     implements ArchetypeCreationConfigurator
 {
+    @Requirement
+    private Logger log;
+    
     @Requirement
     private ArchetypeCreationQueryer archetypeCreationQueryer;
 
@@ -108,24 +110,24 @@ public class DefaultArchetypeCreationConfigurator
 
         if ( interactiveMode.booleanValue() )
         {
-            getLogger().debug( "Entering interactive mode" );
+            log.debug( "Entering interactive mode" );
 
             boolean confirmed = false;
             while ( !confirmed )
             {
                 if ( !archetypeDefinition.isDefined() )//<editor-fold text="...">
                 {
-                    getLogger().debug( "Archetype is yet not defined" );
+                    log.debug( "Archetype is yet not defined" );
                     if ( !archetypeDefinition.isGroupDefined() )
                     {
-                        getLogger().debug( "Asking for archetype's groupId" );
+                        log.debug( "Asking for archetype's groupId" );
                         archetypeDefinition.setGroupId(
                             archetypeCreationQueryer.getArchetypeGroupId( project.getGroupId() )
                         );
                     }
                     if ( !archetypeDefinition.isArtifactDefined() )
                     {
-                        getLogger().debug( "Asking for archetype's artifactId" );
+                        log.debug( "Asking for archetype's artifactId" );
                         archetypeDefinition.setArtifactId(
                             archetypeCreationQueryer.getArchetypeArtifactId(
                                 project.getArtifactId() + Constants.ARCHETYPE_SUFFIX
@@ -134,7 +136,7 @@ public class DefaultArchetypeCreationConfigurator
                     }
                     if ( !archetypeDefinition.isVersionDefined() )
                     {
-                        getLogger().debug( "Asking for archetype's version" );
+                        log.debug( "Asking for archetype's version" );
                         archetypeDefinition.setVersion(
                             archetypeCreationQueryer.getArchetypeVersion( project.getVersion() )
                         );
@@ -148,10 +150,10 @@ public class DefaultArchetypeCreationConfigurator
 
                 if ( !archetypeConfiguration.isConfigured() )//<editor-fold text="...">
                 {
-                    getLogger().debug( "Archetype is not yet configured" );
+                    log.debug( "Archetype is not yet configured" );
                     if ( !archetypeConfiguration.isConfigured( Constants.GROUP_ID ) )
                     {
-                        getLogger().debug( "Asking for project's groupId" );
+                        log.debug( "Asking for project's groupId" );
                         archetypeConfiguration.setProperty(
                             Constants.GROUP_ID,
                             archetypeCreationQueryer.getGroupId(
@@ -161,7 +163,7 @@ public class DefaultArchetypeCreationConfigurator
                     }
                     if ( !archetypeConfiguration.isConfigured( Constants.ARTIFACT_ID ) )
                     {
-                        getLogger().debug( "Asking for project's artifactId" );
+                        log.debug( "Asking for project's artifactId" );
                         archetypeConfiguration.setProperty(
                             Constants.ARTIFACT_ID,
                             archetypeCreationQueryer.getArtifactId(
@@ -171,7 +173,7 @@ public class DefaultArchetypeCreationConfigurator
                     }
                     if ( !archetypeConfiguration.isConfigured( Constants.VERSION ) )
                     {
-                        getLogger().debug( "Asking for project's version" );
+                        log.debug( "Asking for project's version" );
                         archetypeConfiguration.setProperty(
                             Constants.VERSION,
                             archetypeCreationQueryer.getVersion(
@@ -181,7 +183,7 @@ public class DefaultArchetypeCreationConfigurator
                     }
                     if ( !archetypeConfiguration.isConfigured( Constants.PACKAGE ) )
                     {
-                        getLogger().debug( "Asking for project's package" );
+                        log.debug( "Asking for project's package" );
                         archetypeConfiguration.setProperty(
                             Constants.PACKAGE,
                             archetypeCreationQueryer.getPackage(
@@ -196,15 +198,15 @@ public class DefaultArchetypeCreationConfigurator
                 boolean stopAddingProperties = false;
                 while ( !stopAddingProperties )
                 {
-                    getLogger().debug( "Asking for another required property" );
+                    log.debug( "Asking for another required property" );
                     stopAddingProperties = !archetypeCreationQueryer.askAddAnotherProperty();
 
                     if ( !stopAddingProperties )
                     {
-                        getLogger().debug( "Asking for required property key" );
+                        log.debug( "Asking for required property key" );
 
                         String propertyKey = archetypeCreationQueryer.askNewPropertyKey();
-                        getLogger().debug( "Asking for required property value" );
+                        log.debug( "Asking for required property value" );
 
                         String replacementValue =
                             archetypeCreationQueryer.askReplacementValue(
@@ -216,14 +218,14 @@ public class DefaultArchetypeCreationConfigurator
                     }
                 }
 
-                getLogger().debug( "Asking for configuration confirmation" );
+                log.debug( "Asking for configuration confirmation" );
                 if ( archetypeCreationQueryer.confirmConfiguration( archetypeConfiguration ) )
                 {
                     confirmed = true;
                 }
                 else
                 {
-                    getLogger().debug( "Reseting archetype's definition and configuration" );
+                    log.debug( "Reseting archetype's definition and configuration" );
                     archetypeConfiguration.reset();
                     archetypeDefinition.reset();
                 }
@@ -231,7 +233,7 @@ public class DefaultArchetypeCreationConfigurator
         }
         else
         {
-            getLogger().debug( "Entering batch mode" );
+            log.debug( "Entering batch mode" );
             if ( !archetypeDefinition.isDefined() )
             {
                 throw new ArchetypeNotDefined( "The archetype is not defined" );
@@ -278,37 +280,37 @@ public class DefaultArchetypeCreationConfigurator
     {
         if ( StringUtils.isEmpty( properties.getProperty( Constants.GROUP_ID ) ) )
         {
-            getLogger().info( "Setting default groupId: " + project.getGroupId() );
+            log.info( "Setting default groupId: " + project.getGroupId() );
             properties.setProperty( Constants.GROUP_ID, project.getGroupId() );
         }
 
         if ( StringUtils.isEmpty( properties.getProperty( Constants.ARTIFACT_ID ) ) )
         {
-            getLogger().info( "Setting default artifactId: " + project.getArtifactId() );
+            log.info( "Setting default artifactId: " + project.getArtifactId() );
             properties.setProperty( Constants.ARTIFACT_ID, project.getArtifactId() );
         }
 
         if ( StringUtils.isEmpty( properties.getProperty( Constants.VERSION ) ) )
         {
-            getLogger().info( "Setting default version: " + project.getVersion() );
+            log.info( "Setting default version: " + project.getVersion() );
             properties.setProperty( Constants.VERSION, project.getVersion() );
         }
         
         if ( StringUtils.isEmpty( properties.getProperty( Constants.ARCHETYPE_GROUP_ID ) ) )
         {
-            getLogger().info( "Setting default archetype's groupId: " + project.getGroupId() );
+            log.info( "Setting default archetype's groupId: " + project.getGroupId() );
             properties.setProperty( Constants.ARCHETYPE_GROUP_ID, project.getGroupId() );
         }
 
         if ( StringUtils.isEmpty( properties.getProperty( Constants.ARCHETYPE_ARTIFACT_ID ) ) )
         {
-            getLogger().info( "Setting default archetype's artifactId: " + project.getArtifactId() );
+            log.info( "Setting default archetype's artifactId: " + project.getArtifactId() );
             properties.setProperty( Constants.ARCHETYPE_ARTIFACT_ID, project.getArtifactId()+Constants.ARCHETYPE_SUFFIX );
         }
 
         if ( StringUtils.isEmpty( properties.getProperty( Constants.ARCHETYPE_VERSION ) ) )
         {
-            getLogger().info( "Setting default archetype's version: " + project.getVersion() );
+            log.info( "Setting default archetype's version: " + project.getVersion() );
             properties.setProperty( Constants.ARCHETYPE_VERSION, project.getVersion() );
         }
 
@@ -324,7 +326,7 @@ public class DefaultArchetypeCreationConfigurator
             {
                 resolvedPackage = project.getGroupId();
             }
-            getLogger().info( "Setting default package: " + resolvedPackage );
+            log.info( "Setting default package: " + resolvedPackage );
             /*properties.setProperty ( Constants.PACKAGE_NAME, resolvedPackage );*/
             properties.setProperty( Constants.PACKAGE, resolvedPackage );
         }
@@ -342,7 +344,7 @@ public class DefaultArchetypeCreationConfigurator
         throws
         IOException
     {
-        getLogger().debug( "Reading property file " + propertyFile );
+        log.debug( "Reading property file " + propertyFile );
 
         InputStream is = new FileInputStream( propertyFile );
 
@@ -350,7 +352,7 @@ public class DefaultArchetypeCreationConfigurator
         {
             properties.load( is );
 
-            getLogger().debug( "Read " + properties.size() + " properties" );
+            log.debug( "Read " + properties.size() + " properties" );
         }
         finally
         {
@@ -370,10 +372,10 @@ public class DefaultArchetypeCreationConfigurator
         }
         catch ( FileNotFoundException ex )
         {
-            getLogger().debug( "Property file not found. Creating a new one" );
+            log.debug( "Property file not found. Creating a new one" );
         }
 
-        getLogger().debug( "Adding " + properties.size() + " properties" );
+        log.debug( "Adding " + properties.size() + " properties" );
 
         Iterator propertiesIterator = properties.keySet().iterator();
         while ( propertiesIterator.hasNext() )
@@ -388,7 +390,7 @@ public class DefaultArchetypeCreationConfigurator
         {
             storedProperties.store( os, "" );
 
-            getLogger().debug( "Stored " + storedProperties.size() + " properties" );
+            log.debug( "Stored " + storedProperties.size() + " properties" );
         }
         finally
         {
@@ -413,7 +415,7 @@ public class DefaultArchetypeCreationConfigurator
             }
             catch ( FileNotFoundException ex )
             {
-                getLogger().debug( "archetype.properties does not exist" );
+                log.debug( "archetype.properties does not exist" );
             }
         }
 

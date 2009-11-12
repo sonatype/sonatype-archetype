@@ -27,7 +27,7 @@ import org.apache.maven.archetype.source.ArchetypeDataSourceException;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.logging.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,17 +43,19 @@ import java.util.zip.ZipOutputStream;
  */
 @Component(role=Archetype.class)
 public class DefaultArchetype
-    extends AbstractLogEnabled
     implements Archetype
 {
+    @Requirement
+    private Logger log;
+
     @Requirement(hint="fileset")
     private ArchetypeCreator creator;
 
     @Requirement
     private ArchetypeGenerator generator;
 
-    @Requirement
-    private Map archetypeSources;
+    @Requirement(role=ArchetypeDataSource.class)
+    private Map<String,ArchetypeDataSource> archetypeSources;
 
     public ArchetypeCreationResult createArchetypeFromProject( ArchetypeCreationRequest request )
     {
@@ -152,7 +154,7 @@ public class DefaultArchetype
     {
         try
         {
-            ArchetypeDataSource source = (ArchetypeDataSource) archetypeSources.get( "internal-catalog" );
+            ArchetypeDataSource source = archetypeSources.get( "internal-catalog" );
 
             return source.getArchetypeCatalog( new Properties() );
         }
@@ -173,7 +175,7 @@ public class DefaultArchetype
         {
             Properties properties=new Properties();
             properties.setProperty("file", path);
-            ArchetypeDataSource source = (ArchetypeDataSource) archetypeSources.get( "catalog" );
+            ArchetypeDataSource source = archetypeSources.get( "catalog" );
 
             return source.getArchetypeCatalog( properties );
         }
@@ -194,7 +196,7 @@ public class DefaultArchetype
         {
             Properties properties=new Properties();
             properties.setProperty("repository", url);
-            ArchetypeDataSource source = (ArchetypeDataSource) archetypeSources.get( "remote-catalog" );
+            ArchetypeDataSource source = archetypeSources.get( "remote-catalog" );
 
             return source.getArchetypeCatalog( properties );
         }
@@ -209,11 +211,13 @@ public class DefaultArchetype
     }
 
     public void updateLocalCatalog(org.apache.maven.archetype.catalog.Archetype archetype, String path) {
+        log.debug("Updating local catalog; archetype: " + archetype + ", path: " + path);
+        
         try
         {
             Properties properties=new Properties();
             properties.setProperty("file", path);
-            ArchetypeDataSource source = (ArchetypeDataSource) archetypeSources.get( "catalog" );
+            ArchetypeDataSource source = archetypeSources.get( "catalog" );
 
             source.updateCatalog(properties, archetype);
         }

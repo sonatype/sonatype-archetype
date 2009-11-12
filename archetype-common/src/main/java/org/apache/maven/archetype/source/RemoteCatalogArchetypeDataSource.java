@@ -20,17 +20,18 @@
 package org.apache.maven.archetype.source;
 
 import org.apache.maven.archetype.catalog.Archetype;
+import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import org.apache.maven.artifact.manager.WagonManager;
 import org.apache.maven.wagon.Wagon;
 import org.apache.maven.wagon.repository.Repository;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
+import org.codehaus.plexus.logging.Logger;
 
 import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 import java.util.Properties;
-import org.apache.maven.archetype.catalog.ArchetypeCatalog;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 
 /**
  * @author Jason van Zyl
@@ -39,6 +40,9 @@ import org.codehaus.plexus.component.annotations.Requirement;
 public class RemoteCatalogArchetypeDataSource
     extends CatalogArchetypeDataSource
 {
+    @Requirement
+    private Logger log;
+    
     @Requirement
     private WagonManager wagonManager;
 
@@ -61,7 +65,7 @@ public class RemoteCatalogArchetypeDataSource
                 repository = repository.substring( 0, repository.length(  ) - 1 );
             }
 
-            getLogger().debug("Searching for remote catalog: "+ repository +"/archetype-catalog.xml");
+            log.debug("Searching for remote catalog: "+ repository +"/archetype-catalog.xml");
             // We use wagon to take advantage of a Proxy that has already been setup in a Maven environment.
             Repository wagonRepository = new Repository( "archetype", repository );
             Wagon wagon = wagonManager.getWagon( wagonRepository );
@@ -88,7 +92,7 @@ public class RemoteCatalogArchetypeDataSource
                 String repositoryPath = repository.substring(0, repository.lastIndexOf("/"));
                 String fileName = repository.substring(repository.lastIndexOf("/") + 1);
                 
-                getLogger().debug("Searching for remote catalog: "+ repositoryPath +"/"+fileName);
+                log.debug("Searching for remote catalog: "+ repositoryPath +"/"+fileName);
                 // We use wagon to take advantage of a Proxy that has already been setup in a Maven environment.
                 Repository wagonRepository = new Repository( "archetype", repositoryPath );
                 Wagon wagon = wagonManager.getWagon( wagonRepository );
@@ -106,7 +110,7 @@ public class RemoteCatalogArchetypeDataSource
             }
             catch ( Exception ex )
             {
-                getLogger().warn( "Error reading archetype catalog "+ repository, ex );
+                log.warn( "Error reading archetype catalog "+ repository, ex );
                 return new ArchetypeCatalog();
             }
         }
@@ -165,7 +169,7 @@ public class RemoteCatalogArchetypeDataSource
         }
         catch ( Exception e )
         {
-            getLogger().warn( "Problem disconnecting from wagon - ignoring: " + e.getMessage() );
+            log.warn( "Problem disconnecting from wagon - ignoring: " + e.getMessage() );
         }
     }
 

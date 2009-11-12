@@ -20,10 +20,10 @@ package org.apache.maven.archetype.mojos;
  */
 
 import org.apache.maven.archetype.exception.UnknownArchetype;
-import org.apache.maven.archetype.old.OldArchetype;
 import org.apache.maven.archetype.old.ArchetypeDescriptorException;
 import org.apache.maven.archetype.old.ArchetypeNotFoundException;
 import org.apache.maven.archetype.old.ArchetypeTemplateProcessingException;
+import org.apache.maven.archetype.old.OldArchetype;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.repository.ArtifactRepositoryFactory;
 import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;

@@ -16,11 +16,11 @@ package org.apache.maven.archetype.old;
  * limitations under the License.
  */
 
+import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 
 import java.util.List;
 import java.util.Map;
-import org.apache.maven.archetype.exception.UnknownArchetype;
 
 /**
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>

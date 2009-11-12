@@ -41,11 +41,11 @@
                 <version>3.0-SNAPSHOT</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.maven.shared</groupId>
-                <artifactId>maven-invoker</artifactId>
-                <version>2.0.10</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.apache.maven.shared</groupId>-->
+                <!--<artifactId>maven-invoker</artifactId>-->
+                <!--<version>2.0.10</version>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>org.codehaus.plexus</groupId>
@@ -74,18 +74,24 @@
             <dependency>
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-velocity</artifactId>
-                <version>1.1.3</version><!-- with 1.1.4 1.1.5 1.1.6 1.1.7 tests fail -->
-                <exclusions>
-                    <exclusion>
-                        <groupId>velocity</groupId>
-                        <artifactId>velocity</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>velocity</groupId>
-                        <artifactId>velocity-api</artifactId>
-                    </exclusion>
-                </exclusions>
+                <version>1.1.8-SNAPSHOT</version>
             </dependency>
+
+            <!--<dependency>-->
+                <!--<groupId>org.codehaus.plexus</groupId>-->
+                <!--<artifactId>plexus-velocity</artifactId>-->
+                <!--<version>1.1.3</version>&lt;!&ndash; with 1.1.4 1.1.5 1.1.6 1.1.7 tests fail &ndash;&gt;-->
+                <!--<exclusions>-->
+                    <!--<exclusion>-->
+                        <!--<groupId>velocity</groupId>-->
+                        <!--<artifactId>velocity</artifactId>-->
+                    <!--</exclusion>-->
+                    <!--<exclusion>-->
+                        <!--<groupId>velocity</groupId>-->
+                        <!--<artifactId>velocity-api</artifactId>-->
+                    <!--</exclusion>-->
+                <!--</exclusions>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>commons-io</groupId>
@@ -105,11 +111,11 @@
                 <version>1.0</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.velocity</groupId>
-                <artifactId>velocity</artifactId>
-                <version>1.5</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.apache.velocity</groupId>-->
+                <!--<artifactId>velocity</artifactId>-->
+                <!--<version>1.5</version>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>net.sourceforge.jchardet</groupId>
@@ -151,6 +157,20 @@
                 <artifactId>archetype-common</artifactId>
                 <version>2.0-alpha-5-SNAPSHOT</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.archetype</groupId>
+                <artifactId>archetype-repository</artifactId>
+                <version>2.0-alpha-5-SNAPSHOT</version>
+                <type>war</type>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.apache.maven.archetype</groupId>
+                <artifactId>archetype-proxy</artifactId>
+                <version>2.0-alpha-5-SNAPSHOT</version>
+                <type>war</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -185,58 +205,85 @@
                         </includes>
                     </configuration>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>2.2</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.5</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.4</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>2.0.2</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>2.2</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>2.0-beta-7</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.0.4</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.2</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>2.1-alpha-1</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
                     <version>1.2</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>2.0</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>2.4.3</version>
                 </plugin>
+
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>2.1-alpha-2</version>
                 </plugin>
+
                 <plugin>
                     <groupId>org.mortbay.jetty</groupId>
                     <artifactId>maven-jetty-plugin</artifactId>

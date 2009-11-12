@@ -29,10 +29,9 @@ import org.apache.maven.archetype.old.descriptor.ArchetypeDescriptorBuilder;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.repository.metadata.RepositoryMetadataManager;
 import org.apache.maven.model.Model;
-
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
@@ -41,11 +40,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -57,9 +54,11 @@ import java.util.zip.ZipFile;
 
 @Component(role=ArchetypeArtifactManager.class)
 public class DefaultArchetypeArtifactManager
-    extends AbstractLogEnabled
     implements ArchetypeArtifactManager
 {
+    @Requirement
+    private Logger log;
+    
     @Requirement
     private Downloader downloader;
 
@@ -324,11 +323,11 @@ public class DefaultArchetypeArtifactManager
             return archetype.exists();
         }
         catch( DownloadException e ) {
-            getLogger().debug( "Archetype don't exist", e );
+            log.debug( "Archetype don't exist", e );
             return false;
         }
         catch( DownloadNotFoundException e ) {
-            getLogger().debug( "Archetype don't exist", e );
+            log.debug( "Archetype don't exist", e );
             return false;
         }
     }
@@ -410,11 +409,11 @@ public class DefaultArchetypeArtifactManager
                             Constants.ARCHETYPE_RESOURCES + "/",
                             ""
                         );
-                    getLogger().debug( "Found resource " + resource );
+                    log.debug( "Found resource " + resource );
                     // TODO:FIXME
                     archetypeResources.add( resource );
                 } else {
-                    getLogger().debug( "Not resource " + entry.getName() );
+                    log.debug( "Not resource " + entry.getName() );
                 }
             }
             return archetypeResources;
@@ -486,7 +485,7 @@ public class DefaultArchetypeArtifactManager
             zipFile.close();
         }
         catch( Exception e ) {
-            getLogger().error( "Fail to close zipFile" );
+            log.error( "Fail to close zipFile" );
         }
     }
 
@@ -495,10 +494,10 @@ public class DefaultArchetypeArtifactManager
                                String archetypeVersion ) {
         String key = archetypeGroupId + ":" + archetypeArtifactId + ":" + archetypeVersion;
         if( archetypeCache.containsKey( key ) ) {
-            getLogger().debug( "Found archetype " + key + " in cache: " + archetypeCache.get( key ) );
+            log.debug( "Found archetype " + key + " in cache: " + archetypeCache.get( key ) );
             return (File) archetypeCache.get( key );
         } else {
-            getLogger().debug( "Not found archetype " + key + " in cache" );
+            log.debug( "Not found archetype " + key + " in cache" );
             return null;
         }
     }
@@ -512,13 +511,13 @@ public class DefaultArchetypeArtifactManager
     }
 
     private ZipEntry searchEntry( ZipFile zipFile, String searchString ) {
-        getLogger().debug("Searching for "+searchString+" inside "+zipFile);
+        log.debug("Searching for "+searchString+" inside "+zipFile);
         Enumeration enu = zipFile.entries();
         while( enu.hasMoreElements() ) {
             ZipEntry entryfound = (ZipEntry) enu.nextElement();
-            getLogger().debug( "An ENTRY " + entryfound.getName() );
+            log.debug( "An ENTRY " + entryfound.getName() );
             if( searchString.equals( entryfound.getName() ) ) {
-                getLogger().error( "Found entry" );
+                log.error( "Found entry" );
                 return entryfound;
             }
         }
@@ -532,7 +531,7 @@ public class DefaultArchetypeArtifactManager
 
 
         if( entry == null ) {
-            getLogger().debug(
+            log.debug(
                 "Not found " + Constants.ARCHETYPE_DESCRIPTOR + " retrying with windows path"
             );
             entry = searchEntry( zipFile,
@@ -583,11 +582,11 @@ public class DefaultArchetypeArtifactManager
             return archetypeReader.read( reader, true );
         }
         catch(IOException e){
-            getLogger().debug("Cant not read archetype descriptor", e);
+            log.debug("Cant not read archetype descriptor", e);
             throw e;
         }
         catch(XmlPullParserException e){
-            getLogger().error("Cant not parse archetype descriptor", e);
+            log.error("Cant not parse archetype descriptor", e);
             throw e;
         }
         finally {
@@ -609,10 +608,10 @@ public class DefaultArchetypeArtifactManager
             descriptor = builder.build( reader );
         }
         catch( IOException ex ) {
-            getLogger().debug( "Can not load old archetype", ex );
+            log.debug( "Can not load old archetype", ex );
         }
         catch( XmlPullParserException ex ) {
-            getLogger().error( "Can not parse old archetype", ex );
+            log.error( "Can not parse old archetype", ex );
         }
         finally {
             if( reader != null ) {
@@ -643,7 +642,7 @@ public class DefaultArchetypeArtifactManager
         );
 
         if( entry == null ) {
-            getLogger().debug(
+            log.debug(
                 "No found " + Constants.OLD_ARCHETYPE_DESCRIPTOR + " retrying with windows path"
             );
             entry = searchEntry( zipFile,
@@ -674,7 +673,7 @@ public class DefaultArchetypeArtifactManager
         );
 
         if( entry == null ) {
-            getLogger().debug(
+            log.debug(
                 "No found " + Constants.OLDER_ARCHETYPE_DESCRIPTOR + " retrying with windows path"
             );
             entry = searchEntry( zipFile,

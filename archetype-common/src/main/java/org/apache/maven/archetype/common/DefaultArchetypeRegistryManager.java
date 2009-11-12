@@ -28,7 +28,7 @@ import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;
 import org.apache.maven.artifact.repository.layout.ArtifactRepositoryLayout;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
@@ -44,11 +44,13 @@ import java.util.List;
 
 @Component(role=ArchetypeRegistryManager.class)
 public class DefaultArchetypeRegistryManager
-    extends AbstractLogEnabled
     implements ArchetypeRegistryManager
 {
 //    private static File DEFAULT_REGISTRY = new File( System.getProperty( "user.home" ), ".m2/archetype.xml" );
 
+    @Requirement
+    private Logger log;
+    
     /**
      * Used to create ArtifactRepository objects given the urls of the remote repositories.
      */
@@ -85,11 +87,11 @@ public class DefaultArchetypeRegistryManager
         }
         catch ( IOException e )
         {
-            getLogger().warn( "Can not read ~/m2/archetype.xml" );
+            log.warn( "Can not read ~/m2/archetype.xml" );
         }
         catch ( XmlPullParserException e )
         {
-            getLogger().warn( "Can not read ~/m2/archetype.xml" );
+            log.warn( "Can not read ~/m2/archetype.xml" );
         }
 
         if ( filteredExtensions.isEmpty() )
@@ -120,11 +122,11 @@ public class DefaultArchetypeRegistryManager
         }
         catch ( IOException e )
         {
-            getLogger().warn( "Can not read ~/m2/archetype.xml" );
+            log.warn( "Can not read ~/m2/archetype.xml" );
         }
         catch ( XmlPullParserException e )
         {
-            getLogger().warn( "Can not read ~/m2/archetype.xml" );
+            log.warn( "Can not read ~/m2/archetype.xml" );
         }
 
         if ( languages.isEmpty() )

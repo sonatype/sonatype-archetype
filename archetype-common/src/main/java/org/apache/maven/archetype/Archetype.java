@@ -19,11 +19,11 @@
 package org.apache.maven.archetype;
 
 
+import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 
 import java.io.File;
 import java.io.IOException;
-import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 
 /** @author Jason van Zyl */
 public interface Archetype

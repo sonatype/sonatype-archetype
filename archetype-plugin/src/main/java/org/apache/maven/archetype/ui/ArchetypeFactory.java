@@ -19,9 +19,9 @@
 
 package org.apache.maven.archetype.ui;
 
-import org.apache.maven.project.MavenProject;
 import org.apache.maven.archetype.common.ArchetypeConfiguration;
 import org.apache.maven.archetype.common.ArchetypeDefinition;
+import org.apache.maven.project.MavenProject;
 
 import java.util.Properties;
 

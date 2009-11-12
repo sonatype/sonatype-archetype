@@ -5,9 +5,6 @@
 
 package org.apache.maven.archetype.ui;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.components.interactivity.InputHandler;
@@ -15,6 +12,9 @@ import org.codehaus.plexus.components.interactivity.OutputHandler;
 import org.codehaus.plexus.components.interactivity.Prompter;
 import org.codehaus.plexus.components.interactivity.PrompterException;
 import org.codehaus.plexus.util.StringUtils;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  *

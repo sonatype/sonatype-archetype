@@ -31,14 +31,9 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.ContextEnabled;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.shared.invoker.DefaultInvocationRequest;
-import org.apache.maven.shared.invoker.InvocationRequest;
-import org.apache.maven.shared.invoker.Invoker;
-import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -66,8 +61,8 @@ public class CreateProjectFromArchetypeMojo
     /** @component */
     ArchetypeGenerator generator;
 
-    /** @component */
-    private Invoker invoker;
+//    /** @component */
+//    private Invoker invoker;
 
     /**
      * The archetype's artifactId.
@@ -226,18 +221,18 @@ public class CreateProjectFromArchetypeMojo
 
         if ( projectBasedir.exists() )
         {
-            InvocationRequest request = new DefaultInvocationRequest()
-                .setBaseDirectory( projectBasedir )
-                .setGoals( Arrays.asList( StringUtils.split( goals, "," ) ) );
-
-            try
-            {
-                invoker.execute( request );
-            }
-            catch ( MavenInvocationException e )
-            {
-                throw new MojoExecutionException( "Cannot run additions goals." );
-            }
+//            InvocationRequest request = new DefaultInvocationRequest()
+//                .setBaseDirectory( projectBasedir )
+//                .setGoals( Arrays.asList( StringUtils.split( goals, "," ) ) );
+//
+//            try
+//            {
+//                invoker.execute( request );
+//            }
+//            catch ( MavenInvocationException e )
+//            {
+//                throw new MojoExecutionException( "Cannot run additions goals." );
+//            }
         }
     }
 }

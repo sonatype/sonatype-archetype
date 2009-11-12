@@ -48,7 +48,7 @@ import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.ProjectBuildingException;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
@@ -64,7 +64,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -72,16 +71,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import org.apache.maven.shared.invoker.DefaultInvocationRequest;
-import org.apache.maven.shared.invoker.DefaultInvoker;
-import org.apache.maven.shared.invoker.InvocationRequest;
-import org.apache.maven.shared.invoker.Invoker;
+//import org.apache.maven.shared.invoker.DefaultInvocationRequest;
+//import org.apache.maven.shared.invoker.DefaultInvoker;
+//import org.apache.maven.shared.invoker.InvocationRequest;
+//import org.apache.maven.shared.invoker.Invoker;
 
 @Component(role=ArchetypeCreator.class, hint="fileset")
 public class FilesetArchetypeCreator
-    extends AbstractLogEnabled
     implements ArchetypeCreator
 {
+    @Requirement
+    private Logger log;
+    
     @Requirement
     private ArchetypeFilesResolver archetypeFilesResolver;
 
@@ -155,7 +156,7 @@ public class FilesetArchetypeCreator
         File generatedSourcesDirectory =
             FileUtils.resolveFile( basedir, getGeneratedSourcesDirectory() );
         generatedSourcesDirectory.mkdirs();
-        getLogger().debug( "Creating archetype in " + generatedSourcesDirectory );
+        log.debug( "Creating archetype in " + generatedSourcesDirectory );
 
         Model model = new Model();
         model.setModelVersion( "4.0.0" );
@@ -220,7 +221,7 @@ public class FilesetArchetypeCreator
         plugin.setVersion( getArchetypeVersion() );
         plugin.setExtensions( true );
         model.getBuild().addPlugin( plugin );
-        getLogger().debug( "Creating archetype's pom" );
+        log.debug( "Creating archetype's pom" );
 
         File archetypePomFile = FileUtils.resolveFile( basedir, getArchetypePom() );
 
@@ -240,14 +241,14 @@ public class FilesetArchetypeCreator
 
         File archetypeFilesDirectory = FileUtils.resolveFile( archetypeResourcesDirectory, Constants.ARCHETYPE_RESOURCES );
         archetypeFilesDirectory.mkdirs();
-        getLogger().debug( "Archetype's files output directory " + archetypeFilesDirectory );
+        log.debug( "Archetype's files output directory " + archetypeFilesDirectory );
 
         File archetypeDescriptorFile = FileUtils.resolveFile( archetypeResourcesDirectory, Constants.ARCHETYPE_DESCRIPTOR );
         archetypeDescriptorFile.getParentFile().mkdirs();
 
         ArchetypeDescriptor archetypeDescriptor = new ArchetypeDescriptor();
         archetypeDescriptor.setName( project.getArtifactId() );
-        getLogger().debug( "Starting archetype's descriptor " + project.getArtifactId() );
+        log.debug( "Starting archetype's descriptor " + project.getArtifactId() );
         archetypeDescriptor.setPartial( partialArchetype );
 
         addRequiredProperties( archetypeDescriptor, properties );
@@ -267,22 +268,22 @@ public class FilesetArchetypeCreator
             Model pom = pomManager.readPom( FileUtils.resolveFile( basedir, Constants.ARCHETYPE_POM ) );
 
             List fileNames = resolveFileNames( pom, basedir );
-            getLogger().debug( "Scanned for files " + fileNames.size() );
+            log.debug( "Scanned for files " + fileNames.size() );
 
             Iterator names = fileNames.iterator();
 
             while ( names.hasNext() )
             {
-                getLogger().debug( "- " + names.next().toString() );
+                log.debug( "- " + names.next().toString() );
             }
 
             List filesets = resolveFileSets( packageName, fileNames, languages, filtereds, defaultEncoding );
-            getLogger().debug( "Resolved filesets for " + archetypeDescriptor.getName() );
+            log.debug( "Resolved filesets for " + archetypeDescriptor.getName() );
 
             archetypeDescriptor.setFileSets( filesets );
 
             createArchetypeFiles( reverseProperties, filesets, packageName, basedir, archetypeFilesDirectory, defaultEncoding );
-            getLogger().debug( "Created files for " + archetypeDescriptor.getName() );
+            log.debug( "Created files for " + archetypeDescriptor.getName() );
 
             setParentArtifactId(
                 reverseProperties,
@@ -299,7 +300,7 @@ public class FilesetArchetypeCreator
                 {
                     moduleIdDirectory = StringUtils.replace( moduleId, rootArtifactId, "__rootArtifactId__" );
                 }
-                getLogger().debug( "Creating module " + moduleId );
+                log.debug( "Creating module " + moduleId );
 
                 ModuleDescriptor moduleDescriptor =
                     createModule(
@@ -317,7 +318,7 @@ public class FilesetArchetypeCreator
                     );
 
                 archetypeDescriptor.addModule( moduleDescriptor );
-                getLogger().debug(
+                log.debug(
                     "Added module " + moduleDescriptor.getName() + " in "
                         + archetypeDescriptor.getName()
                 );
@@ -332,11 +333,11 @@ public class FilesetArchetypeCreator
                 configurationProperties.getProperty( Constants.ARTIFACT_ID ),
                 archetypeFilesDirectory, basedir,
                 pomReversedProperties, preserveCData, keepParent );
-            getLogger().debug( "Created Archetype " + archetypeDescriptor.getName() + " pom" );
+            log.debug( "Created Archetype " + archetypeDescriptor.getName() + " pom" );
 
             ArchetypeDescriptorXpp3Writer writer = new ArchetypeDescriptorXpp3Writer();
             writer.write( new FileWriter( archetypeDescriptorFile ), archetypeDescriptor );
-            getLogger().debug( "Archetype " + archetypeDescriptor.getName() + " descriptor written" );
+            log.debug( "Archetype " + archetypeDescriptor.getName() + " descriptor written" );
 
             OldArchetypeDescriptor oldDescriptor =
                 convertToOldDescriptor( archetypeDescriptor.getName(), packageName, basedir );
@@ -347,16 +348,16 @@ public class FilesetArchetypeCreator
                 );
             archetypeDescriptorFile.getParentFile().mkdirs();
             writeOldDescriptor( oldDescriptor, oldDescriptorFile );
-            getLogger().debug(
+            log.debug(
                 "Archetype " + archetypeDescriptor.getName() + " old descriptor written"
             );
             
-            InvocationRequest internalRequest = new DefaultInvocationRequest();
-            internalRequest.setPomFile( archetypePomFile );
-            internalRequest.setGoals( Collections.singletonList( request.getPostPhase() ) );
-
-            Invoker invoker = new DefaultInvoker();
-            invoker.execute(internalRequest);
+//            InvocationRequest internalRequest = new DefaultInvocationRequest();
+//            internalRequest.setPomFile( archetypePomFile );
+//            internalRequest.setGoals( Collections.singletonList( request.getPostPhase() ) );
+//
+//            Invoker invoker = new DefaultInvoker();
+//            invoker.execute(internalRequest);
         }
         catch ( Exception e )
         {
@@ -388,7 +389,7 @@ public class FilesetArchetypeCreator
             requiredProperty.setDefaultValue( requiredProperties.getProperty( propertyKey ) );
             archetypeDescriptor.addRequiredProperty( requiredProperty );
 
-            getLogger().debug(
+            log.debug(
                 "Adding requiredProperty " + propertyKey + "="
                     + requiredProperties.getProperty( propertyKey ) + " to archetype's descriptor"
             );
@@ -821,7 +822,7 @@ public class FilesetArchetypeCreator
         throws
         IOException
     {
-        getLogger().debug( "Resolving OldArchetypeDescriptor files in " + basedir );
+        log.debug( "Resolving OldArchetypeDescriptor files in " + basedir );
 
         String excludes = "pom.xml,archetype.properties*,**/target/**";
 
@@ -833,7 +834,7 @@ public class FilesetArchetypeCreator
 
         List fileNames = FileUtils.getFileNames( basedir, "**", excludes, false );
 
-        getLogger().debug( "Resolved " + fileNames.size() + " files" );
+        log.debug( "Resolved " + fileNames.size() + " files" );
 
         String packageAsDirectory = StringUtils.replace( packageName, '.', '/' ) + "/";
 
@@ -879,7 +880,7 @@ public class FilesetArchetypeCreator
         IOException
     {
         String packageAsDirectory = StringUtils.replace( packageName, ".", File.separator );
-        getLogger().debug(
+        log.debug(
             "Package as Directory: Package:" + packageName + "->" + packageAsDirectory
         );
 
@@ -893,8 +894,8 @@ public class FilesetArchetypeCreator
                 packaged
                     ? StringUtils.replace( inputFileName, packageAsDirectory + File.separator, "" )
                     : inputFileName;
-            getLogger().debug( "InputFileName:" + inputFileName );
-            getLogger().debug( "OutputFileName:" + outputFileName );
+            log.debug( "InputFileName:" + inputFileName );
+            log.debug( "OutputFileName:" + outputFileName );
 
             File outputFile = new File( archetypeFilesDirectory, outputFileName );
 
@@ -928,7 +929,7 @@ public class FilesetArchetypeCreator
         throws
         IOException
     {
-        getLogger().debug(
+        log.debug(
             "Creating Archetype/Module files from " + basedir + " to " + archetypeFilesDirectory
         );
         
@@ -950,11 +951,11 @@ public class FilesetArchetypeCreator
                 )
             );
             scanner.addDefaultExcludes();
-            getLogger().debug( "Using fileset " + fileSet );
+            log.debug( "Using fileset " + fileSet );
             scanner.scan();
 
             List fileSetResources = Arrays.asList( scanner.getIncludedFiles() );
-            getLogger().debug( "Scanned " + fileSetResources.size() + " resources" );
+            log.debug( "Scanned " + fileSetResources.size() + " resources" );
 
             if ( fileSet.isFiltered() )
             {
@@ -968,7 +969,7 @@ public class FilesetArchetypeCreator
                     reverseProperties,
                     defaultEncoding
                 );
-                getLogger().debug( "Processed " + fileSet.getDirectory() + " files" );
+                log.debug( "Processed " + fileSet.getDirectory() + " files" );
             }
             else
             {
@@ -980,7 +981,7 @@ public class FilesetArchetypeCreator
                     fileSet.isPackaged(),
                     packageName
                 );
-                getLogger().debug( "Copied " + fileSet.getDirectory() + " files" );
+                log.debug( "Copied " + fileSet.getDirectory() + " files" );
             }
         } // end while
     }
@@ -1001,7 +1002,7 @@ public class FilesetArchetypeCreator
 
         if ( preserveCData )
         {
-            getLogger().debug( "Preserving CDATA parts of pom" );
+            log.debug( "Preserving CDATA parts of pom" );
             File inputFile =
                 FileUtils.resolveFile( archetypeFilesDirectory, Constants.ARCHETYPE_POM + ".tmp" );
 
@@ -1043,7 +1044,7 @@ public class FilesetArchetypeCreator
 
             if ( initialcontent.indexOf( "${" + property + "}" ) > 0 )
             {
-                getLogger().warn( "Archetype uses ${" + property +
+                log.warn( "Archetype uses ${" + property +
                     "} for internal processing, but file " + initialPomFile +
                     " contains this property already" );
             }
@@ -1068,7 +1069,7 @@ public class FilesetArchetypeCreator
         fileSet.setExcludes( excludes );
         fileSet.setEncoding( defaultEncoding );
 
-        getLogger().debug( "Created Fileset " + fileSet );
+        log.debug( "Created Fileset " + fileSet );
 
         return fileSet;
     }
@@ -1086,7 +1087,7 @@ public class FilesetArchetypeCreator
 
         if ( !files.isEmpty() )
         {
-            getLogger().debug(
+            log.debug(
                 "Creating filesets" + ( packaged ? ( " packaged (" + packageName + ")" ) : "" )
                     + ( filtered ? " filtered" : "" ) + " at level " + level
             );
@@ -1126,7 +1127,7 @@ public class FilesetArchetypeCreator
                 {
                     String group = (String) groupIterator.next();
 
-                    getLogger().debug( "Creating filesets for group " + group );
+                    log.debug( "Creating filesets for group " + group );
 
                     if ( !packaged )
                     {
@@ -1154,7 +1155,7 @@ public class FilesetArchetypeCreator
                 }
             } // end if
 
-            getLogger().debug( "Resolved fileSets " + fileSets );
+            log.debug( "Resolved fileSets " + fileSets );
         } // end if
         return fileSets;
     }
@@ -1177,10 +1178,10 @@ public class FilesetArchetypeCreator
         XmlPullParserException
     {
         ModuleDescriptor archetypeDescriptor = new ModuleDescriptor();
-        getLogger().debug( "Starting module's descriptor " + moduleId );
+        log.debug( "Starting module's descriptor " + moduleId );
 
         archetypeFilesDirectory.mkdirs();
-        getLogger().debug( "Module's files output directory " + archetypeFilesDirectory );
+        log.debug( "Module's files output directory " + archetypeFilesDirectory );
 
         Model pom =
             pomManager.readPom( FileUtils.resolveFile( basedir, Constants.ARCHETYPE_POM ) );
@@ -1205,7 +1206,7 @@ public class FilesetArchetypeCreator
 
         List filesets =
             resolveFileSets( packageName, fileNames, languages, filtereds, defaultEncoding );
-        getLogger().debug( "Resolved filesets for module " + archetypeDescriptor.getName() );
+        log.debug( "Resolved filesets for module " + archetypeDescriptor.getName() );
 
         archetypeDescriptor.setFileSets( filesets );
 
@@ -1217,7 +1218,7 @@ public class FilesetArchetypeCreator
             archetypeFilesDirectory,
             defaultEncoding
         );
-        getLogger().debug( "Created files for module " + archetypeDescriptor.getName() );
+        log.debug( "Created files for module " + archetypeDescriptor.getName() );
 
         String parentArtifactId = reverseProperties.getProperty( Constants.PARENT_ARTIFACT_ID );
         setParentArtifactId( reverseProperties, pom.getArtifactId() );
@@ -1232,7 +1233,7 @@ public class FilesetArchetypeCreator
                 subModuleIdDirectory = StringUtils.replace( subModuleId, rootArtifactId, "__rootArtifactId__" );
             }
 
-            getLogger().debug( "Creating module " + subModuleId );
+            log.debug( "Creating module " + subModuleId );
 
             ModuleDescriptor moduleDescriptor =
                 createModule(
@@ -1250,7 +1251,7 @@ public class FilesetArchetypeCreator
                 );
 
             archetypeDescriptor.addModule( moduleDescriptor );
-            getLogger().debug(
+            log.debug(
                 "Added module " + moduleDescriptor.getName() + " in "
                     + archetypeDescriptor.getName()
             );
@@ -1258,7 +1259,7 @@ public class FilesetArchetypeCreator
         restoreParentArtifactId( reverseProperties, parentArtifactId );
         restoreArtifactId( reverseProperties, pom.getArtifactId() );
 
-        getLogger().debug( "Created Module " + archetypeDescriptor.getName() + " pom" );
+        log.debug( "Created Module " + archetypeDescriptor.getName() + " pom" );
 
         return archetypeDescriptor;
     }
@@ -1280,7 +1281,7 @@ public class FilesetArchetypeCreator
 
         if ( preserveCData )
         {
-            getLogger().debug( "Preserving CDATA parts of pom" );
+            log.debug( "Preserving CDATA parts of pom" );
             File inputFile =
                 FileUtils.resolveFile( archetypeFilesDirectory, Constants.ARCHETYPE_POM + ".tmp" );
 
@@ -1345,7 +1346,7 @@ public class FilesetArchetypeCreator
 
             if ( initialcontent.indexOf( "${" + property + "}" ) > 0 )
             {
-                getLogger().warn( "OldArchetype uses ${" + property +
+                log.warn( "OldArchetype uses ${" + property +
                     "} for internal processing, but file " + initialPomFile +
                     " contains this property already" );
             }
@@ -1358,7 +1359,7 @@ public class FilesetArchetypeCreator
         throws
         IOException
     {
-        getLogger().debug(
+        log.debug(
             "Creating OldArchetype/Module replica files from " + basedir + " to "
                 + replicaFilesDirectory
         );
@@ -1383,7 +1384,7 @@ public class FilesetArchetypeCreator
                 )
             );
             scanner.addDefaultExcludes();
-            getLogger().debug( "Using fileset " + fileset );
+            log.debug( "Using fileset " + fileset );
             scanner.scan();
 
             List fileSetResources = Arrays.asList( scanner.getIncludedFiles() );
@@ -1396,7 +1397,7 @@ public class FilesetArchetypeCreator
                 false,
                 null
             );
-            getLogger().debug( "Copied " + fileset.getDirectory() + " files" );
+            log.debug( "Copied " + fileset.getDirectory() + " files" );
         }
     }
 
@@ -1445,10 +1446,10 @@ public class FilesetArchetypeCreator
 
             group.add( innerPath );
         }
-        getLogger().debug(
+        log.debug(
             "Sorted " + groups.size() + " groups in " + files.size() + " files"
         );
-        getLogger().debug( "Sorted Files:" + files );
+        log.debug( "Sorted Files:" + files );
         return groups;
     }
 
@@ -1495,14 +1496,14 @@ public class FilesetArchetypeCreator
         String packageAsDir = StringUtils.replace( packageName, ".", "/" );
         List packagedFileSets = new ArrayList();
         List packagedFiles = archetypeFilesResolver.getPackagedFiles( groupFiles, packageAsDir );
-        getLogger().debug( "Found packaged Files:" + packagedFiles );
+        log.debug( "Found packaged Files:" + packagedFiles );
 
         List unpackagedFiles =
             archetypeFilesResolver.getUnpackagedFiles( groupFiles, packageAsDir );
-        getLogger().debug( "Found unpackaged Files:" + unpackagedFiles );
+        log.debug( "Found unpackaged Files:" + unpackagedFiles );
 
         Set packagedExtensions = getExtensions( packagedFiles );
-        getLogger().debug( "Found packaged extensions " + packagedExtensions );
+        log.debug( "Found packaged extensions " + packagedExtensions );
 
         Set unpackagedExtensions = getExtensions( unpackagedFiles );
 
@@ -1522,7 +1523,7 @@ public class FilesetArchetypeCreator
 
         if ( !unpackagedExtensions.isEmpty() )
         {
-            getLogger().debug( "Found unpackaged extensions " + unpackagedExtensions );
+            log.debug( "Found unpackaged extensions " + unpackagedExtensions );
             packagedFileSets.add(
                 getUnpackagedFileSet(
                     filtered,
@@ -1559,7 +1560,7 @@ public class FilesetArchetypeCreator
         IOException
     {
         String packageAsDirectory = StringUtils.replace( packageName, ".", File.separator );
-        getLogger().debug(
+        log.debug(
             "Package as Directory: Package:" + packageName + "->" + packageAsDirectory
         );
 
@@ -1572,8 +1573,8 @@ public class FilesetArchetypeCreator
                 packaged
                     ? StringUtils.replace( inputFileName, packageAsDirectory + File.separator, "" )
                     : inputFileName;
-            getLogger().debug( "InputFileName:" + inputFileName );
-            getLogger().debug( "OutputFileName:" + outputFileName );
+            log.debug( "InputFileName:" + inputFileName );
+            log.debug( "OutputFileName:" + outputFileName );
 
             File outputFile = new File( archetypeFilesDirectory, outputFileName );
             File inputFile = new File( basedir, inputFileName );
@@ -1595,7 +1596,7 @@ public class FilesetArchetypeCreator
 
                 if ( initialcontent.indexOf( "${" + property + "}" ) > 0 )
                 {
-                    getLogger().warn( "Archetype uses ${" + property +
+                    log.warn( "Archetype uses ${" + property +
                         "} for internal processing, but file " + inputFile +
                         " contains this property already" );
                 }
@@ -1655,7 +1656,7 @@ public class FilesetArchetypeCreator
         throws
         IOException
     {
-        getLogger().debug( "Resolving files for " + pom.getId() + " in " + basedir );
+        log.debug( "Resolving files for " + pom.getId() + " in " + basedir );
 
         Iterator modules = pom.getModules().iterator();
         String excludes = "pom.xml*,archetype.properties*,target/**,";
@@ -1674,8 +1675,8 @@ public class FilesetArchetypeCreator
 
         List fileNames = FileUtils.getFileNames( basedir, "**,.*,**/.*", excludes, false );
 
-        getLogger().debug( "Resolved " + fileNames.size() + " files" );
-        getLogger().debug( "Resolved Files:" + fileNames );
+        log.debug( "Resolved " + fileNames.size() + " files" );
+        log.debug( "Resolved Files:" + fileNames );
 
         return fileNames;
     }
@@ -1689,7 +1690,7 @@ public class FilesetArchetypeCreator
     )
     {
         List resolvedFileSets = new ArrayList();
-        getLogger().debug(
+        log.debug(
             "Resolving filesets with package=" + packageName + ", languages=" + languages
                 + " and extentions=" + filtereds
         );
@@ -1708,7 +1709,7 @@ public class FilesetArchetypeCreator
                 ( ( languageIncludes.length() == 0 ) ? "" : "," ) + language + "/**";
         }
 
-        getLogger().debug( "Using languages includes " + languageIncludes );
+        log.debug( "Using languages includes " + languageIncludes );
 
         String filteredIncludes = "";
         Iterator filteredsIterator = filtereds.iterator();
@@ -1721,7 +1722,7 @@ public class FilesetArchetypeCreator
                     + ( filtered.startsWith( "." ) ? "" : "*." ) + filtered;
         }
 
-        getLogger().debug( "Using filtered includes " + filteredIncludes );
+        log.debug( "Using filtered includes " + filteredIncludes );
 
         /*sourcesMainFiles*/
         List sourcesMainFiles =
@@ -2050,7 +2051,7 @@ public class FilesetArchetypeCreator
          /**/
         if ( !files.isEmpty() )
         {
-            getLogger().info( "Ignored files: " + files );
+            log.info( "Ignored files: " + files );
         }
 
         return resolvedFileSets;

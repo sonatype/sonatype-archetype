@@ -19,12 +19,8 @@
 
 package org.apache.maven.archetype.generator;
 
-import org.apache.maven.archetype.old.OldArchetype;
-import org.apache.maven.archetype.old.ArchetypeDescriptorException;
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
-import org.apache.maven.archetype.old.ArchetypeNotFoundException;
-import org.apache.maven.archetype.old.ArchetypeTemplateProcessingException;
 import org.apache.maven.archetype.common.ArchetypeArtifactManager;
 import org.apache.maven.archetype.common.ArchetypeConfiguration;
 import org.apache.maven.archetype.common.ArchetypeRegistryManager;
@@ -36,10 +32,11 @@ import org.apache.maven.archetype.exception.OutputFileExists;
 import org.apache.maven.archetype.exception.PomFileExists;
 import org.apache.maven.archetype.exception.ProjectDirectoryExists;
 import org.apache.maven.archetype.exception.UnknownArchetype;
+import org.apache.maven.archetype.old.OldArchetype;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.dom4j.DocumentException;
@@ -50,13 +47,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 @Component(role=ArchetypeGenerator.class)
 public class DefaultArchetypeGenerator
-    extends AbstractLogEnabled
     implements ArchetypeGenerator
 {
+    @Requirement
+    private Logger log;
+    
     @Requirement
     private ArchetypeRegistryManager archetypeRegistryManager;
 
@@ -289,57 +287,57 @@ public class DefaultArchetypeGenerator
         }
         catch ( IOException ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
         catch ( ArchetypeNotDefined ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
         catch ( UnknownArchetype ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
         catch ( ArchetypeNotConfigured ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
         catch ( ProjectDirectoryExists ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
         catch ( PomFileExists ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
         catch ( OutputFileExists ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
         catch ( XmlPullParserException ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
         catch ( DocumentException ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
         catch ( InvalidPackaging ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
         catch ( ArchetypeGenerationFailure ex )
         {
-            getLogger().error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
             result.setCause(ex);
         }
     }

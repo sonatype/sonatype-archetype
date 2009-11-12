@@ -19,7 +19,6 @@
 
 package org.apache.maven.archetype.common.util;
 
-import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.mozilla.intl.chardet.nsDetector;
 import org.mozilla.intl.chardet.nsICharsetDetectionObserver;
 import org.mozilla.intl.chardet.nsPSMDetector;
@@ -33,7 +32,6 @@ import java.io.InputStream;
 
 /** @author rafale */
 public class FileCharsetDetector
-    extends AbstractLogEnabled
 {
     private String charset = null;
 

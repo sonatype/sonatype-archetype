@@ -63,10 +63,10 @@ under the License.
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-model</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.maven.shared</groupId>
-            <artifactId>maven-invoker</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.maven.shared</groupId>-->
+            <!--<artifactId>maven-invoker</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-container-default</artifactId>
@@ -88,10 +88,10 @@ under the License.
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-velocity</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.velocity</groupId>-->
+            <!--<artifactId>velocity</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
@@ -147,17 +147,17 @@ under the License.
             <!-- with 1.0-beta-4 some tests fail -->
             <scope>test</scope>
         </dependency>
+
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.apache.maven.archetype</groupId>
             <artifactId>archetype-repository</artifactId>
-            <version>${project.version}</version>
             <type>war</type>
             <scope>test</scope>
         </dependency>
+
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.apache.maven.archetype</groupId>
             <artifactId>archetype-proxy</artifactId>
-            <version>${project.version}</version>
             <type>war</type>
             <scope>test</scope>
         </dependency>
@@ -170,6 +170,7 @@ under the License.
                 <filtering>true</filtering>
             </testResource>
         </testResources>
+        
         <plugins>
             <plugin>
                 <groupId>org.codehaus.modello</groupId>
@@ -197,6 +198,7 @@ under the License.
                     </execution>
                 </executions>
             </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -217,6 +219,7 @@ under the License.
                     </execution>
                 </executions>
             </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -371,6 +374,7 @@ under the License.
                     </execution>
                 </executions>
             </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -385,15 +389,6 @@ under the License.
             </plugin>
         </plugins>
     </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.2</version>
-            </plugin>
-        </plugins>
-    </reporting>
 
     <profiles>
         <profile>

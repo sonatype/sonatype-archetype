@@ -20,19 +20,25 @@
 package org.apache.maven.archetype.ui;
 
 //import org.apache.maven.archetype.common.Archetype;
+
 import org.apache.maven.archetype.catalog.Archetype;
 import org.apache.maven.archetype.common.ArchetypeDefinition;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.components.interactivity.Prompter;
 import org.codehaus.plexus.components.interactivity.PrompterException;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @Component(role=ArchetypeSelectionQueryer.class)
 public class DefaultArchetypeSelectionQueryer
-    extends AbstractLogEnabled
     implements ArchetypeSelectionQueryer
 {
     @Requirement(hint="archetype")
@@ -46,7 +52,7 @@ public class DefaultArchetypeSelectionQueryer
             "Confirm archetype selection: \n" + archetypeDefinition.getGroupId() + "/"
                 + archetypeDefinition.getName() + "\n";
 
-        String answer = prompter.prompt( query, Arrays.asList( new String[]{"Y", "N"} ), "Y" );
+        String answer = prompter.prompt( query, Arrays.asList("Y", "N"), "Y" );
 
         return "Y".equalsIgnoreCase( answer );
     }

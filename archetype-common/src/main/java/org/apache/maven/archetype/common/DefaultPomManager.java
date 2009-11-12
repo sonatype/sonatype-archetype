@@ -22,26 +22,27 @@ package org.apache.maven.archetype.common;
 import org.apache.maven.archetype.common.util.FileCharsetDetector;
 import org.apache.maven.archetype.common.util.Format;
 import org.apache.maven.archetype.exception.InvalidPackaging;
+import org.apache.maven.model.Build;
+import org.apache.maven.model.BuildBase;
+import org.apache.maven.model.Dependency;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.ModelBase;
+import org.apache.maven.model.Parent;
+import org.apache.maven.model.Plugin;
+import org.apache.maven.model.Profile;
+import org.apache.maven.model.ReportPlugin;
+import org.apache.maven.model.Reporting;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
-import org.apache.maven.model.Model;
-import org.apache.maven.model.Parent;
-import org.apache.maven.model.Dependency;
-import org.apache.maven.model.Build;
-import org.apache.maven.model.Profile;
-import org.apache.maven.model.ModelBase;
-import org.apache.maven.model.Reporting;
-import org.apache.maven.model.ReportPlugin;
-import org.apache.maven.model.BuildBase;
-import org.apache.maven.model.Plugin;
 import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.component.annotations.Requirement;
+import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-import org.codehaus.plexus.util.xml.Xpp3DomUtils;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
+import org.codehaus.plexus.util.xml.Xpp3DomUtils;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -63,13 +64,19 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @Component(role=PomManager.class)
 public class DefaultPomManager
-    extends AbstractLogEnabled
     implements PomManager
 {
+    @Requirement
+    private Logger log;
+    
     public void addModule( File pom,
                            String artifactId )
         throws
@@ -166,7 +173,7 @@ public class DefaultPomManager
         Model generatedModel = readPom( pom );
         if( null != generatedModel.getParent() )
         {
-            getLogger().info( "Parent element not overwrited in " + pom );
+            log.info( "Parent element not overwrited in " + pom );
             return;
         }
 
@@ -375,7 +382,7 @@ public class DefaultPomManager
         }
         catch ( FileNotFoundException e )
         {
-            getLogger().debug( "Creating pom file " + pomFile );
+            log.debug( "Creating pom file " + pomFile );
 
             Writer pomWriter = null;
 
@@ -466,7 +473,7 @@ public class DefaultPomManager
                 }
                 else
                 {
-                    getLogger().warn( "Try to merge profiles with id " + generatedProfileId );
+                    log.warn( "Try to merge profiles with id " + generatedProfileId );
                     mergeModelBase( (Profile) modelProfileIdMap.get( generatedProfileId ), generatedProfile );
                     mergeProfileBuild( (Profile) modelProfileIdMap.get( generatedProfileId ), generatedProfile );
                 }
@@ -507,7 +514,7 @@ public class DefaultPomManager
             }
             else
             {
-                getLogger().warn( "Can not override property: " + generatedDependencyId );
+                log.warn( "Can not override property: " + generatedDependencyId );
             }
 
         // TODO: maybe warn, if a property key gets overriden?
@@ -544,7 +551,7 @@ public class DefaultPomManager
                 }
                 else
                 {
-                    getLogger().warn( "Can not override report: " + generatedReportPluginsId );
+                    log.warn( "Can not override report: " + generatedReportPluginsId );
                 }
             }
         }
@@ -566,7 +573,7 @@ public class DefaultPomManager
             }
             else
             {
-                getLogger().info( "Try to merge plugin configuration of plugins with id: " + generatedPluginsId );
+                log.info( "Try to merge plugin configuration of plugins with id: " + generatedPluginsId );
                 Plugin modelPlugin = (Plugin) pluginsByIds.get( generatedPluginsId );
 
                 modelPlugin.setConfiguration( Xpp3DomUtils.mergeXpp3Dom( (Xpp3Dom) generatedPlugin.getConfiguration(),

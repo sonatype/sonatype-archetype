@@ -19,6 +19,7 @@
 
 package org.apache.maven.archetype.generator;
 
+import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.common.ArchetypeArtifactManager;
 import org.apache.maven.archetype.common.ArchetypeFilesResolver;
 import org.apache.maven.archetype.common.Constants;
@@ -34,11 +35,12 @@ import org.apache.maven.archetype.metadata.AbstractArchetypeDescriptor;
 import org.apache.maven.archetype.metadata.ArchetypeDescriptor;
 import org.apache.maven.archetype.metadata.FileSet;
 import org.apache.maven.archetype.metadata.ModuleDescriptor;
+import org.apache.maven.archetype.metadata.RequiredProperty;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.context.Context;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
@@ -59,14 +61,14 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import org.apache.maven.archetype.ArchetypeGenerationRequest;
-import org.apache.maven.archetype.metadata.RequiredProperty;
 
 @Component(role=FilesetArchetypeGenerator.class)
 public class DefaultFilesetArchetypeGenerator
-    extends AbstractLogEnabled
     implements FilesetArchetypeGenerator
 {
+    @Requirement
+    private Logger log;
+    
     @Requirement
     private ArchetypeArtifactManager archetypeArtifactManager;
 
@@ -166,7 +168,7 @@ public class DefaultFilesetArchetypeGenerator
 
             if ( archetypeDescriptor.isPartial() )
             {
-                getLogger().debug(
+                log.debug(
                     "Procesing partial archetype " + archetypeDescriptor.getName()
                 );
                 if ( outputDirectoryFile.exists() )
@@ -223,12 +225,12 @@ public class DefaultFilesetArchetypeGenerator
 
                 if ( archetypeDescriptor.getModules().size() > 0 )
                 {
-                    getLogger().info( "Modules ignored in partial mode" );
+                    log.info( "Modules ignored in partial mode" );
                 }
             }
             else
             {
-                getLogger().debug(
+                log.debug(
                     "Processing complete archetype " + archetypeDescriptor.getName()
                 );
                 if ( outputDirectoryFile.exists() && pom.exists() )
@@ -239,7 +241,7 @@ public class DefaultFilesetArchetypeGenerator
                 {
                     if ( outputDirectoryFile.exists() )
                     {
-                        getLogger().warn( "The directory " + outputDirectoryFile.getPath() + " already exists." );
+                        log.warn( "The directory " + outputDirectoryFile.getPath() + " already exists." );
                     }
                     context.put( "rootArtifactId", artifactId );
 
@@ -305,7 +307,7 @@ public class DefaultFilesetArchetypeGenerator
         OutputFileExists,
         IOException
     {
-        getLogger().debug( "Copying file " + template );
+        log.debug( "Copying file " + template );
 
         if ( failIfExists && outFile.exists() )
         {
@@ -313,7 +315,7 @@ public class DefaultFilesetArchetypeGenerator
         }
         else if ( outFile.exists() )
         {
-            getLogger().warn( "CP Don't override file " + outFile );
+            log.warn( "CP Don't override file " + outFile );
         }
         else
         {
@@ -436,9 +438,9 @@ public class DefaultFilesetArchetypeGenerator
                 if ( contextPropertyValue != null && 
                             contextPropertyValue.trim().length() > 0 ) 
                 {
-                    if (getLogger().isDebugEnabled())
+                    if (log.isDebugEnabled())
                     {
-                        getLogger().debug( "Replacing '" + DELIMITER + propertyToken
+                        log.debug( "Replacing '" + DELIMITER + propertyToken
                                 + DELIMITER + "' in file path '" + 
                                 interpolatedResult + "' with value '" + 
                                 contextPropertyValue + "'."); 
@@ -454,16 +456,16 @@ public class DefaultFilesetArchetypeGenerator
                     // Need to skip the undefined property
                     skipUndefinedPropertyIndex = end + DELIMITER.length() + 1;
                    
-                    getLogger().warn( "Property '" + propertyToken + 
+                    log.warn( "Property '" + propertyToken + 
                             "' was not specified, so the token in '" + 
                             interpolatedResult + "' is not being replaced." );
                 }
             }
         }
 
-        if (getLogger().isDebugEnabled())
+        if (log.isDebugEnabled())
         {
-            getLogger().debug( "Final interpolated file path: '" + interpolatedResult + "'" ); 
+            log.debug( "Final interpolated file path: '" + interpolatedResult + "'" ); 
         }
 
         return interpolatedResult; 
@@ -630,11 +632,11 @@ public class DefaultFilesetArchetypeGenerator
         OutputFileExists
     {
         outputDirectoryFile.mkdirs();
-        getLogger().debug( "Processing module " + artifactId );
-        getLogger().debug( "Processing module rootArtifactId " + rootArtifactId );
-        getLogger().debug( "Processing module pom " + pom );
-        getLogger().debug( "Processing module moduleOffset " + moduleOffset );
-        getLogger().debug( "Processing module outputDirectoryFile " + outputDirectoryFile );
+        log.debug( "Processing module " + artifactId );
+        log.debug( "Processing module rootArtifactId " + rootArtifactId );
+        log.debug( "Processing module pom " + pom );
+        log.debug( "Processing module moduleOffset " + moduleOffset );
+        log.debug( "Processing module outputDirectoryFile " + outputDirectoryFile );
 
         processFilesetProject(
             archetypeDescriptor,
@@ -653,7 +655,7 @@ public class DefaultFilesetArchetypeGenerator
         Iterator subprojects = archetypeDescriptor.getModules().iterator();
         if ( subprojects.hasNext() )
         {
-            getLogger().debug(
+            log.debug(
                 artifactId + " has modules (" + archetypeDescriptor.getModules() + ")"
             );
             setParentArtifactId( context, StringUtils.replace( artifactId, "${rootArtifactId}", rootArtifactId ) );
@@ -683,7 +685,7 @@ public class DefaultFilesetArchetypeGenerator
             );
         }
         restoreParentArtifactId( context, parentArtifactId );
-        getLogger().debug( "Processed " + artifactId );
+        log.debug( "Processed " + artifactId );
     }
 
     private void processFilesetProject(
@@ -707,11 +709,11 @@ public class DefaultFilesetArchetypeGenerator
         FileNotFoundException,
         OutputFileExists
     {
-        getLogger().debug( "Processing fileset project moduleId " + moduleId );
-        getLogger().debug( "Processing fileset project pom " + pom );
-        getLogger().debug( "Processing fileset project moduleOffset " + moduleOffset );
-        getLogger().debug( "Processing fileset project outputDirectoryFile " + outputDirectoryFile );
-        getLogger().debug( "Processing fileset project basedirPom " + basedirPom );
+        log.debug( "Processing fileset project moduleId " + moduleId );
+        log.debug( "Processing fileset project pom " + pom );
+        log.debug( "Processing fileset project moduleOffset " + moduleOffset );
+        log.debug( "Processing fileset project outputDirectoryFile " + outputDirectoryFile );
+        log.debug( "Processing fileset project basedirPom " + basedirPom );
         
         if ( basedirPom.exists() )
         {
@@ -746,7 +748,7 @@ public class DefaultFilesetArchetypeGenerator
         OutputFileExists,
         ArchetypeGenerationFailure
     {
-        getLogger().debug( "Processing pom " + pom );
+        log.debug( "Processing pom " + pom );
         processTemplate(
             pom,
             context,
@@ -766,7 +768,7 @@ public class DefaultFilesetArchetypeGenerator
         XmlPullParserException,
         ArchetypeGenerationFailure
     {
-        getLogger().debug( "Processing pom " + pom + " with merge" );
+        log.debug( "Processing pom " + pom + " with merge" );
 
         File temporaryPom = getTemporaryFile( pom );
 
@@ -808,7 +810,7 @@ public class DefaultFilesetArchetypeGenerator
         InvalidPackaging,
         ArchetypeGenerationFailure
     {
-        getLogger().debug( "Processing pom " + pom + " with parent " + basedirPom );
+        log.debug( "Processing pom " + pom + " with parent " + basedirPom );
         processTemplate(
             pom,
             context,
@@ -818,7 +820,7 @@ public class DefaultFilesetArchetypeGenerator
             true
         );
 
-        getLogger().debug( "Adding module " + moduleId );
+        log.debug( "Adding module " + moduleId );
         pomManager.addModule( basedirPom, moduleId );
         pomManager.addParent( pom, basedirPom );
     }
@@ -845,7 +847,7 @@ public class DefaultFilesetArchetypeGenerator
             templateFileName = templateFileName.replace ( '/', File.separatorChar );
         }
         
-        getLogger().debug( "Prosessing template " + templateFileName );
+        log.debug( "Prosessing template " + templateFileName );
 
         if ( failIfExists && outFile.exists() )
         {
@@ -853,7 +855,7 @@ public class DefaultFilesetArchetypeGenerator
         }
         else if ( outFile.exists() )
         {
-            getLogger().warn( "PT Don't override file " + outFile );
+            log.warn( "PT Don't override file " + outFile );
         }
         else
         {
@@ -862,7 +864,7 @@ public class DefaultFilesetArchetypeGenerator
                 outFile.getParentFile().mkdirs();
             }
 
-            getLogger().debug( "Merging into " + outFile );
+            log.debug( "Merging into " + outFile );
 
             Writer writer = null;
 
@@ -908,7 +910,7 @@ public class DefaultFilesetArchetypeGenerator
         Iterator iterator = archetypeDescriptor.getFileSets().iterator();
         if ( iterator.hasNext() )
         {
-            getLogger().debug( "Processing filesets" );
+            log.debug( "Processing filesets" );
         }
         while ( iterator.hasNext() )
         {
@@ -926,7 +928,7 @@ public class DefaultFilesetArchetypeGenerator
 
             if ( fileSet.isFiltered() )
             {
-                getLogger().debug(
+                log.debug(
                     "Processing fileset " + fileSet + "\n\n\n\n" + fileSetResources + "\n\n"
                         + archetypeResources + "\n\n"
                 );
@@ -941,11 +943,11 @@ public class DefaultFilesetArchetypeGenerator
                     getEncoding( fileSet.getEncoding() ),
                     failIfExists
                 );
-                getLogger().debug( "Processed " + fileSetResources.size() + " files" );
+                log.debug( "Processed " + fileSetResources.size() + " files" );
             }
             else
             {
-                getLogger().debug( "Copying fileset " + fileSet );
+                log.debug( "Copying fileset " + fileSet );
                 copyFiles(
                     fileSet.getDirectory(),
                     fileSetResources,
@@ -957,7 +959,7 @@ public class DefaultFilesetArchetypeGenerator
                     failIfExists,
                     context
                 );
-                getLogger().debug( "Copied " + fileSetResources.size() + " files" );
+                log.debug( "Copied " + fileSetResources.size() + " files" );
             }
         }
     }

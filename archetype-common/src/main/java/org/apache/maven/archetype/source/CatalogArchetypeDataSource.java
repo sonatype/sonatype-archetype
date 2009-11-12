@@ -24,7 +24,8 @@ import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import org.apache.maven.archetype.catalog.io.xpp3.ArchetypeCatalogXpp3Reader;
 import org.apache.maven.archetype.catalog.io.xpp3.ArchetypeCatalogXpp3Writer;
 import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.component.annotations.Requirement;
+import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
@@ -45,7 +46,6 @@ import java.util.Properties;
  */
 @Component(role=ArchetypeDataSource.class, hint="catalog")
 public class CatalogArchetypeDataSource
-    extends AbstractLogEnabled
     implements ArchetypeDataSource
 {
     public static final String ARCHETYPE_CATALOG_PROPERTY = "file";
@@ -62,6 +62,9 @@ public class CatalogArchetypeDataSource
 
     public static final File DEFAULT_ARCHETYPE_CATALOG = new File( MAVEN_CONFIGURATION, ARCHETYPE_CATALOG_FILENAME );
 
+    @Requirement
+    private Logger log;
+    
     public List getArchetypes( Properties properties )
         throws ArchetypeDataSourceException
     {
@@ -69,7 +72,7 @@ public class CatalogArchetypeDataSource
 
         s = StringUtils.replace( s, "${user.home}", System.getProperty( "user.home" ) );
 
-        getLogger().debug( "Using catalog " + s );
+        log.debug( "Using catalog " + s );
 
         File catalogFile = new File( s );
 
@@ -101,7 +104,7 @@ public class CatalogArchetypeDataSource
 
         s = StringUtils.replace( s, "${user.home}", System.getProperty( "user.home" ) );
 
-        getLogger().debug( "Using catalog " + s );
+        log.debug( "Using catalog " + s );
 
         File catalogFile = new File( s );
 
@@ -110,18 +113,18 @@ public class CatalogArchetypeDataSource
         {
             try
             {
-                getLogger().debug( "Reading the catalog " + catalogFile );
+                log.debug( "Reading the catalog " + catalogFile );
                 catalog = readCatalog( new FileReader( catalogFile ) );
             }
             catch ( FileNotFoundException ex )
             {
-                getLogger().debug( "Catalog file don't exist" );
+                log.debug( "Catalog file don't exist" );
                 catalog = new ArchetypeCatalog();
             }
         }
         else
         {
-            getLogger().debug( "Catalog file don't exist" );
+            log.debug( "Catalog file don't exist" );
             catalog = new ArchetypeCatalog();
         }
 
@@ -220,7 +223,7 @@ public class CatalogArchetypeDataSource
         {
             catalogFile = new File( catalogFile, ARCHETYPE_CATALOG_FILENAME );
         }
-        getLogger().debug( "Using catalog " + catalogFile );
+        log.debug( "Using catalog " + catalogFile );
 
         if ( catalogFile.exists() )
         {

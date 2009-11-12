@@ -21,24 +21,21 @@ package org.apache.maven.archetype.repositorycrawler;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-
 import org.apache.maven.archetype.catalog.Archetype;
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import org.apache.maven.archetype.catalog.io.xpp3.ArchetypeCatalogXpp3Writer;
 import org.apache.maven.archetype.common.ArchetypeArtifactManager;
 import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.model.Model;
-
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import java.util.Iterator;
 
 /**
@@ -46,9 +43,11 @@ import java.util.Iterator;
  */
 @Component(role=RepositoryCrawler.class)
 public class DefaultRepositoryCrawler
-extends AbstractLogEnabled
 implements RepositoryCrawler
 {
+    @Requirement
+    private Logger log;
+    
     @Requirement
     private ArchetypeArtifactManager archetypeArtifactManager;
 
@@ -63,7 +62,7 @@ implements RepositoryCrawler
             while ( jars.hasNext () )
             {
                 File jar = (File) jars.next ();
-                getLogger ().info ( "Scanning " + jar );
+                log.info ( "Scanning " + jar );
                 if ( archetypeArtifactManager.isFileSetArchetype ( jar )
                     || archetypeArtifactManager.isOldArchetype ( jar )
                 )
@@ -105,7 +104,7 @@ implements RepositoryCrawler
                             {
                                 archetype.setVersion ( pom.getParent ().getVersion () );
                             }
-                            getLogger ().info ( "\tArchetype " + archetype + " found in pom" );
+                            log.info ( "\tArchetype " + archetype + " found in pom" );
                         }
                         else
                         {
@@ -132,7 +131,7 @@ implements RepositoryCrawler
                             archetype.setArtifactId ( artifactId );
                             archetype.setVersion ( version );
 
-                            getLogger ().info (
+                            log.info (
                                 "\tArchetype " + archetype + " defined by repository path"
                             );
                         } // end if-else
@@ -157,7 +156,7 @@ implements RepositoryCrawler
         }
         else
         {
-            getLogger ().warn ( "File is not a directory" );
+            log.warn ( "File is not a directory" );
             return null;
         } // end if-else
     }
@@ -175,7 +174,7 @@ implements RepositoryCrawler
         }
         catch ( IOException ex )
         {
-            getLogger ().warn ( "Catalog can not be writen to " + archetypeCatalogFile, ex );
+            log.warn ( "Catalog can not be writen to " + archetypeCatalogFile, ex );
             return false;
         }
         finally

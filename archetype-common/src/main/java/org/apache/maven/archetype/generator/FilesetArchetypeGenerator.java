@@ -19,6 +19,7 @@
 
 package org.apache.maven.archetype.generator;
 
+import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.exception.ArchetypeGenerationFailure;
 import org.apache.maven.archetype.exception.ArchetypeNotConfigured;
 import org.apache.maven.archetype.exception.OutputFileExists;
@@ -27,7 +28,6 @@ import org.apache.maven.archetype.exception.ProjectDirectoryExists;
 import org.apache.maven.archetype.exception.UnknownArchetype;
 
 import java.io.File;
-import org.apache.maven.archetype.ArchetypeGenerationRequest;
 
 /** @author rafale */
 public interface FilesetArchetypeGenerator

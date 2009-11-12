@@ -31,28 +31,28 @@ import org.apache.maven.archetype.exception.ArchetypeNotDefined;
 import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.archetype.old.OldArchetype;
 import org.apache.maven.artifact.repository.ArtifactRepository;
-
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.components.interactivity.PrompterException;
-import org.codehaus.plexus.logging.AbstractLogEnabled;
+import org.codehaus.plexus.logging.Logger;
+import org.codehaus.plexus.util.StringUtils;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import org.codehaus.plexus.util.StringUtils;
 
 // TODO: this seems to have more responsibilities than just a configurator
 @Component(role=ArchetypeGenerationConfigurator.class)
 public class DefaultArchetypeGenerationConfigurator
-extends AbstractLogEnabled
 implements ArchetypeGenerationConfigurator
 {
+    @Requirement
+    private Logger log;
+    
     @Requirement
     OldArchetype oldArchetype;
 
@@ -161,9 +161,9 @@ implements ArchetypeGenerationConfigurator
             while ( !confirmed )
             {
                 List propertiesRequired = archetypeConfiguration.getRequiredProperties();
-                getLogger().debug( "Required properties before content sort: " + propertiesRequired );
+                log.debug( "Required properties before content sort: " + propertiesRequired );
                 Collections.sort( propertiesRequired, new RequiredPropertyComparator( archetypeConfiguration ) );
-                getLogger().debug( "Required properties after content sort: " + propertiesRequired );
+                log.debug( "Required properties after content sort: " + propertiesRequired );
                     Iterator requiredProperties = propertiesRequired.iterator();
                 if ( !archetypeConfiguration.isConfigured() )
                 {
@@ -196,7 +196,7 @@ implements ArchetypeGenerationConfigurator
                         }
                         else
                         {
-                            getLogger().info( "Using property: " + requiredProperty + " = " + archetypeConfiguration.getProperty( requiredProperty) );
+                            log.info( "Using property: " + requiredProperty + " = " + archetypeConfiguration.getProperty( requiredProperty) );
                         }
                     }
                 }
@@ -206,23 +206,23 @@ implements ArchetypeGenerationConfigurator
                     while ( requiredProperties.hasNext() )
                     {
                         String requiredProperty = (String) requiredProperties.next();
-                        getLogger().info( "Using property: " + requiredProperty + " = " + archetypeConfiguration.getProperty( requiredProperty) );
+                        log.info( "Using property: " + requiredProperty + " = " + archetypeConfiguration.getProperty( requiredProperty) );
                     }
                 }
 
                 if ( !archetypeConfiguration.isConfigured() )
                 {
-                    getLogger().warn( "Archetype is not fully configured" );
+                    log.warn( "Archetype is not fully configured" );
                 }
                 else if ( !archetypeGenerationQueryer.confirmConfiguration( archetypeConfiguration ) )
                 {
-                    getLogger().debug( "Archetype generation configuration not confirmed" );
+                    log.debug( "Archetype generation configuration not confirmed" );
                     archetypeConfiguration.reset();
                     restoreCommandLineProperties( archetypeConfiguration, executionProperties );
                 }
                 else
                 {
-                    getLogger().debug( "Archetype generation configuration confirmed" );
+                    log.debug( "Archetype generation configuration confirmed" );
 
                     confirmed = true;
                 }
@@ -269,7 +269,7 @@ implements ArchetypeGenerationConfigurator
                             exceptionMessage.append( requiredProperty );
                             missingProperties.add( requiredProperty );
                             exceptionMessage.append( " is missing." );
-                            getLogger().warn( "Property " + requiredProperty
+                            log.warn( "Property " + requiredProperty
                                 + " is missing. Add -D" + requiredProperty + "=someValue" );
                         }
                     }
@@ -315,7 +315,7 @@ implements ArchetypeGenerationConfigurator
     private void restoreCommandLineProperties( ArchetypeConfiguration archetypeConfiguration,
         Properties executionProperties )
     {
-        getLogger().debug( "Restoring command line properties" );
+        log.debug( "Restoring command line properties" );
 
         Iterator properties = archetypeConfiguration.getRequiredProperties().iterator();
         while ( properties.hasNext() )
@@ -324,7 +324,7 @@ implements ArchetypeGenerationConfigurator
             if ( executionProperties.containsKey( property ) )
             {
                 archetypeConfiguration.setProperty( property, executionProperties.getProperty( property ) );
-                getLogger().debug( "Restored " + property + "=" + archetypeConfiguration.getProperty( property ) );
+                log.debug( "Restored " + property + "=" + archetypeConfiguration.getProperty( property ) );
             }
         }
     }
