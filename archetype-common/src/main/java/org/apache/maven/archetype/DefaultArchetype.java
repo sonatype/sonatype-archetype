@@ -155,6 +155,7 @@ public class DefaultArchetype
         try
         {
             ArchetypeDataSource source = archetypeSources.get( "internal-catalog" );
+            assert source != null;
 
             return source.getArchetypeCatalog( new Properties() );
         }
@@ -176,6 +177,7 @@ public class DefaultArchetype
             Properties properties=new Properties();
             properties.setProperty("file", path);
             ArchetypeDataSource source = archetypeSources.get( "catalog" );
+            assert source != null;
 
             return source.getArchetypeCatalog( properties );
         }
@@ -197,6 +199,7 @@ public class DefaultArchetype
             Properties properties=new Properties();
             properties.setProperty("repository", url);
             ArchetypeDataSource source = archetypeSources.get( "remote-catalog" );
+            assert source != null;
 
             return source.getArchetypeCatalog( properties );
         }
@@ -218,7 +221,8 @@ public class DefaultArchetype
             Properties properties=new Properties();
             properties.setProperty("file", path);
             ArchetypeDataSource source = archetypeSources.get( "catalog" );
-
+            assert source != null;
+            
             source.updateCatalog(properties, archetype);
         }
         catch ( ArchetypeDataSourceException e )

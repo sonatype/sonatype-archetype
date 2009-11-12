@@ -30,7 +30,7 @@ import java.util.Properties;
 /**
  * @author Jason van Zyl
  */
-@Component(role=CatalogArchetypeDataSource.class, hint="internal-catalog")
+@Component(role=ArchetypeDataSource.class, hint="internal-catalog")
 public class InternalCatalogArchetypeDataSource
     extends CatalogArchetypeDataSource
 {

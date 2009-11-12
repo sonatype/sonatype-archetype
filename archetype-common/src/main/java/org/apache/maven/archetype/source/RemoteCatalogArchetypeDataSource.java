@@ -36,7 +36,7 @@ import java.util.Properties;
 /**
  * @author Jason van Zyl
  */
-@Component(role=CatalogArchetypeDataSource.class, hint="remote-catalog")
+@Component(role=ArchetypeDataSource.class, hint="remote-catalog")
 public class RemoteCatalogArchetypeDataSource
     extends CatalogArchetypeDataSource
 {
