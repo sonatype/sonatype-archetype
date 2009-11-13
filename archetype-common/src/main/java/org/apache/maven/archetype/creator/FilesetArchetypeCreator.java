@@ -96,8 +96,8 @@ public class FilesetArchetypeCreator
                                  ArchetypeCreationResult result )
     {
         MavenProject project = request.getProject();
-        List languages = request.getLanguages();
-        List filtereds = request.getFiltereds();
+        List<String> languages = request.getLanguages();
+        List<String> filtereds = request.getFiltereds();
         String defaultEncoding = request.getDefaultEncoding();
         boolean preserveCData = request.isPreserveCData();
         boolean keepParent = request.isKeepParent();
@@ -268,13 +268,14 @@ public class FilesetArchetypeCreator
             Model pom = pomManager.readPom( FileUtils.resolveFile( basedir, Constants.ARCHETYPE_POM ) );
 
             List fileNames = resolveFileNames( pom, basedir );
-            log.debug( "Scanned for files " + fileNames.size() );
 
-            Iterator names = fileNames.iterator();
+            if (log.isDebugEnabled()) {
+                log.debug("Scanned for files " + fileNames.size());
+                Iterator names = fileNames.iterator();
 
-            while ( names.hasNext() )
-            {
-                log.debug( "- " + names.next().toString() );
+                while (names.hasNext()) {
+                    log.debug("- " + names.next().toString());
+                }
             }
 
             List filesets = resolveFileSets( packageName, fileNames, languages, filtereds, defaultEncoding );
@@ -318,10 +319,7 @@ public class FilesetArchetypeCreator
                     );
 
                 archetypeDescriptor.addModule( moduleDescriptor );
-                log.debug(
-                    "Added module " + moduleDescriptor.getName() + " in "
-                        + archetypeDescriptor.getName()
-                );
+                log.debug("Added module " + moduleDescriptor.getName() + " in " + archetypeDescriptor.getName());
             }
             restoreParentArtifactId( reverseProperties, null );
             restoreArtifactId(
@@ -422,10 +420,10 @@ public class FilesetArchetypeCreator
         {
             String subModuleId = (String) modules.next();
             String subModuleIdDirectory = subModuleId;
-                if ( subModuleId.indexOf( rootArtifactId ) >= 0 )
-                {
-                    subModuleIdDirectory = StringUtils.replace( subModuleId, rootArtifactId, "__rootArtifactId__" );
-                }
+            if ( subModuleId.indexOf( rootArtifactId ) >= 0 )
+            {
+                subModuleIdDirectory = StringUtils.replace( subModuleId, rootArtifactId, "__rootArtifactId__" );
+            }
 
             createModulePoms(
                 pomReversedProperties,
@@ -470,10 +468,10 @@ public class FilesetArchetypeCreator
         {
             String moduleId = (String) modules.next();
             String moduleIdDirectory = moduleId;
-                if ( moduleId.indexOf( rootArtifactId ) >= 0 )
-                {
-                    moduleIdDirectory = StringUtils.replace( moduleId, rootArtifactId, "__rootArtifactId__" );
-                }
+            if ( moduleId.indexOf( rootArtifactId ) >= 0 )
+            {
+                moduleIdDirectory = StringUtils.replace( moduleId, rootArtifactId, "__rootArtifactId__" );
+            }
 
             createModulePoms(
                 pomReversedProperties,
@@ -513,31 +511,26 @@ public class FilesetArchetypeCreator
                                     String groupId )
     {
         // rewrite Dependencies
-        if ( pom.getDependencies() != null && !pom.getDependencies().
-            isEmpty() )
-        {
+        if (pom.getDependencies() != null && !pom.getDependencies().
+            isEmpty()) {
             Iterator dependencies = pom.getDependencies().iterator();
-            while ( dependencies.hasNext() )
-            {
+            while (dependencies.hasNext()) {
                 Dependency dependency =
                     (Dependency) dependencies.next();
 
-                if ( dependency.getArtifactId() != null &&
-                    dependency.getArtifactId().indexOf( rootArtifactId ) >= 0 )
-                {
-                    if ( dependency.getGroupId() != null )
-                    {
-                        dependency.setGroupId( StringUtils.replace( dependency.getGroupId(),
+                if (dependency.getArtifactId() != null &&
+                    dependency.getArtifactId().indexOf(rootArtifactId) >= 0) {
+                    if (dependency.getGroupId() != null) {
+                        dependency.setGroupId(StringUtils.replace(dependency.getGroupId(),
                             groupId,
                             "${" +
-                                Constants.GROUP_ID + "}" ) );
+                                Constants.GROUP_ID + "}"));
                     }
-                    dependency.setArtifactId( StringUtils.replace( dependency.getArtifactId(),
-                        rootArtifactId, "${rootArtifactId}" ) );
-                    if ( dependency.getVersion() != null )
-                    {
-                        dependency.setVersion( "${" +
-                            Constants.VERSION + "}" );
+                    dependency.setArtifactId(StringUtils.replace(dependency.getArtifactId(),
+                        rootArtifactId, "${rootArtifactId}"));
+                    if (dependency.getVersion() != null) {
+                        dependency.setVersion("${" +
+                            Constants.VERSION + "}");
                     }
                 }
             }

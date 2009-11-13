@@ -29,7 +29,7 @@ public class ArchetypeCreationResult
         return cause;
     }
 
-    public void setCause( Exception cause )
+    public void setCause( final Exception cause )
     {
         this.cause = cause;
     }

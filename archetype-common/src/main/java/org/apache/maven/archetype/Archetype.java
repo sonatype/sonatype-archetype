@@ -16,8 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.maven.archetype;
 
+package org.apache.maven.archetype;
 
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
@@ -31,25 +31,24 @@ public interface Archetype
     String ROLE = Archetype.class.getName();
 
     /**
-     * A command to create an OldArchetype from an existing Maven project given the suppled
-     * creation request.
+     * A command to create an archetype from an existing Maven project given the supplied creation request.
      *
      * @param request
-     * @return The result of creating the archetype from the existing project. It contains any errors that might have occured.
+     * @return The result of creating the archetype from the existing project. It contains any errors that might have occurred.
      */
     ArchetypeCreationResult createArchetypeFromProject( ArchetypeCreationRequest request );
 
     /**
-     * A command to generate a Maven project from an OldArchetype given the suppled
-     * generation request.
+     * A command to generate a Maven project from an archetype given the supplied generation request.
      *
      * @param request
-     * @return The result of creating the proejct from the existing archetype. It contains any errors that might have occured.
+     * @return The result of creating the project from the existing archetype. It contains any errors that might have occurred.
      */
     ArchetypeGenerationResult generateProjectFromArchetype( ArchetypeGenerationRequest request );
 
     /**
      * Gives the catalog of archetypes internal to the plugin.
+     * 
      * @return the catalog.
      */
     ArchetypeCatalog getInternalCatalog();
@@ -64,6 +63,7 @@ public interface Archetype
      * Gives the catalog of archetypes located in the given path.
      * if path is a file, it used as is.
      * if path is a directory, archetype-catalog.xml is appended to it.
+     *
      * @param path the catalog file path or directory containing the catalog file.
      * @return the catalog.
      */
@@ -71,6 +71,7 @@ public interface Archetype
 
     /**
      * Gives the catalog of archetypes located at http://repo1.maven.org/maven2/archetype-catalog.xml.
+     *
      * @return the catalog.
      */
     ArchetypeCatalog getRemoteCatalog();
@@ -78,6 +79,7 @@ public interface Archetype
     /**
      * Gives the catalog of archetypes located at the given url.
      * if the url doesn't define a catalog, then 'archetype-catalog.xml' is appended to it for search.
+     *
      * @param url the catalog url or base url containing the catalog file.
      * @return the catalog.
      */
@@ -91,7 +93,6 @@ public interface Archetype
      * @param finalName
      * @return The File to the generated jar
      * @throws org.apache.maven.artifact.DependencyResolutionRequiredException
-     *
      * @throws java.io.IOException
      */
     File archiveArchetype(
@@ -99,6 +100,8 @@ public interface Archetype
         File outputDirectory,
         String finalName )
         throws DependencyResolutionRequiredException, IOException;
+
     void updateLocalCatalog(org.apache.maven.archetype.catalog.Archetype archetype, String path);
+
     void updateLocalCatalog(org.apache.maven.archetype.catalog.Archetype archetype);
 }

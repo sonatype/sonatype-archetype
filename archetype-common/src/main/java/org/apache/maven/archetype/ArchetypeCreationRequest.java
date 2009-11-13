@@ -36,9 +36,9 @@ public class ArchetypeCreationRequest
 
 //    private File propertyFile;
 
-    private List languages = new ArrayList();
+    private List<String> languages = new ArrayList<String>();
 
-    private List filtereds = new ArrayList();
+    private List<String> filtereds = new ArrayList<String>();
 
     private String defaultEncoding = "UTF-8";
 
@@ -60,7 +60,7 @@ public class ArchetypeCreationRequest
         return postPhase;
     }
 
-    public ArchetypeCreationRequest setPostPhase(String postPhase) {
+    public ArchetypeCreationRequest setPostPhase(final String postPhase) {
         this.postPhase = postPhase;
 
         return this;
@@ -71,7 +71,7 @@ public class ArchetypeCreationRequest
         return localRepository;
     }
 
-    public ArchetypeCreationRequest setLocalRepository( ArtifactRepository localRepository )
+    public ArchetypeCreationRequest setLocalRepository( final ArtifactRepository localRepository )
     {
         this.localRepository = localRepository;
 
@@ -83,7 +83,7 @@ public class ArchetypeCreationRequest
         return project;
     }
 
-    public ArchetypeCreationRequest setProject( MavenProject project )
+    public ArchetypeCreationRequest setProject( final MavenProject project )
     {
         this.project = project;
 
@@ -102,24 +102,24 @@ public class ArchetypeCreationRequest
 //        return this;
 //    }
 
-    public List getLanguages()
+    public List<String> getLanguages()
     {
         return languages;
     }
 
-    public ArchetypeCreationRequest setLanguages( List languages )
+    public ArchetypeCreationRequest setLanguages( final List<String> languages )
     {
         this.languages = languages;
 
         return this;
     }
 
-    public List getFiltereds()
+    public List<String> getFiltereds()
     {
         return filtereds;
     }
 
-    public ArchetypeCreationRequest setFiltereds( List filtereds )
+    public ArchetypeCreationRequest setFiltereds( final List<String> filtereds )
     {
         this.filtereds = filtereds;
 
@@ -131,7 +131,7 @@ public class ArchetypeCreationRequest
         return defaultEncoding;
     }
 
-    public ArchetypeCreationRequest setDefaultEncoding( String defaultEncoding )
+    public ArchetypeCreationRequest setDefaultEncoding( final String defaultEncoding )
     {
         this.defaultEncoding = defaultEncoding;
 
@@ -143,7 +143,7 @@ public class ArchetypeCreationRequest
         return preserveCData;
     }
 
-    public ArchetypeCreationRequest setPreserveCData( boolean preserveCData )
+    public ArchetypeCreationRequest setPreserveCData( final boolean preserveCData )
     {
         this.preserveCData = preserveCData;
 
@@ -155,7 +155,7 @@ public class ArchetypeCreationRequest
         return keepParent;
     }
 
-    public ArchetypeCreationRequest setKeepParent( boolean keepParent )
+    public ArchetypeCreationRequest setKeepParent( final boolean keepParent )
     {
         this.keepParent = keepParent;
 
@@ -167,7 +167,7 @@ public class ArchetypeCreationRequest
         return partialArchetype;
     }
 
-    public ArchetypeCreationRequest setPartialArchetype( boolean partialArchetype )
+    public ArchetypeCreationRequest setPartialArchetype( final boolean partialArchetype )
     {
         this.partialArchetype = partialArchetype;
 
@@ -179,7 +179,7 @@ public class ArchetypeCreationRequest
         return archetypeRegistryFile;
     }
 
-    public ArchetypeCreationRequest setArchetypeRegistryFile( File archetypeRegistryFile )
+    public ArchetypeCreationRequest setArchetypeRegistryFile( final File archetypeRegistryFile )
     {
         this.archetypeRegistryFile = archetypeRegistryFile;
 
@@ -191,7 +191,7 @@ public class ArchetypeCreationRequest
         return properties;
     }
 
-    public ArchetypeCreationRequest setProperties( Properties properties )
+    public ArchetypeCreationRequest setProperties( final Properties properties )
     {
         this.properties = properties;
 
@@ -203,7 +203,7 @@ public class ArchetypeCreationRequest
         return packageName;
     }
 
-    public ArchetypeCreationRequest setPackageName( String packageName )
+    public ArchetypeCreationRequest setPackageName( final String packageName )
     {
         this.packageName = packageName;
 
