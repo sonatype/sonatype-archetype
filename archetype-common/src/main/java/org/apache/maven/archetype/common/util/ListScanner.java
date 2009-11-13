@@ -424,7 +424,7 @@ public class ListScanner
      * @throws IllegalStateException if the base directory was set incorrectly (i.e. if it is
      *                               <code>null</code>, doesn't exist, or isn't a directory).
      */
-    public List scan( List files )
+    public List<String> scan( List<String> files )
         throws
         IllegalStateException
     {
@@ -448,7 +448,7 @@ public class ListScanner
             excludes = new String[0];
         }
 
-        List result = new ArrayList();
+        List<String> result = new ArrayList<String>();
 
         Iterator iterator = files.iterator();
         while ( iterator.hasNext() )

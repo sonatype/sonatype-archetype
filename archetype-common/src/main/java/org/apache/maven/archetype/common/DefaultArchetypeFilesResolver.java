@@ -43,39 +43,33 @@ public class DefaultArchetypeFilesResolver
 {
     @Requirement
     private Logger log;
-    
-    public List getFilesWithExtension( List files,
-                                       String extension )
-    {
+
+    public List<String> getFilesWithExtension(List<String> files, String extension) {
         ListScanner scanner = new ListScanner();
-        scanner.setBasedir( "" );
+        scanner.setBasedir("");
 
-        scanner.setIncludes( "**/*." + extension );
-        scanner.setExcludes( "" );
+        scanner.setIncludes("**/*." + extension);
+        scanner.setExcludes("");
 
-        return scanner.scan( files );
+        return scanner.scan(files);
     }
 
-    public List getFilteredFiles( List files,
-                                  String filtered )
-    {
+    public List<String> getFilteredFiles(List<String> files, String filtered) {
         ListScanner scanner = new ListScanner();
-        scanner.setBasedir( "" );
+        scanner.setBasedir("");
 
-        scanner.setIncludes( filtered );
-        scanner.setExcludes( "" );
+        scanner.setIncludes(filtered);
+        scanner.setExcludes("");
 
-        List result = scanner.scan( files );
-        log.debug(
-            "Scanned " + result.size() + " filtered files in " + files.size() + " files"
-        );
+        List<String> result = scanner.scan(files);
+        log.debug("Scanned " + result.size() + " filtered files in " + files.size() + " files");
 
         return result;
     }
 
-    public List filterFiles( String moduleOffset,
+    public List<String> filterFiles( String moduleOffset,
                              FileSet fileSet,
-                             List archetypeResources )
+                             List<String> archetypeResources )
     {
         ListScanner scanner = new ListScanner();
         scanner.setBasedir(
@@ -89,8 +83,8 @@ public class DefaultArchetypeFilesResolver
         return scanner.scan( archetypeResources );
     }
 
-    public List findOtherResources( int level,
-                                    List files,
+    public List<String> findOtherResources( int level,
+                                    List<String> files,
                                     String languages )
     {
         ListScanner scanner = new ListScanner();
@@ -106,7 +100,7 @@ public class DefaultArchetypeFilesResolver
         scanner.setIncludes( includes + "**" );
         scanner.setExcludes( languages );
 
-        List result = scanner.scan( files );
+        List<String> result = scanner.scan( files );
         log.debug(
             "Scanned " + result.size() + " other resources in " + files.size()
                 + " files at level " + level
@@ -115,18 +109,18 @@ public class DefaultArchetypeFilesResolver
         return result;
     }
 
-    public List findOtherResources( int level,
-                                    List files,
-                                    List sourcesFiles,
+    public List<String> findOtherResources( int level,
+                                    List<String> files,
+                                    List<String> sourcesFiles,
                                     String languages )
     {
         ListScanner scanner = new ListScanner();
 
         scanner.setBasedir( "" );
 
-        Set selectedDirectories = new HashSet();
+        Set<String> selectedDirectories = new HashSet<String>();
 
-        List includes = new ArrayList();
+        List<String> includes = new ArrayList<String>();
 
         Iterator sourcesFilesIterator = sourcesFiles.iterator();
         while ( sourcesFilesIterator.hasNext() )
@@ -144,17 +138,14 @@ public class DefaultArchetypeFilesResolver
 
         scanner.setExcludes( languages );
 
-        List result = scanner.scan( files );
-        log.debug(
-            "Scanned " + result.size() + " other resources in " + files.size()
-                + " files at level " + level
-        );
+        List<String> result = scanner.scan( files );
+        log.debug("Scanned " + result.size() + " other resources in " + files.size() + " files at level " + level);
 
         return result;
     }
 
-    public List findOtherSources( int level,
-                                  List files,
+    public List<String> findOtherSources( int level,
+                                  List<String> files,
                                   String languages )
     {
         ListScanner scanner = new ListScanner();
@@ -175,16 +166,13 @@ public class DefaultArchetypeFilesResolver
 
         scanner.setIncludes( includes );
 
-        List result = scanner.scan( files );
-        log.debug(
-            "Scanned " + result.size() + " other sources in " + files.size() + " files at level "
-                + level
-        );
+        List<String> result = scanner.scan( files );
+        log.debug("Scanned " + result.size() + " other sources in " + files.size() + " files at level " + level);
 
         return result;
     }
 
-    public List findResourcesMainFiles( List files,
+    public List<String> findResourcesMainFiles( List<String> files,
                                         String languages )
     {
         ListScanner scanner = new ListScanner();
@@ -193,7 +181,7 @@ public class DefaultArchetypeFilesResolver
         scanner.setIncludes( "**" );
         scanner.setExcludes( languages );
 
-        List result = scanner.scan( files );
+        List<String> result = scanner.scan( files );
         log.debug(
             "Scanned " + result.size() + " resources in " + files.size() + " files"
         );
@@ -201,7 +189,7 @@ public class DefaultArchetypeFilesResolver
         return result;
     }
 
-    public List findResourcesTestFiles( List files,
+    public List<String> findResourcesTestFiles( List<String> files,
                                         String languages )
     {
         ListScanner scanner = new ListScanner();
@@ -210,15 +198,13 @@ public class DefaultArchetypeFilesResolver
         scanner.setIncludes( "**" );
         scanner.setExcludes( languages );
 
-        List result = scanner.scan( files );
-        log.debug(
-            "Scanned " + result.size() + " test resources in " + files.size() + " files"
-        );
+        List<String> result = scanner.scan( files );
+        log.debug("Scanned " + result.size() + " test resources in " + files.size() + " files");
 
         return result;
     }
 
-    public List findSiteFiles( List files,
+    public List<String> findSiteFiles( List<String> files,
                                String languages )
     {
         ListScanner scanner = new ListScanner();
@@ -227,15 +213,13 @@ public class DefaultArchetypeFilesResolver
         scanner.setIncludes( "**" );
         scanner.setExcludes( languages );
 
-        List result = scanner.scan( files );
-        log.debug(
-            "Scanned " + result.size() + " site resources in " + files.size() + " files"
-        );
+        List<String> result = scanner.scan( files );
+        log.debug("Scanned " + result.size() + " site resources in " + files.size() + " files");
 
         return result;
     }
 
-    public List findSourcesMainFiles( List files,
+    public List<String> findSourcesMainFiles( List<String> files,
                                       String languages )
     {
         ListScanner scanner = new ListScanner();
@@ -243,15 +227,13 @@ public class DefaultArchetypeFilesResolver
 
         scanner.setIncludes( languages );
 
-        List result = scanner.scan( files );
-        log.debug(
-            "Scanned " + result.size() + " sources in " + files.size() + " files"
-        );
+        List<String> result = scanner.scan( files );
+        log.debug("Scanned " + result.size() + " sources in " + files.size() + " files");
 
         return result;
     }
 
-    public List findSourcesTestFiles( List files,
+    public List<String> findSourcesTestFiles( List<String> files,
                                       String languages )
     {
         ListScanner scanner = new ListScanner();
@@ -259,18 +241,16 @@ public class DefaultArchetypeFilesResolver
 
         scanner.setIncludes( languages );
 
-        List result = scanner.scan( files );
-        log.debug(
-            "Scanned " + result.size() + " test sources in " + files.size() + " files"
-        );
+        List<String> result = scanner.scan( files );
+        log.debug("Scanned " + result.size() + " test sources in " + files.size() + " files");
 
         return result;
     }
 
-    public List getPackagedFiles( List files,
+    public List<String> getPackagedFiles( List<String> files,
                                   String packageName )
     {
-        List packagedFiles = new ArrayList();
+        List<String> packagedFiles = new ArrayList<String>();
         Iterator filesIterator = files.iterator();
         while ( filesIterator.hasNext() )
         {
@@ -281,20 +261,19 @@ public class DefaultArchetypeFilesResolver
                 packagedFiles.add( file.substring( packageName.length() + 1 ) );
             }
         }
-        log.debug(
-            "Scanned " + packagedFiles.size() + " packaged files in " + files.size() + " files"
-        );
+        log.debug("Scanned " + packagedFiles.size() + " packaged files in " + files.size() + " files");
+
         return packagedFiles;
     }
 
     public String resolvePackage( File basedir,
-                                  List languages )
+                                  List<String> languages )
         throws
         IOException
     {
         log.debug( "Resolving package in " + basedir + " using languages " + languages );
 
-        List files = resolveFiles( basedir, languages );
+        List<String> files = resolveFiles( basedir, languages );
 
         return resolvePackage( files );
     }
@@ -316,10 +295,10 @@ public class DefaultArchetypeFilesResolver
 //        return result;
 //    }
 
-    public List getUnpackagedFiles( List files,
+    public List<String> getUnpackagedFiles( List<String> files,
                                     String packageName )
     {
-        List unpackagedFiles = new ArrayList();
+        List<String> unpackagedFiles = new ArrayList<String>();
         Iterator filesIterator = files.iterator();
         while ( filesIterator.hasNext() )
         {
@@ -330,18 +309,15 @@ public class DefaultArchetypeFilesResolver
                 unpackagedFiles.add( file );
             }
         }
-        log.debug(
-            "Scanned " + unpackagedFiles.size() + " unpackaged files in " + files.size()
-                + " files"
-        );
+        log.debug("Scanned " + unpackagedFiles.size() + " unpackaged files in " + files.size() + " files");
         return unpackagedFiles;
     }
 
     private String getCommonPackage( String packageName,
                                      String templatePackage )
     {
-        String common = "";
-
+        String common;
+        
         String difference = StringUtils.difference( packageName, templatePackage );
         if ( StringUtils.isNotEmpty( difference ) )
         {
@@ -373,12 +349,12 @@ public class DefaultArchetypeFilesResolver
         return common;
     }
 
-    private List resolveFiles( File basedir,
-                               List languages )
+    private List<String> resolveFiles( File basedir,
+                               List<String> languages )
         throws
         IOException
     {
-        String[] languagesArray = (String[]) languages.toArray( new String[languages.size()] );
+        String[] languagesArray = languages.toArray( new String[languages.size()] );
         String[] languagesPathesArray = new String[languagesArray.length];
         for ( int i = 0; i < languagesArray.length; i++ )
         {
@@ -389,7 +365,7 @@ public class DefaultArchetypeFilesResolver
         Iterator defaultExcludes = Arrays.asList( ListScanner.DEFAULTEXCLUDES ).iterator();
         while ( defaultExcludes.hasNext() )
         {
-            excludes += "," + (String) defaultExcludes.next() + "/**";
+            excludes += "," + defaultExcludes.next() + "/**";
         }
 
         List absoluteFiles =
@@ -401,7 +377,7 @@ public class DefaultArchetypeFilesResolver
 
         log.debug( "Found " + absoluteFiles.size() + " potential archetype files" );
 
-        List files = new ArrayList( absoluteFiles.size() );
+        List<String> files = new ArrayList<String>( absoluteFiles.size() );
 
         Iterator filesIterator = absoluteFiles.iterator();
         while ( filesIterator.hasNext() )
@@ -434,14 +410,12 @@ public class DefaultArchetypeFilesResolver
             }
         }
 
-        log.debug(
-            "Found " + files.size() + " archetype files for package resolution "
-        );
+        log.debug("Found " + files.size() + " archetype files for package resolution ");
 
         return files;
     }
 
-    private String resolvePackage( List files )
+    private String resolvePackage( List<String> files )
     {
         String packageName = null;
         Iterator minusLanguageIterator = files.iterator();

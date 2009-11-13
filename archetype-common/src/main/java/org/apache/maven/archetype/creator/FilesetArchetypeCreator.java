@@ -192,18 +192,14 @@ public class FilesetArchetypeCreator
 
                 if ( p.getBuildExtensions() != null )
                 {
-                    for ( Iterator i = p.getBuildExtensions().iterator(); i.hasNext(); )
-                    {
-                        Extension be = (Extension) i.next();
-
-                        model.getBuild().addExtension( be );
+                    for (Extension extension : p.getBuildExtensions()) {
+                        model.getBuild().addExtension( extension );
                     }
                 }
             }
             catch ( ProjectBuildingException e )
             {
-                result.setCause( new TemplateCreationException(
-                    "Error reading parent POM of project: " + pa.getGroupId() + ":" + pa.getArtifactId() + ":" + pa.getVersion() ) );
+                result.setCause( new TemplateCreationException("Error reading parent POM of project: " + pa.getGroupId() + ":" + pa.getArtifactId() + ":" + pa.getVersion() ) );
 
                 return;
             }
@@ -291,10 +287,7 @@ public class FilesetArchetypeCreator
                 configurationProperties.getProperty( Constants.ARTIFACT_ID )
             );
 
-            Iterator modules = pom.getModules().iterator();
-            while ( modules.hasNext() )
-            {
-                String moduleId = (String) modules.next();
+            for (String moduleId : pom.getModules()) {
                 String rootArtifactId = configurationProperties.getProperty( Constants.ARTIFACT_ID );
                 String moduleIdDirectory = moduleId;
                 if ( moduleId.indexOf( rootArtifactId ) >= 0 )
@@ -387,10 +380,7 @@ public class FilesetArchetypeCreator
             requiredProperty.setDefaultValue( requiredProperties.getProperty( propertyKey ) );
             archetypeDescriptor.addRequiredProperty( requiredProperty );
 
-            log.debug(
-                "Adding requiredProperty " + propertyKey + "="
-                    + requiredProperties.getProperty( propertyKey ) + " to archetype's descriptor"
-            );
+            log.debug("Adding requiredProperty " + propertyKey + "=" + requiredProperties.getProperty( propertyKey ) + " to archetype's descriptor");
         }
     }
 
@@ -407,18 +397,14 @@ public class FilesetArchetypeCreator
         IOException,
         XmlPullParserException
     {
-        Model pom =
-            pomManager.readPom( FileUtils.resolveFile( basedir, Constants.ARCHETYPE_POM ) );
+        Model pom = pomManager.readPom( FileUtils.resolveFile( basedir, Constants.ARCHETYPE_POM ) );
 
         String parentArtifactId = pomReversedProperties.getProperty( Constants.PARENT_ARTIFACT_ID );
         String artifactId = pom.getArtifactId();
         setParentArtifactId( pomReversedProperties, pomReversedProperties.getProperty( Constants.ARTIFACT_ID ) );
         setArtifactId( pomReversedProperties, pom.getArtifactId() );
 
-        Iterator modules = pom.getModules().iterator();
-        while ( modules.hasNext() )
-        {
-            String subModuleId = (String) modules.next();
+        for (String subModuleId : pom.getModules()) {
             String subModuleIdDirectory = subModuleId;
             if ( subModuleId.indexOf( rootArtifactId ) >= 0 )
             {
@@ -463,10 +449,7 @@ public class FilesetArchetypeCreator
     {
         setArtifactId( pomReversedProperties, pom.getArtifactId() );
 
-        Iterator modules = pom.getModules().iterator();
-        while ( modules.hasNext() )
-        {
-            String moduleId = (String) modules.next();
+        for (String moduleId: pom.getModules()) {
             String moduleIdDirectory = moduleId;
             if ( moduleId.indexOf( rootArtifactId ) >= 0 )
             {
@@ -511,26 +494,16 @@ public class FilesetArchetypeCreator
                                     String groupId )
     {
         // rewrite Dependencies
-        if (pom.getDependencies() != null && !pom.getDependencies().
-            isEmpty()) {
-            Iterator dependencies = pom.getDependencies().iterator();
-            while (dependencies.hasNext()) {
-                Dependency dependency =
-                    (Dependency) dependencies.next();
-
+        if (pom.getDependencies() != null && !pom.getDependencies().isEmpty()) {
+            for (Dependency dependency : pom.getDependencies()) {
                 if (dependency.getArtifactId() != null &&
                     dependency.getArtifactId().indexOf(rootArtifactId) >= 0) {
                     if (dependency.getGroupId() != null) {
-                        dependency.setGroupId(StringUtils.replace(dependency.getGroupId(),
-                            groupId,
-                            "${" +
-                                Constants.GROUP_ID + "}"));
+                        dependency.setGroupId(StringUtils.replace(dependency.getGroupId(), groupId, "${" + Constants.GROUP_ID + "}"));
                     }
-                    dependency.setArtifactId(StringUtils.replace(dependency.getArtifactId(),
-                        rootArtifactId, "${rootArtifactId}"));
+                    dependency.setArtifactId(StringUtils.replace(dependency.getArtifactId(), rootArtifactId, "${rootArtifactId}"));
                     if (dependency.getVersion() != null) {
-                        dependency.setVersion("${" +
-                            Constants.VERSION + "}");
+                        dependency.setVersion("${" + Constants.VERSION + "}");
                     }
                 }
             }
@@ -541,59 +514,37 @@ public class FilesetArchetypeCreator
             pom.getDependencyManagement().getDependencies() != null &&
             !pom.getDependencyManagement().getDependencies().isEmpty() )
         {
-            Iterator dependencies =
-                pom.getDependencyManagement().getDependencies().iterator();
-            while ( dependencies.hasNext() )
-            {
-                Dependency dependency =
-                    (Dependency) dependencies.next();
-
+            for (Dependency dependency : pom.getDependencyManagement().getDependencies()) {
                 if ( dependency.getArtifactId() != null &&
                     dependency.getArtifactId().indexOf( rootArtifactId ) >= 0 )
                 {
                     if ( dependency.getGroupId() != null )
                     {
-                        dependency.setGroupId( StringUtils.replace( dependency.getGroupId(),
-                            groupId,
-                            "${" +
-                                Constants.GROUP_ID + "}" ) );
+                        dependency.setGroupId( StringUtils.replace( dependency.getGroupId(), groupId, "${" + Constants.GROUP_ID + "}" ) );
                     }
-                    dependency.setArtifactId( StringUtils.replace( dependency.getArtifactId(),
-                        rootArtifactId, "${rootArtifactId}" ) );
+                    dependency.setArtifactId( StringUtils.replace( dependency.getArtifactId(), rootArtifactId, "${rootArtifactId}" ) );
                     if ( dependency.getVersion() != null )
                     {
-                        dependency.setVersion( "${" +
-                            Constants.VERSION + "}" );
+                        dependency.setVersion( "${" + Constants.VERSION + "}" );
                     }
                 }
             }
         }
 
         // rewrite Plugins
-        if ( pom.getBuild() != null && pom.getBuild().getPlugins() !=
-            null && !pom.getBuild().getPlugins().isEmpty() )
+        if ( pom.getBuild() != null && pom.getBuild().getPlugins() != null && !pom.getBuild().getPlugins().isEmpty() )
         {
-            Iterator plugins = pom.getBuild().getPlugins().iterator();
-            while ( plugins.hasNext() )
-            {
-                Plugin plugin = (Plugin) plugins.next();
-
-                if ( plugin.getArtifactId() != null &&
-                    plugin.getArtifactId().indexOf( rootArtifactId ) >= 0 )
+            for (Plugin plugin : pom.getBuild().getPlugins()) {
+                if ( plugin.getArtifactId() != null && plugin.getArtifactId().indexOf( rootArtifactId ) >= 0 )
                 {
                     if ( plugin.getGroupId() != null )
                     {
-                        plugin.setGroupId( StringUtils.replace( plugin.getGroupId(),
-                            groupId,
-                            "${" +
-                                Constants.GROUP_ID + "}" ) );
+                        plugin.setGroupId( StringUtils.replace( plugin.getGroupId(), groupId, "${" + Constants.GROUP_ID + "}" ) );
                     }
-                    plugin.setArtifactId( StringUtils.replace( plugin.getArtifactId(),
-                        rootArtifactId, "${rootArtifactId}" ) );
+                    plugin.setArtifactId( StringUtils.replace( plugin.getArtifactId(), rootArtifactId, "${rootArtifactId}" ) );
                     if ( plugin.getVersion() != null )
                     {
-                        plugin.setVersion( "${" +
-                            Constants.VERSION + "}" );
+                        plugin.setVersion( "${" + Constants.VERSION + "}" );
                     }
                 }
             }
@@ -603,32 +554,20 @@ public class FilesetArchetypeCreator
         if ( pom.getBuild() != null &&
             pom.getBuild().getPluginManagement() != null &&
             pom.getBuild().getPluginManagement().getPlugins() != null &&
-            !pom.getBuild().getPluginManagement().getPlugins().
-                isEmpty() )
+            !pom.getBuild().getPluginManagement().getPlugins().isEmpty() )
         {
-            Iterator plugins =
-                pom.getBuild().getPluginManagement().getPlugins().
-                    iterator();
-            while ( plugins.hasNext() )
-            {
-                Plugin plugin = (Plugin) plugins.next();
-
+            for (Plugin plugin : pom.getBuild().getPluginManagement().getPlugins()) {
                 if ( plugin.getArtifactId() != null &&
                     plugin.getArtifactId().indexOf( rootArtifactId ) >= 0 )
                 {
                     if ( plugin.getGroupId() != null )
                     {
-                        plugin.setGroupId( StringUtils.replace( plugin.getGroupId(),
-                            groupId,
-                            "${" +
-                                Constants.GROUP_ID + "}" ) );
+                        plugin.setGroupId( StringUtils.replace( plugin.getGroupId(), groupId, "${" + Constants.GROUP_ID + "}" ) );
                     }
-                    plugin.setArtifactId( StringUtils.replace( plugin.getArtifactId(),
-                        rootArtifactId, "${rootArtifactId}" ) );
+                    plugin.setArtifactId( StringUtils.replace( plugin.getArtifactId(), rootArtifactId, "${rootArtifactId}" ) );
                     if ( plugin.getVersion() != null )
                     {
-                        plugin.setVersion( "${" +
-                            Constants.VERSION + "}" );
+                        plugin.setVersion( "${" + Constants.VERSION + "}" );
                     }
                 }
             }
@@ -636,39 +575,22 @@ public class FilesetArchetypeCreator
         // rewrite Profiles
         if ( pom.getProfiles() != null )
         {
-            Iterator profiles = pom.getProfiles().iterator();
-            while ( profiles.hasNext() )
-            {
-                Profile profile = (Profile) profiles.next();
-
+            for (Profile profile : pom.getProfiles()) {
                 // rewrite Dependencies
                 if ( profile.getDependencies() != null &&
                     !profile.getDependencies().isEmpty() )
                 {
-                    Iterator dependencies = profile.getDependencies().
-                        iterator();
-                    while ( dependencies.hasNext() )
-                    {
-                        Dependency dependency =
-                            (Dependency) dependencies.next();
-
-                        if ( dependency.getArtifactId() != null &&
-                            dependency.getArtifactId().
-                                indexOf( rootArtifactId ) >= 0 )
+                    for (Dependency dependency : profile.getDependencies()) {
+                        if ( dependency.getArtifactId() != null && dependency.getArtifactId().indexOf( rootArtifactId ) >= 0 )
                         {
                             if ( dependency.getGroupId() != null )
                             {
-                                dependency.setGroupId( StringUtils.replace( dependency.getGroupId(),
-                                    groupId,
-                                    "${" +
-                                        Constants.GROUP_ID + "}" ) );
+                                dependency.setGroupId( StringUtils.replace( dependency.getGroupId(), groupId, "${" + Constants.GROUP_ID + "}" ) );
                             }
-                            dependency.setArtifactId( StringUtils.replace( dependency.getArtifactId(),
-                                rootArtifactId, "${rootArtifactId}" ) );
+                            dependency.setArtifactId( StringUtils.replace( dependency.getArtifactId(), rootArtifactId, "${rootArtifactId}" ) );
                             if ( dependency.getVersion() != null )
                             {
-                                dependency.setVersion( "${" +
-                                    Constants.VERSION + "}" );
+                                dependency.setVersion( "${" + Constants.VERSION + "}" );
                             }
                         }
                     }
@@ -676,36 +598,21 @@ public class FilesetArchetypeCreator
 
                 // rewrite DependencyManagement
                 if ( profile.getDependencyManagement() != null &&
-                    profile.getDependencyManagement().getDependencies() !=
-                        null &&
-                    !profile.getDependencyManagement().getDependencies().
-                        isEmpty() )
+                     profile.getDependencyManagement().getDependencies() != null &&
+                    !profile.getDependencyManagement().getDependencies().isEmpty() )
                 {
-                    Iterator dependencies =
-                        profile.getDependencyManagement().getDependencies().
-                            iterator();
-                    while ( dependencies.hasNext() )
-                    {
-                        Dependency dependency =
-                            (Dependency) dependencies.next();
-
+                    for (Dependency dependency : profile.getDependencyManagement().getDependencies()) {
                         if ( dependency.getArtifactId() != null &&
-                            dependency.getArtifactId().
-                                indexOf( rootArtifactId ) >= 0 )
+                            dependency.getArtifactId().indexOf( rootArtifactId ) >= 0 )
                         {
                             if ( dependency.getGroupId() != null )
                             {
-                                dependency.setGroupId( StringUtils.replace( dependency.getGroupId(),
-                                    groupId,
-                                    "${" +
-                                        Constants.GROUP_ID + "}" ) );
+                                dependency.setGroupId( StringUtils.replace( dependency.getGroupId(), groupId, "${" + Constants.GROUP_ID + "}" ) );
                             }
-                            dependency.setArtifactId( StringUtils.replace( dependency.getArtifactId(),
-                                rootArtifactId, "${rootArtifactId}" ) );
+                            dependency.setArtifactId( StringUtils.replace( dependency.getArtifactId(), rootArtifactId, "${rootArtifactId}" ) );
                             if ( dependency.getVersion() != null )
                             {
-                                dependency.setVersion( "${" +
-                                    Constants.VERSION + "}" );
+                                dependency.setVersion( "${" + Constants.VERSION + "}" );
                             }
                         }
                     }
@@ -713,33 +620,20 @@ public class FilesetArchetypeCreator
 
                 // rewrite Plugins
                 if ( profile.getBuild() != null &&
-                    profile.getBuild().getPlugins() != null &&
+                     profile.getBuild().getPlugins() != null &&
                     !profile.getBuild().getPlugins().isEmpty() )
                 {
-                    Iterator plugins = profile.getBuild().getPlugins().
-                        iterator();
-                    while ( plugins.hasNext() )
-                    {
-                        Plugin plugin =
-                            (Plugin) plugins.next();
-
-                        if ( plugin.getArtifactId() != null &&
-                            plugin.getArtifactId().indexOf( rootArtifactId ) >=
-                                0 )
+                    for (Plugin plugin : profile.getBuild().getPlugins()) {
+                        if ( plugin.getArtifactId() != null && plugin.getArtifactId().indexOf( rootArtifactId ) >= 0 )
                         {
                             if ( plugin.getGroupId() != null )
                             {
-                                plugin.setGroupId( StringUtils.replace( plugin.getGroupId(),
-                                    groupId,
-                                    "${" +
-                                        Constants.GROUP_ID + "}" ) );
+                                plugin.setGroupId( StringUtils.replace( plugin.getGroupId(), groupId, "${" + Constants.GROUP_ID + "}" ) );
                             }
-                            plugin.setArtifactId( StringUtils.replace( plugin.getArtifactId(),
-                                rootArtifactId, "${rootArtifactId}" ) );
+                            plugin.setArtifactId( StringUtils.replace( plugin.getArtifactId(), rootArtifactId, "${rootArtifactId}" ) );
                             if ( plugin.getVersion() != null )
                             {
-                                plugin.setVersion( "${" +
-                                    Constants.VERSION + "}" );
+                                plugin.setVersion( "${" + Constants.VERSION + "}" );
                             }
                         }
                     }
@@ -747,37 +641,22 @@ public class FilesetArchetypeCreator
 
                 // rewrite PluginManagement
                 if ( profile.getBuild() != null &&
-                    profile.getBuild().getPluginManagement() != null &&
-                    profile.getBuild().getPluginManagement().getPlugins() !=
-                        null &&
-                    !profile.getBuild().getPluginManagement().getPlugins().
-                        isEmpty() )
+                     profile.getBuild().getPluginManagement() != null &&
+                     profile.getBuild().getPluginManagement().getPlugins() != null &&
+                    !profile.getBuild().getPluginManagement().getPlugins().isEmpty() )
                 {
-                    Iterator plugins =
-                        profile.getBuild().getPluginManagement().
-                            getPlugins().iterator();
-                    while ( plugins.hasNext() )
-                    {
-                        Plugin plugin =
-                            (Plugin) plugins.next();
-
+                    for (Plugin plugin : profile.getBuild().getPluginManagement().getPlugins()) {
                         if ( plugin.getArtifactId() != null &&
-                            plugin.getArtifactId().indexOf( rootArtifactId ) >=
-                                0 )
+                            plugin.getArtifactId().indexOf( rootArtifactId ) >= 0 )
                         {
                             if ( plugin.getGroupId() != null )
                             {
-                                plugin.setGroupId( StringUtils.replace( plugin.getGroupId(),
-                                    groupId,
-                                    "${" +
-                                        Constants.GROUP_ID + "}" ) );
+                                plugin.setGroupId( StringUtils.replace( plugin.getGroupId(), groupId, "${" + Constants.GROUP_ID + "}" ) );
                             }
-                            plugin.setArtifactId( StringUtils.replace( plugin.getArtifactId(),
-                                rootArtifactId, "${rootArtifactId}" ) );
+                            plugin.setArtifactId( StringUtils.replace( plugin.getArtifactId(), rootArtifactId, "${rootArtifactId}" ) );
                             if ( plugin.getVersion() != null )
                             {
-                                plugin.setVersion( "${" +
-                                    Constants.VERSION + "}" );
+                                plugin.setVersion( "${" + Constants.VERSION + "}" );
                             }
                         }
                     }
@@ -819,13 +698,11 @@ public class FilesetArchetypeCreator
 
         String excludes = "pom.xml,archetype.properties*,**/target/**";
 
-        Iterator defaultExcludes = Arrays.asList( ListScanner.DEFAULTEXCLUDES ).iterator();
-        while ( defaultExcludes.hasNext() )
-        {
-            excludes += "," + (String) defaultExcludes.next() + "/**";
+        for (String exclude : ListScanner.DEFAULTEXCLUDES) {
+            excludes += "," + exclude + "/**";
         }
 
-        List fileNames = FileUtils.getFileNames( basedir, "**", excludes, false );
+        List<String> fileNames = FileUtils.getFileNames( basedir, "**", excludes, false );
 
         log.debug( "Resolved " + fileNames.size() + " files" );
 
@@ -873,9 +750,7 @@ public class FilesetArchetypeCreator
         IOException
     {
         String packageAsDirectory = StringUtils.replace( packageName, ".", File.separator );
-        log.debug(
-            "Package as Directory: Package:" + packageName + "->" + packageAsDirectory
-        );
+        log.debug("Package as Directory: Package:" + packageName + "->" + packageAsDirectory);
 
         Iterator iterator = fileSetResources.iterator();
 
@@ -905,10 +780,7 @@ public class FilesetArchetypeCreator
         throws
         IOException
     {
-        FileUtils.copyFileToDirectory(
-            new File( basedir, Constants.ARCHETYPE_POM ),
-            replicaFilesDirectory
-        );
+        FileUtils.copyFileToDirectory( new File( basedir, Constants.ARCHETYPE_POM ), replicaFilesDirectory);
     }
 
     private void createArchetypeFiles(
@@ -934,15 +806,8 @@ public class FilesetArchetypeCreator
 
             DirectoryScanner scanner = new DirectoryScanner();
             scanner.setBasedir( basedir );
-            scanner.setIncludes(
-                (String[]) concatenateToList( fileSet.getIncludes(), fileSet.getDirectory() )
-                    .toArray( new String[fileSet.getIncludes().size()] )
-            );
-            scanner.setExcludes(
-                (String[]) fileSet.getExcludes().toArray(
-                    new String[fileSet.getExcludes().size()]
-                )
-            );
+            scanner.setIncludes((String[]) concatenateToList( fileSet.getIncludes(), fileSet.getDirectory() ).toArray( new String[fileSet.getIncludes().size()] ));
+            scanner.setExcludes((String[]) fileSet.getExcludes().toArray(new String[fileSet.getExcludes().size()]));
             scanner.addDefaultExcludes();
             log.debug( "Using fileset " + fileSet );
             scanner.scan();
@@ -1269,14 +1134,12 @@ public class FilesetArchetypeCreator
         throws
         IOException
     {
-        File outputFile =
-            FileUtils.resolveFile( archetypeFilesDirectory, Constants.ARCHETYPE_POM );
+        File outputFile = FileUtils.resolveFile( archetypeFilesDirectory, Constants.ARCHETYPE_POM );
 
         if ( preserveCData )
         {
             log.debug( "Preserving CDATA parts of pom" );
-            File inputFile =
-                FileUtils.resolveFile( archetypeFilesDirectory, Constants.ARCHETYPE_POM + ".tmp" );
+            File inputFile = FileUtils.resolveFile( archetypeFilesDirectory, Constants.ARCHETYPE_POM + ".tmp" );
 
             FileUtils.copyFile( initialPomFile, inputFile );
             String initialcontent = FileUtils.fileRead( inputFile );
@@ -1394,14 +1257,11 @@ public class FilesetArchetypeCreator
         }
     }
 
-    private Set getExtensions( List files )
+    private Set<String> getExtensions( List<String> files )
     {
-        Set extensions = new HashSet();
-        Iterator filesIterator = files.iterator();
-        while ( filesIterator.hasNext() )
-        {
-            String file = (String) filesIterator.next();
+        Set<String> extensions = new HashSet<String>();
 
+        for (String file : files) {
             extensions.add( FileUtils.extension( file ) );
         }
 
@@ -2083,20 +1943,14 @@ public class FilesetArchetypeCreator
     private String getReversedContent( String content,
                                        Properties properties )
     {
-        String result = StringUtils.replace( 
-                StringUtils.replace( content, "$", "${symbol_dollar}" ), 
-                "\\", "${symbol_escape}" );
+        String result = StringUtils.replace(StringUtils.replace( content, "$", "${symbol_dollar}" ), "\\", "${symbol_escape}" );
         Iterator propertyIterator = properties.keySet().iterator();
         while ( propertyIterator.hasNext() )
         {
             String propertyKey = (String) propertyIterator.next();
-            result =
-                StringUtils.replace(
-                    result,
-                    properties.getProperty( propertyKey ),
-                    "${" + propertyKey + "}"
-                );
+            result = StringUtils.replace(result, properties.getProperty( propertyKey ), "${" + propertyKey + "}");
         }
+
         //TODO: Replace velocity to a better engine... 
         return "#set( $symbol_pound = '#' )\n" + "#set( $symbol_dollar = '$' )\n" + 
                "#set( $symbol_escape = '\\' )\n" + 
@@ -2105,8 +1959,7 @@ public class FilesetArchetypeCreator
 
     private String getTemplateOutputDirectory()
     {
-        return
-            Constants.SRC + File.separator + Constants.MAIN + File.separator + Constants.RESOURCES;
+        return Constants.SRC + File.separator + Constants.MAIN + File.separator + Constants.RESOURCES;
     }
 
     private FileSet getUnpackagedFileSet(

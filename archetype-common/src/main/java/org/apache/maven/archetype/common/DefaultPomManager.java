@@ -534,20 +534,13 @@ public class DefaultPomManager
                 model.setReporting( new Reporting() );
             }
 
-            Map reportPluginsByIds = model.getReporting().getReportPluginsAsMap();
-            Map generatedReportPluginsByIds =
-                generatedModel.getReporting().getReportPluginsAsMap();
+            Map<String,ReportPlugin> reportPluginsByIds = model.getReporting().getReportPluginsAsMap();
+            Map<String,ReportPlugin> generatedReportPluginsByIds = generatedModel.getReporting().getReportPluginsAsMap();
 
-            Iterator generatedReportPluginsIds = generatedReportPluginsByIds.keySet().iterator();
-            while ( generatedReportPluginsIds.hasNext() )
-            {
-                String generatedReportPluginsId = (String) generatedReportPluginsIds.next();
-
+            for (String generatedReportPluginsId : generatedReportPluginsByIds.keySet()) {
                 if ( !reportPluginsByIds.containsKey( generatedReportPluginsId ) )
                 {
-                    model.getReporting().addPlugin(
-                        (ReportPlugin) generatedReportPluginsByIds.get( generatedReportPluginsId )
-                    );
+                    model.getReporting().addPlugin(generatedReportPluginsByIds.get( generatedReportPluginsId ));
                 }
                 else
                 {
