@@ -128,19 +128,19 @@ public class CatalogArchetypeDataSource
             catalog = new ArchetypeCatalog();
         }
 
-        Iterator archetypes = catalog.getArchetypes().iterator();
         boolean found = false;
         Archetype newArchetype = archetype;
-        while ( !found && archetypes.hasNext() )
-        {
-            Archetype a = (Archetype) archetypes.next();
+
+        for (Archetype a : catalog.getArchetypes()) {
             if ( a.getGroupId().equals( archetype.getGroupId() ) && a.getArtifactId().
                 equals( archetype.getArtifactId() ) )
             {
                 newArchetype = a;
                 found = true;
+                break;
             }
         }
+        
         if ( !found )
         {
             catalog.addArchetype( newArchetype );
@@ -175,15 +175,12 @@ public class CatalogArchetypeDataSource
         }
     }
 
-    protected List createArchetypeMap( ArchetypeCatalog archetypeCatalog )
+    protected List<Archetype> createArchetypeMap( ArchetypeCatalog archetypeCatalog )
         throws ArchetypeDataSourceException
     {
-        List archetypes = new ArrayList();
+        List<Archetype> archetypes = new ArrayList<Archetype>();
 
-        for ( Iterator i = archetypeCatalog.getArchetypes().iterator(); i.hasNext(); )
-        {
-            Archetype archetype = (Archetype) i.next();
-
+        for (Archetype archetype : archetypeCatalog.getArchetypes()) {
             archetypes.add( archetype );
         }
 
@@ -235,8 +232,7 @@ public class CatalogArchetypeDataSource
             }
             catch ( FileNotFoundException e )
             {
-                throw new ArchetypeDataSourceException( "The specific archetype catalog does not exist.",
-                    e );
+                throw new ArchetypeDataSourceException( "The specific archetype catalog does not exist.", e );
             }
         }
         else

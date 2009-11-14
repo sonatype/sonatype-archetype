@@ -23,6 +23,10 @@ package org.apache.maven.archetype.source;
 public class ArchetypeDataSourceException
     extends Exception
 {
+    ///CLOVER:OFF
+
+    private static final long serialVersionUID = 1;
+    
     public ArchetypeDataSourceException( String s )
     {
         super( s );

@@ -4,6 +4,10 @@ package org.apache.maven.archetype.source;
 public class ArchetypeDataSinkException
     extends Exception
 {
+    ///CLOVER:OFF
+
+    private static final long serialVersionUID = 1;
+    
     public ArchetypeDataSinkException( String s )
     {
         super( s );

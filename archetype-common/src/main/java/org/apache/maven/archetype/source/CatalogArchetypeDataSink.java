@@ -7,7 +7,6 @@ import org.codehaus.plexus.util.IOUtil;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -17,16 +16,13 @@ public class CatalogArchetypeDataSink
 {
     private ArchetypeCatalogXpp3Writer catalogWriter = new ArchetypeCatalogXpp3Writer();
 
-    public void putArchetypes( List archetypes,
+    public void putArchetypes( List<Archetype> archetypes,
                                Writer writer )
         throws ArchetypeDataSinkException
     {
         ArchetypeCatalog catalog = new ArchetypeCatalog();
 
-        for ( Iterator i = archetypes.iterator(); i.hasNext(); )
-        {
-            Archetype archetype = (Archetype) i.next();
-
+        for (Archetype archetype : archetypes) {
             catalog.addArchetype( archetype );
         }
 
@@ -49,7 +45,7 @@ public class CatalogArchetypeDataSink
                                Writer writer )
         throws ArchetypeDataSourceException, ArchetypeDataSinkException
     {
-        List archetypes = source.getArchetypeCatalog( properties ).getArchetypes();
+        List<Archetype> archetypes = source.getArchetypeCatalog( properties ).getArchetypes();
 
         putArchetypes( archetypes, writer );
     }
