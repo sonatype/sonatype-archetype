@@ -6,6 +6,10 @@ package org.apache.maven.archetype.downloader;
 public class DownloadNotFoundException
     extends Exception
 {
+    ///CLOVER:OFF
+
+    private static final long serialVersionUID = 1;
+
     public DownloadNotFoundException( String string )
     {
         super( string );

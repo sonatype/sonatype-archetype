@@ -22,6 +22,10 @@ package org.apache.maven.archetype.exception;
 public class ArchetypeGenerationConfigurationFailure
     extends Exception
 {
+    ///CLOVER:OFF
+
+    private static final long serialVersionUID = 1;
+
     public ArchetypeGenerationConfigurationFailure()
     {
     }

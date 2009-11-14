@@ -24,6 +24,10 @@ import java.util.List;
 public class ArchetypeNotConfigured
     extends Exception
 {
+    ///CLOVER:OFF
+
+    private static final long serialVersionUID = 1;
+    
     private List missingProperties;
 
     public List getMissingProperties() {
