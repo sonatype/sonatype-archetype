@@ -23,6 +23,7 @@ import org.apache.maven.archetype.catalog.Archetype;
 import org.apache.maven.archetype.common.ArchetypeDefinition;
 import org.codehaus.plexus.components.interactivity.PrompterException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +33,7 @@ public interface ArchetypeSelectionQueryer
 {
     String ROLE = ArchetypeSelectionQueryer.class.getName();
 
-    public Archetype selectArchetype( Map map )
+    public Archetype selectArchetype( Map<String,List<Archetype>> catalog )
         throws PrompterException;
 
     boolean confirmSelection( ArchetypeDefinition archetypeDefinition )
@@ -58,11 +59,11 @@ public interface ArchetypeSelectionQueryer
     /**
      * Select an archetype from the given map.
      *
-     * @param archetypes the archetypes to choose from
+     * @param catalog the archetypes to choose from
      * @param defaultDefinition the default archetype, if present in the map
      * @return the selected archetype
      * @throws org.codehaus.plexus.components.interactivity.PrompterException if there is a problem in making a selection
      */
-    Archetype selectArchetype( Map archetypes, ArchetypeDefinition defaultDefinition )
+    Archetype selectArchetype( Map<String, List<Archetype>> catalog, ArchetypeDefinition defaultDefinition )
         throws PrompterException;
 }

@@ -40,7 +40,7 @@ public interface ArchetypeCreationConfigurator
         Boolean interactiveMode,
         Properties commandLineProperties,
         File propertyFile,
-        List languages
+        List<String> languages
     )
         throws
         FileNotFoundException,

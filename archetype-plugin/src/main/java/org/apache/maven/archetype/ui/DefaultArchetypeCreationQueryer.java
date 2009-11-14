@@ -99,8 +99,7 @@ public class DefaultArchetypeCreationQueryer
     {
         String query = "Confirm archetype configuration:\n";
         query += Constants.ARCHETYPE_GROUP_ID + "=" + archetypeConfiguration.getGroupId() + "\n";
-        query +=
-            Constants.ARCHETYPE_ARTIFACT_ID + "=" + archetypeConfiguration.getArtifactId() + "\n";
+        query += Constants.ARCHETYPE_ARTIFACT_ID + "=" + archetypeConfiguration.getArtifactId() + "\n";
         query += Constants.ARCHETYPE_VERSION + "=" + archetypeConfiguration.getVersion() + "\n";
 
         Iterator propertiesIter = archetypeConfiguration.getProperties().keySet().iterator();

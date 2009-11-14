@@ -67,7 +67,7 @@ public class DefaultArchetypeCreationConfigurator
         Boolean interactiveMode,
         Properties commandLineProperties,
         File propertyFile,
-        List languages
+        List<String> languages
     )
         throws
         IOException,
@@ -423,7 +423,7 @@ public class DefaultArchetypeCreationConfigurator
     }
 
     private Properties removeDottedProperties(Properties properties) {
-        List toRemove=new ArrayList(0);
+        List<String> toRemove=new ArrayList<String>(0);
         Iterator keys = properties.keySet().iterator();
         while (keys.hasNext())
         {
