@@ -17,7 +17,7 @@ public interface Downloader
                           String version,
                           ArtifactRepository archetypeRepository,
                           ArtifactRepository localRepository,
-                          List remoteRepositories )
+                          List<ArtifactRepository> remoteRepositories )
         throws DownloadException, DownloadNotFoundException;
 
     public File downloadOld( String groupId,
@@ -25,6 +25,6 @@ public interface Downloader
                           String version,
                           ArtifactRepository archetypeRepository,
                           ArtifactRepository localRepository,
-                          List remoteRepositories )
+                          List<ArtifactRepository> remoteRepositories )
         throws DownloadException, DownloadNotFoundException;
 }

@@ -31,18 +31,17 @@ public class DefaultDownloader
                           String version,
                           ArtifactRepository archetypeRepository,
                           ArtifactRepository localRepository,
-                         List remoteRepositories )
+                          List<ArtifactRepository> remoteRepositories )
         throws DownloadException, DownloadNotFoundException
    {
         Artifact artifact = artifactFactory.createArtifact( groupId, artifactId, version, Artifact.SCOPE_RUNTIME, "jar" );
 
-        List repositories = new ArrayList(remoteRepositories);
+        List<ArtifactRepository> repositories = new ArrayList<ArtifactRepository>(remoteRepositories);
         if ( repositories.isEmpty() && archetypeRepository != null )
         {
             repositories.add(archetypeRepository);
         }
-        else
-        if ( repositories.isEmpty() && localRepository != null )
+        else if ( repositories.isEmpty() && localRepository != null )
         {
             repositories.add(localRepository);
             
@@ -68,7 +67,7 @@ public class DefaultDownloader
                           String version,
                           ArtifactRepository archetypeRepository,
                           ArtifactRepository localRepository,
-                         List remoteRepositories )
+                          List<ArtifactRepository> remoteRepositories )
         throws DownloadException, DownloadNotFoundException
    {
         Artifact artifact = artifactFactory.createArtifact( groupId, artifactId, version, Artifact.SCOPE_RUNTIME, "jar" );
