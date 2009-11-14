@@ -26,7 +26,7 @@ under the License.
   <parent>
     <artifactId>maven-archetype</artifactId>
     <groupId>org.sonatype.maven.archetype</groupId>
-    <version>2.0-alpha-5-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>archetype-testing</artifactId>
