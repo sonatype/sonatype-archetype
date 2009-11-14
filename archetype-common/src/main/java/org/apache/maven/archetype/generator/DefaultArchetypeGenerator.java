@@ -73,24 +73,26 @@ public class DefaultArchetypeGenerator
         String basedir
     )
         throws
-        IOException,
-        ArchetypeNotDefined,
-        UnknownArchetype,
-        ArchetypeNotConfigured,
-        ProjectDirectoryExists,
-        PomFileExists,
-        OutputFileExists,
-        XmlPullParserException,
-        DocumentException,
-        InvalidPackaging,
-        ArchetypeGenerationFailure
+            IOException,
+            ArchetypeNotDefined,
+            UnknownArchetype,
+            ArchetypeNotConfigured,
+            ProjectDirectoryExists,
+            PomFileExists,
+            OutputFileExists,
+            XmlPullParserException,
+            DocumentException,
+            InvalidPackaging,
+            ArchetypeGenerationFailure
     {
+        assert request != null;
+
         if ( !isArchetypeDefined( request ) )
         {
             throw new ArchetypeNotDefined( "The archetype is not defined" );
         }
 
-        List repos = new ArrayList( /*repositories*/ );
+        List<ArtifactRepository> repos = new ArrayList<ArtifactRepository>( /*repositories*/ );
 
         ArtifactRepository remoteRepo = null;
         if ( request != null  && request.getArchetypeRepository() != null )
@@ -105,9 +107,10 @@ public class DefaultArchetypeGenerator
         if ( !archetypeArtifactManager.exists(
             request.getArchetypeGroupId(),
             request.getArchetypeArtifactId(),
-            request.getArchetypeVersion(),remoteRepo,
+            request.getArchetypeVersion(),
+            remoteRepo,
             localRepository,
-            repos ) )
+            repos ))
         {
             throw new UnknownArchetype(
                 "The desired archetype does not exist (" + request.getArchetypeGroupId() + ":"
@@ -121,9 +124,7 @@ public class DefaultArchetypeGenerator
             request.getArchetypeArtifactId(),
             request.getArchetypeVersion(),remoteRepo,
             localRepository,
-            repos
-        )
-            )
+            repos))
         {
             processFileSetArchetype(
                 request,remoteRepo,
@@ -161,9 +162,10 @@ public class DefaultArchetypeGenerator
 
     private boolean isArchetypeDefined( ArchetypeGenerationRequest request )
     {
+        assert request != null;
         return org.codehaus.plexus.util.StringUtils.isNotEmpty( request.getArchetypeGroupId() )
-        && org.codehaus.plexus.util.StringUtils.isNotEmpty( request.getArchetypeArtifactId() )
-        && org.codehaus.plexus.util.StringUtils.isNotEmpty( request.getArchetypeVersion() );
+            && org.codehaus.plexus.util.StringUtils.isNotEmpty( request.getArchetypeArtifactId() )
+            && org.codehaus.plexus.util.StringUtils.isNotEmpty( request.getArchetypeVersion() );
     }
 
     /** FileSetArchetype */
@@ -172,16 +174,16 @@ public class DefaultArchetypeGenerator
         ArtifactRepository remoteRepo,
         final ArtifactRepository localRepository,
         final String basedir,
-        final List repositories
+        final List<ArtifactRepository> repositories
     )
         throws
-        UnknownArchetype,
-        ArchetypeNotConfigured,
-        ProjectDirectoryExists,
-        PomFileExists,
-        OutputFileExists,
-        ArchetypeGenerationFailure
-    {
+            UnknownArchetype,
+            ArchetypeNotConfigured,
+            ProjectDirectoryExists,
+            PomFileExists,
+            OutputFileExists,
+            ArchetypeGenerationFailure
+        {
         //TODO: get rid of the property file usage.
 //        Properties properties = request.getProperties();
 //
@@ -218,11 +220,11 @@ public class DefaultArchetypeGenerator
         ArtifactRepository remoteRepo,
         ArtifactRepository localRepository,
         String basedir,
-        List repositories
+        List<ArtifactRepository> repositories
     )
         throws
-        UnknownArchetype,
-        ArchetypeGenerationFailure
+            UnknownArchetype,
+            ArchetypeGenerationFailure
     {
         ArchetypeConfiguration archetypeConfiguration;
 
@@ -235,7 +237,7 @@ public class DefaultArchetypeGenerator
                 repositories
             );
 
-        Map map = new HashMap();
+        Map<String,String> map = new HashMap<String,String>();
 
         map.put( "basedir", basedir );
 
@@ -281,6 +283,9 @@ public class DefaultArchetypeGenerator
 
     public void generateArchetype( ArchetypeGenerationRequest request, ArchetypeGenerationResult result )
     {
+        assert request != null;
+        assert result != null;
+        
         try
         {
             generateArchetype( request, request.getLocalRepository(), request.getOutputDirectory() );

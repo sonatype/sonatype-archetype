@@ -96,12 +96,12 @@ public class DefaultFilesetArchetypeGenerator
                                    File archetypeFile,
                                    String basedir )
         throws
-        UnknownArchetype,
-        ArchetypeNotConfigured,
-        ProjectDirectoryExists,
-        PomFileExists,
-        OutputFileExists,
-        ArchetypeGenerationFailure
+            UnknownArchetype,
+            ArchetypeNotConfigured,
+            ProjectDirectoryExists,
+            PomFileExists,
+            OutputFileExists,
+            ArchetypeGenerationFailure
     {
         ClassLoader old = Thread.currentThread().getContextClassLoader();
 
@@ -118,14 +118,14 @@ public class DefaultFilesetArchetypeGenerator
                 }
                 else
                 {
-                    StringBuffer exceptionMessage = new StringBuffer();
-                    exceptionMessage.append("Archetype " );
-                    exceptionMessage.append( request.getArchetypeGroupId() );
-                    exceptionMessage.append( ":" );
-                    exceptionMessage.append( request.getArchetypeArtifactId() );
-                    exceptionMessage.append( ":" );
-                    exceptionMessage.append( request.getArchetypeVersion() );
-                    exceptionMessage.append( " is not configured" );
+                    StringBuffer buff = new StringBuffer();
+                    buff.append("Archetype " );
+                    buff.append( request.getArchetypeGroupId() );
+                    buff.append( ":" );
+                    buff.append( request.getArchetypeArtifactId() );
+                    buff.append( ":" );
+                    buff.append( request.getArchetypeVersion() );
+                    buff.append( " is not configured" );
                     
                     List missingProperties = new ArrayList( 0 );
                     java.util.Iterator requiredProperties = 
@@ -136,14 +136,14 @@ public class DefaultFilesetArchetypeGenerator
                         if (org.codehaus.plexus.util.StringUtils.isEmpty(
                             request.getProperties().getProperty ( requiredProperty.getKey() ) ) )
                         {
-                            exceptionMessage.append( "\n\tProperty " );
-                            exceptionMessage.append( requiredProperty.getKey() );
+                            buff.append( "\n\tProperty " );
+                            buff.append( requiredProperty.getKey() );
                             missingProperties.add( requiredProperty.getKey() );
-                            exceptionMessage.append( " is missing." );
+                            buff.append( " is missing." );
                         }
                     }
                     
-                    throw new ArchetypeNotConfigured( exceptionMessage.toString(), missingProperties );
+                    throw new ArchetypeNotConfigured( buff.toString(), missingProperties );
                 }
             }
 
@@ -303,9 +303,9 @@ public class DefaultFilesetArchetypeGenerator
         final ZipFile archetypeZipFile
     )
         throws
-        FileNotFoundException,
-        OutputFileExists,
-        IOException
+            FileNotFoundException,
+            OutputFileExists,
+            IOException
     {
         log.debug( "Copying file " + template );
 
@@ -342,9 +342,8 @@ public class DefaultFilesetArchetypeGenerator
         Context context
     )
         throws
-        OutputFileExists,
-        FileNotFoundException,
-        IOException
+            OutputFileExists,
+            IOException
     {
         Iterator iterator = fileSetResources.iterator();
 
@@ -560,7 +559,6 @@ public class DefaultFilesetArchetypeGenerator
         throws
         OutputFileExists,
         ArchetypeGenerationFailure,
-        FileNotFoundException,
         IOException
     {
         processTemplates(
@@ -624,12 +622,12 @@ public class DefaultFilesetArchetypeGenerator
         final Context context
     )
         throws
-        DocumentException,
-        XmlPullParserException,
-        ArchetypeGenerationFailure,
-        InvalidPackaging,
-        IOException,
-        OutputFileExists
+            DocumentException,
+            XmlPullParserException,
+            ArchetypeGenerationFailure,
+            InvalidPackaging,
+            IOException,
+            OutputFileExists
     {
         outputDirectoryFile.mkdirs();
         log.debug( "Processing module " + artifactId );
@@ -652,31 +650,28 @@ public class DefaultFilesetArchetypeGenerator
         );
 
         String parentArtifactId = (String) context.get( Constants.PARENT_ARTIFACT_ID );
-        Iterator subprojects = archetypeDescriptor.getModules().iterator();
-        if ( subprojects.hasNext() )
-        {
-            log.debug(
-                artifactId + " has modules (" + archetypeDescriptor.getModules() + ")"
-            );
+        List<ModuleDescriptor> subProjects = archetypeDescriptor.getModules();
+
+        if (!subProjects.isEmpty()) {
+            log.debug(artifactId + " has modules (" + archetypeDescriptor.getModules() + ")");
             setParentArtifactId( context, StringUtils.replace( artifactId, "${rootArtifactId}", rootArtifactId ) );
         }
-        while ( subprojects.hasNext() )
-        {
-            ModuleDescriptor project = (ModuleDescriptor) subprojects.next();
 
+        for (ModuleDescriptor project : subProjects) {
             artifactId = project.getId();
 
             File moduleOutputDirectoryFile = new File( outputDirectoryFile,
                 StringUtils.replace( project.getDir(), "__rootArtifactId__", rootArtifactId ) );
+
             context.put( Constants.ARTIFACT_ID, StringUtils.replace( project.getId(), "${rootArtifactId}", rootArtifactId ) );
+
             processFilesetModule(
                 rootArtifactId,
                 StringUtils.replace( project.getDir(), "__rootArtifactId__", rootArtifactId ),
                 archetypeResources,
                 new File( moduleOutputDirectoryFile, Constants.ARCHETYPE_POM ),
                 archetypeZipFile,
-                ( StringUtils.isEmpty( moduleOffset ) ? "" : ( moduleOffset + "/" ) ) + StringUtils.replace( project.getDir(), "${rootArtifactId}",
-                    rootArtifactId ),
+                ( StringUtils.isEmpty( moduleOffset ) ? "" : ( moduleOffset + "/" ) ) + StringUtils.replace( project.getDir(), "${rootArtifactId}", rootArtifactId ),
                 pom,
                 moduleOutputDirectoryFile,
                 packageName,
@@ -706,7 +701,6 @@ public class DefaultFilesetArchetypeGenerator
         ArchetypeGenerationFailure,
         InvalidPackaging,
         IOException,
-        FileNotFoundException,
         OutputFileExists
     {
         log.debug( "Processing fileset project moduleId " + moduleId );
@@ -886,7 +880,6 @@ public class DefaultFilesetArchetypeGenerator
             finally
             {
                 IOUtil.close( writer );
-                writer = null;
             }
         }
     }
@@ -904,18 +897,9 @@ public class DefaultFilesetArchetypeGenerator
         throws
         OutputFileExists,
         ArchetypeGenerationFailure,
-        FileNotFoundException,
         IOException
     {
-        Iterator iterator = archetypeDescriptor.getFileSets().iterator();
-        if ( iterator.hasNext() )
-        {
-            log.debug( "Processing filesets" );
-        }
-        while ( iterator.hasNext() )
-        {
-            FileSet fileSet = (FileSet) iterator.next();
-
+        for (FileSet fileSet : archetypeDescriptor.getFileSets()) {
             List fileSetResources =
                 archetypeFilesResolver.filterFiles( moduleOffset, fileSet, archetypeResources );
 
@@ -979,8 +963,7 @@ public class DefaultFilesetArchetypeGenerator
 
     private File getTemporaryFile( File file )
     {
-        File tmp =
-            FileUtils.createTempFile( file.getName(), Constants.TMP, file.getParentFile() );
+        File tmp = FileUtils.createTempFile( file.getName(), Constants.TMP, file.getParentFile() );
         tmp.deleteOnExit();
         return tmp;
     }

@@ -203,6 +203,7 @@ under the License.
                             <goal>xpp3-writer</goal>
                         </goals>
                         <configuration>
+                            <useJava5>true</useJava5>
                             <version>1.0.0</version>
                             <models>
                                 <model>src/main/mdo/archetype-common.mdo</model>

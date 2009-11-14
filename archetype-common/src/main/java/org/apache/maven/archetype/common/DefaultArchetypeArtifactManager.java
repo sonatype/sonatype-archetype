@@ -76,7 +76,7 @@ public class DefaultArchetypeArtifactManager
         final String version,
         ArtifactRepository archetypeRepository,
         final ArtifactRepository localRepository,
-        final List repositories
+        final List<ArtifactRepository> repositories
     )
         throws UnknownArchetype {
         try {
