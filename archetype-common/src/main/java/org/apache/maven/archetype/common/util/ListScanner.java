@@ -117,7 +117,8 @@ public class ListScanner
      * @see #addDefaultExcludes()
      */
     public static final String[] DEFAULTEXCLUDES =
-        { // Miscellaneous typical temporary files
+        {
+            // Miscellaneous typical temporary files
             "**/*~", "**/#*#", "**/.#*", "**/%*%", "**/._*",
 
             // CVS
@@ -137,6 +138,9 @@ public class ListScanner
 
             // Bazaar
             "**/.bzr", "**/.bzr/**",
+
+            // GIT
+            "**/.git", "**/.git/**",
 
             // SurroundSCM
             "**/.MySCMServerInfo",

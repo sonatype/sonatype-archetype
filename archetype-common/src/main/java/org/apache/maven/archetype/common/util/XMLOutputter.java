@@ -94,10 +94,6 @@ import java.util.List;
 public class XMLOutputter
     implements Cloneable
 {
-
-    private static final String CVS_ID =
-        "@(#) $RCSfile: XMLOutputter.java,v $ $Revision: 1.112 $ $Date: 2004/09/01 06:08:18 $ $Name: jdom_1_0 $";
-
     // For normal output
     private Format userFormat = Format.getRawFormat();
 

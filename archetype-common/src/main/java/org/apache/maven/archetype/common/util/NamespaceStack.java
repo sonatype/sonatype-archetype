@@ -34,22 +34,13 @@ import java.util.Stack;
  */
 class NamespaceStack
 {
-
-    private static final String CVS_ID =
-        "@(#) $RCSfile: NamespaceStack.java,v $ $Revision: 1.13 $ $Date: 2004/02/06 09:28:32 $ $Name: jdom_1_0 $";
-
     /** The prefixes available */
-    private Stack prefixes;
+    private Stack<String> prefixes = new Stack<String>();
 
     /** The URIs available */
-    private Stack uris;
+    private Stack<String> uris = new Stack<String>();
 
-    /** This creates the needed storage. */
-    NamespaceStack()
-    {
-        prefixes = new Stack();
-        uris = new Stack();
-    }
+    NamespaceStack() {}
 
     /**
      * This will add a new <code>{@link Namespace}</code>
@@ -71,7 +62,7 @@ class NamespaceStack
      */
     public String pop()
     {
-        String prefix = (String) prefixes.pop();
+        String prefix = prefixes.pop();
         uris.pop();
 
         return prefix;
@@ -101,8 +92,7 @@ class NamespaceStack
         {
             return null;
         }
-        String uri = (String) uris.elementAt( index );
-        return uri;
+        return uris.elementAt( index );
     }
 
     /**

@@ -68,7 +68,7 @@ public class DefaultArchetypeArtifactManager
     @Requirement
     private RepositoryMetadataManager repositoryMetadataManager;
 
-    private Map archetypeCache = new TreeMap();
+    private Map<String,File> archetypeCache = new TreeMap<String,File>();
 
     public File getArchetypeFile(
         final String groupId,
@@ -83,7 +83,7 @@ public class DefaultArchetypeArtifactManager
             File archetype = getArchetype(
                 groupId,
                 artifactId,
-                version );
+                version);
             if( archetype == null ) {
                 archetype =
                     downloader.download(
@@ -199,7 +199,7 @@ public class DefaultArchetypeArtifactManager
         String version,
         ArtifactRepository archetypeRepository,
         ArtifactRepository localRepository,
-        List repositories
+        List<ArtifactRepository> repositories
     ) {
         ZipFile zipFile = null;
         try {
@@ -258,7 +258,7 @@ public class DefaultArchetypeArtifactManager
         String version,
         ArtifactRepository archetypeRepository,
         ArtifactRepository localRepository,
-        List repositories
+        List<ArtifactRepository> repositories
     ) {
         ZipFile zipFile = null;
         try {
@@ -296,7 +296,7 @@ public class DefaultArchetypeArtifactManager
         String archetypeVersion,
         ArtifactRepository archetypeRepository,
         ArtifactRepository localRepository,
-        List remoteRepositories
+        List<ArtifactRepository> remoteRepositories
     ) {
         try {
             File archetype = getArchetype(
@@ -357,7 +357,7 @@ public class DefaultArchetypeArtifactManager
         String version,
         ArtifactRepository archetypeRepository,
         ArtifactRepository localRepository,
-        List repositories
+        List<ArtifactRepository> repositories
     )
         throws UnknownArchetype {
         ZipFile zipFile = null;
@@ -387,9 +387,9 @@ public class DefaultArchetypeArtifactManager
         }
     }
 
-    public List getFilesetArchetypeResources( File archetypeFile )
+    public List<String> getFilesetArchetypeResources( File archetypeFile )
         throws UnknownArchetype {
-        List archetypeResources = new ArrayList();
+        List<String> archetypeResources = new ArrayList<String>();
 
         ZipFile zipFile = null;
         try {
@@ -450,7 +450,7 @@ public class DefaultArchetypeArtifactManager
         String version,
         ArtifactRepository archetypeRepository,
         ArtifactRepository localRepository,
-        List repositories
+        List<ArtifactRepository> repositories
     )
         throws UnknownArchetype {
         ZipFile zipFile = null;

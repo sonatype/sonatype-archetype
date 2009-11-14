@@ -38,10 +38,6 @@ import java.lang.reflect.Method;
 public class Format
     implements Cloneable
 {
-
-    private static final String CVS_ID =
-        "@(#) $RCSfile: Format.java,v $ $Revision: 1.10 $ $Date: 2004/09/07 06:37:20 $ $Name: jdom_1_0 $";
-
     /**
      * Returns a new Format object that performs no whitespace changes, uses
      * the UTF-8 encoding, doesn't expand empty elements, includes the

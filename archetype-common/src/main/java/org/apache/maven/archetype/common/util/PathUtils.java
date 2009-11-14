@@ -30,9 +30,6 @@ public class PathUtils
 {
     /**
      * This method converts all \ or / chars to File.separatorChar.
-     *
-     * @param path
-     * @return
      */
     public static String convertPathForOS( String path )
     {
@@ -46,17 +43,13 @@ public class PathUtils
         file = convertPathForOS( file );
 
         String[] fileAsArray = StringUtils.split( file, File.separator );
-        List directoryAsArray = new ArrayList();
+        List<String> directoryAsArray = new ArrayList<String>();
 
         for ( int i = 0; ( i < level ) && ( i < ( fileAsArray.length - 1 ) ); i++ )
         {
             directoryAsArray.add( fileAsArray[i] );
         }
 
-        return
-            StringUtils.join(
-                directoryAsArray.toArray( new String[directoryAsArray.size()] ),
-                File.separator
-            );
+        return StringUtils.join(directoryAsArray.toArray( new String[directoryAsArray.size()] ), File.separator);
     }
 }
