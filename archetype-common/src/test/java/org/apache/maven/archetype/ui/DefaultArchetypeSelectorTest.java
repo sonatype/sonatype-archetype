@@ -96,9 +96,9 @@ public class DefaultArchetypeSelectorTest
 
         control.verify();
 
-        assertEquals( DefaultArchetypeSelector.DEFAULT_ARCHETYPE_GROUPID, request.getArchetypeGroupId() );
+        Assert.assertEquals( DefaultArchetypeSelector.DEFAULT_ARCHETYPE_GROUPID, request.getArchetypeGroupId() );
         assertEquals( "preset-artifactId", request.getArchetypeArtifactId() );
-        assertEquals( DefaultArchetypeSelector.DEFAULT_ARCHETYPE_VERSION, request.getArchetypeVersion() );
+        Assert.assertEquals( DefaultArchetypeSelector.DEFAULT_ARCHETYPE_VERSION, request.getArchetypeVersion() );
     }
 
     public void testArchetypeArtifactIdNotInRequest()
@@ -150,9 +150,9 @@ public class DefaultArchetypeSelectorTest
 
         control.verify();
 
-        assertEquals( DefaultArchetypeSelector.DEFAULT_ARCHETYPE_GROUPID, request.getArchetypeGroupId() );
-        assertEquals( DefaultArchetypeSelector.DEFAULT_ARCHETYPE_ARTIFACTID, request.getArchetypeArtifactId() );
-        assertEquals( DefaultArchetypeSelector.DEFAULT_ARCHETYPE_VERSION, request.getArchetypeVersion() );
+        Assert.assertEquals( DefaultArchetypeSelector.DEFAULT_ARCHETYPE_GROUPID, request.getArchetypeGroupId() );
+        Assert.assertEquals( DefaultArchetypeSelector.DEFAULT_ARCHETYPE_ARTIFACTID, request.getArchetypeArtifactId() );
+        Assert.assertEquals( DefaultArchetypeSelector.DEFAULT_ARCHETYPE_VERSION, request.getArchetypeVersion() );
     }
 
     public void testArchetypeNotInRequestDefaults()

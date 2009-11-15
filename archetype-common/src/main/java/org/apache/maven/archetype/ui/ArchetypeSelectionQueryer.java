@@ -33,37 +33,36 @@ public interface ArchetypeSelectionQueryer
 {
     String ROLE = ArchetypeSelectionQueryer.class.getName();
 
-    public Archetype selectArchetype( Map<String,List<Archetype>> catalog )
-        throws PrompterException;
+    public Archetype selectArchetype(Map<String, List<Archetype>> catalog) throws PrompterException;
 
-    boolean confirmSelection( ArchetypeDefinition archetypeDefinition )
-        throws
-        PrompterException;
+    boolean confirmSelection(ArchetypeDefinition archetypeDefinition) throws PrompterException;
 
-//    Archetype selectArchetype( List list )
-//        throws
-//        PrompterException;
+    // Archetype selectArchetype( List list )
+    // throws
+    // PrompterException;
 
-//    Archetype selectArtifact( List list )
-//        throws
-//        PrompterException;
-//
-//    String selectGroup( List list )
-//        throws
-//        PrompterException;
-//
-//    String selectVersion( List list )
-//        throws
-//        PrompterException;
+    // Archetype selectArtifact( List list )
+    // throws
+    // PrompterException;
+    //
+    // String selectGroup( List list )
+    // throws
+    // PrompterException;
+    //
+    // String selectVersion( List list )
+    // throws
+    // PrompterException;
 
     /**
      * Select an archetype from the given map.
-     *
-     * @param catalog the archetypes to choose from
-     * @param defaultDefinition the default archetype, if present in the map
+     * 
+     * @param catalog
+     *            the archetypes to choose from
+     * @param defaultDefinition
+     *            the default archetype, if present in the map
      * @return the selected archetype
-     * @throws org.codehaus.plexus.components.interactivity.PrompterException if there is a problem in making a selection
+     * @throws org.codehaus.plexus.components.interactivity.PrompterException
+     *             if there is a problem in making a selection
      */
-    Archetype selectArchetype( Map<String, List<Archetype>> catalog, ArchetypeDefinition defaultDefinition )
-        throws PrompterException;
+    Archetype selectArchetype(Map<String, List<Archetype>> catalog, ArchetypeDefinition defaultDefinition) throws PrompterException;
 }

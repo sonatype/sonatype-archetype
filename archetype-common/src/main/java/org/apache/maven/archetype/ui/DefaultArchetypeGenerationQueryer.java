@@ -27,48 +27,36 @@ import org.codehaus.plexus.components.interactivity.PrompterException;
 
 import java.util.Iterator;
 
-@Component(role=ArchetypeGenerationQueryer.class)
-public class DefaultArchetypeGenerationQueryer
-    implements ArchetypeGenerationQueryer
+@Component(role = ArchetypeGenerationQueryer.class)
+public class DefaultArchetypeGenerationQueryer implements ArchetypeGenerationQueryer
 {
     @Requirement
     private Prompter prompter;
 
-    public boolean confirmConfiguration( ArchetypeConfiguration archetypeConfiguration )
-        throws
-        PrompterException
-    {
+    public boolean confirmConfiguration(ArchetypeConfiguration archetypeConfiguration) throws PrompterException {
         String query = "Confirm properties configuration:\n";
 
-        Iterator requiredPropertiesIter =
-            archetypeConfiguration.getRequiredProperties().iterator();
+        Iterator requiredPropertiesIter = archetypeConfiguration.getRequiredProperties().iterator();
 
-        while ( requiredPropertiesIter.hasNext() )
-        {
+        while (requiredPropertiesIter.hasNext()) {
             String property = (String) requiredPropertiesIter.next();
-            query += property + ": " + archetypeConfiguration.getProperty( property ) + "\n";
+            query += property + ": " + archetypeConfiguration.getProperty(property) + "\n";
         }
 
-        String answer = prompter.prompt( query, "Y" );
+        String answer = prompter.prompt(query, "Y");
 
-        return "Y".equalsIgnoreCase( answer );
+        return "Y".equalsIgnoreCase(answer);
     }
 
-    public String getPropertyValue( String requiredProperty,
-                                    String defaultValue )
-        throws
-        PrompterException
-    {
+    public String getPropertyValue(String requiredProperty, String defaultValue) throws PrompterException {
         String query = "Define value for property '" + requiredProperty + "': ";
         String answer;
 
-        if ( ( defaultValue != null ) && !defaultValue.equals( "null" ) )
-        {
-            answer = prompter.prompt( query, defaultValue );
+        if ((defaultValue != null) && !defaultValue.equals("null")) {
+            answer = prompter.prompt(query, defaultValue);
         }
-        else
-        {
-            answer = prompter.prompt( query );
+        else {
+            answer = prompter.prompt(query);
         }
         return answer;
     }

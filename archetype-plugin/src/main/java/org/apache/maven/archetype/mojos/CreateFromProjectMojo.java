@@ -297,7 +297,7 @@ public class CreateFromProjectMojo
     }
 
     private List getLanguages(String archetypeLanguages, File propertyFile) {
-        List resultingLanguages = new ArrayList();
+        List<String> resultingLanguages = new ArrayList<String>();
 
         if ( StringUtils.isNotEmpty( archetypeLanguages ) )
         {

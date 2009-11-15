@@ -20,28 +20,32 @@
 package org.apache.maven.archetype.ui;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
-import org.apache.maven.archetype.exception.ArchetypeGenerationConfigurationFailure;
-import org.apache.maven.archetype.exception.ArchetypeNotConfigured;
 import org.apache.maven.archetype.exception.ArchetypeNotDefined;
+import org.apache.maven.archetype.exception.ArchetypeSelectionFailure;
 import org.apache.maven.archetype.exception.UnknownArchetype;
+import org.apache.maven.archetype.exception.UnknownGroup;
 import org.codehaus.plexus.components.interactivity.PrompterException;
 
 import java.io.IOException;
-import java.util.Properties;
 
-public interface ArchetypeGenerationConfigurator
+//TODO: We should need any remote repositories here, we should simply be doing selection, any remote catalogs
+//      should be validating correctness, and if it so happens we get a crap entry then the generation mechanism
+
+//      should take care of reporting the error. The selector should not be downloading anything.
+public interface ArchetypeSelector
 {
-    String ROLE = ArchetypeGenerationConfigurator.class.getName();
+    String ROLE = ArchetypeSelector.class.getName();
 
-    public void configureArchetype(
-        ArchetypeGenerationRequest request,
-        Boolean interactiveMode,
-        Properties commandLineProperties )
-        throws
-        ArchetypeNotDefined,
-        UnknownArchetype,
-        ArchetypeNotConfigured,
-        IOException,
-        PrompterException,
-        ArchetypeGenerationConfigurationFailure;
+    // void selectArchetype( ArchetypeGenerationRequest request,
+    // Boolean interactiveMode )
+    // throws
+    // ArchetypeNotDefined,
+    // UnknownArchetype,
+    // UnknownGroup,
+    // IOException,
+    // PrompterException,
+    // ArchetypeSelectionFailure;
+
+    void selectArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, String catalogs) throws ArchetypeNotDefined, UnknownArchetype, UnknownGroup, IOException, PrompterException,
+            ArchetypeSelectionFailure;
 }

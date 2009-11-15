@@ -19,34 +19,23 @@
 
 package org.apache.maven.archetype.ui;
 
-import org.apache.maven.archetype.exception.ArchetypeNotConfigured;
-import org.apache.maven.archetype.exception.ArchetypeNotDefined;
-import org.apache.maven.archetype.exception.TemplateCreationException;
+import org.apache.maven.archetype.common.ArchetypeConfiguration;
+import org.apache.maven.archetype.common.ArchetypeDefinition;
 import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.components.interactivity.PrompterException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 
-public interface ArchetypeCreationConfigurator
+public interface ArchetypeFactory
 {
-    String ROLE = ArchetypeCreationConfigurator.class.getName();
+    String ROLE = ArchetypeFactory.class.getName();
 
-    Properties configureArchetypeCreation(
-        MavenProject project,
-        Boolean interactiveMode,
-        Properties commandLineProperties,
-        File propertyFile,
-        List<String> languages
-    )
-        throws
-        FileNotFoundException,
-        IOException,
-        ArchetypeNotDefined,
-        ArchetypeNotConfigured,
-        PrompterException,
-        TemplateCreationException;
+    ArchetypeConfiguration createArchetypeConfiguration(org.apache.maven.archetype.old.descriptor.ArchetypeDescriptor archetypeDescriptor, Properties properties);
+
+    ArchetypeConfiguration createArchetypeConfiguration(org.apache.maven.archetype.metadata.ArchetypeDescriptor archetypeDescriptor, Properties properties);
+
+    ArchetypeConfiguration createArchetypeConfiguration(MavenProject project, ArchetypeDefinition archetypeDefinition, Properties properties);
+
+    ArchetypeDefinition createArchetypeDefinition(Properties properties);
+
+    void updateArchetypeConfiguration(ArchetypeConfiguration archetypeConfiguration, ArchetypeDefinition archetypeDefinition);
 }
