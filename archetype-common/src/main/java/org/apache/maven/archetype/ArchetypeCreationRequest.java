@@ -56,6 +56,8 @@ public class ArchetypeCreationRequest
 
     private String postPhase;
 
+    private File outputDirectory = new File("target/generated-sources/archetype");
+
     public String getPostPhase() {
         return postPhase;
     }
@@ -207,6 +209,15 @@ public class ArchetypeCreationRequest
     {
         this.packageName = packageName;
 
+        return this;
+    }
+
+    public File getOutputDirectory() {
+        return outputDirectory;
+    }
+
+    public ArchetypeCreationRequest setOutputDirectory(final File outputDirectory) {
+        this.outputDirectory = outputDirectory;
         return this;
     }
 }

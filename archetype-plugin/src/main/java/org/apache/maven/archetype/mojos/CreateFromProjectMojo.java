@@ -57,9 +57,6 @@ public class CreateFromProjectMojo
     ArchetypeCreationConfigurator configurator;
 
     /** @component */
-    ArchetypeRegistryManager archetypeRegistryManager;
-
-    /** @component */
     Archetype archetype;
 
     /**
