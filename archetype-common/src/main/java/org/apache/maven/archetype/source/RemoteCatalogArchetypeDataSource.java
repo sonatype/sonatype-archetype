@@ -27,9 +27,12 @@ import org.apache.maven.wagon.repository.Repository;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.Logger;
+import org.codehaus.plexus.util.IOUtil;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.Reader;
 import java.util.List;
 import java.util.Properties;
 
@@ -106,7 +109,18 @@ public class RemoteCatalogArchetypeDataSource
                 {
                     disconnectWagon( wagon );
                 }
-                return readCatalog( new FileReader( catalog ) );
+
+                if (log.isDebugEnabled()) {
+                    Reader reader = new BufferedReader(new FileReader(catalog));
+                    try {
+                        log.debug("Read remote catalog (" + catalog + "): \n" + IOUtil.toString(reader));
+                    }
+                    finally {
+                        IOUtil.close(reader);
+                    }
+                }
+
+                return readCatalog( new BufferedReader( new FileReader( catalog ) ));
             }
             catch ( Exception ex )
             {
