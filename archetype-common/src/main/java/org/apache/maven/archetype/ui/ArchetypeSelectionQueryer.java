@@ -21,7 +21,7 @@ package org.apache.maven.archetype.ui;
 
 import org.apache.maven.archetype.catalog.Archetype;
 import org.apache.maven.archetype.common.ArchetypeDefinition;
-import org.codehaus.plexus.components.interactivity.PrompterException;
+import org.apache.maven.archetype.ui.prompt.PrompterException;
 
 import java.util.List;
 import java.util.Map;

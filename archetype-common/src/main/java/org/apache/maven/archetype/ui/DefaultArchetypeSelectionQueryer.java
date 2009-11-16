@@ -19,14 +19,12 @@
 
 package org.apache.maven.archetype.ui;
 
-//import org.apache.maven.archetype.common.Archetype;
-
 import org.apache.maven.archetype.catalog.Archetype;
 import org.apache.maven.archetype.common.ArchetypeDefinition;
+import org.apache.maven.archetype.ui.prompt.Prompter;
+import org.apache.maven.archetype.ui.prompt.PrompterException;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.components.interactivity.Prompter;
-import org.codehaus.plexus.components.interactivity.PrompterException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,7 +55,6 @@ public class DefaultArchetypeSelectionQueryer implements ArchetypeSelectionQuery
         int counter = 1;
 
         for (Archetype archetype : archetypes) {
-
             answerMap.put("" + counter, archetype);
             query += "" + counter + ": " + archetype.getArtifactId() + " (" + archetype.getDescription() + ":" + archetype.getArtifactId() + ")\n";
             answers.add("" + counter);
@@ -107,9 +104,7 @@ public class DefaultArchetypeSelectionQueryer implements ArchetypeSelectionQuery
                     counter++;
                 }
                 archetypeVersions.add(archetype);
-
             }
-
         }
 
         query += "Choose a number: ";

@@ -21,7 +21,7 @@ package org.apache.maven.archetype.ui;
  */
 
 import org.apache.maven.archetype.common.ArchetypeConfiguration;
-import org.codehaus.plexus.components.interactivity.PrompterException;
+import org.apache.maven.archetype.ui.prompt.PrompterException;
 
 public interface ArchetypeGenerationQueryer
 {
