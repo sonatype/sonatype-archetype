@@ -19,15 +19,9 @@
 
 package org.apache.maven.archetype.ui;
 
-import org.apache.maven.archetype.exception.ArchetypeNotConfigured;
-import org.apache.maven.archetype.exception.ArchetypeNotDefined;
-import org.apache.maven.archetype.exception.TemplateCreationException;
 import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.components.interactivity.PrompterException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
@@ -35,6 +29,5 @@ public interface ArchetypeCreationConfigurator
 {
     String ROLE = ArchetypeCreationConfigurator.class.getName();
 
-    Properties configureArchetypeCreation(MavenProject project, Boolean interactiveMode, Properties commandLineProperties, File propertyFile, List<String> languages) throws FileNotFoundException,
-            IOException, ArchetypeNotDefined, ArchetypeNotConfigured, PrompterException, TemplateCreationException;
+    Properties configureArchetypeCreation(MavenProject project, Boolean interactiveMode, Properties commandLineProperties, File propertyFile, List<String> languages) throws Exception;
 }

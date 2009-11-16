@@ -33,11 +33,9 @@ import org.apache.maven.archetype.old.OldArchetype;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.components.interactivity.PrompterException;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.StringUtils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -71,13 +69,12 @@ public class DefaultArchetypeGenerationConfigurator implements ArchetypeGenerati
         this.archetypeArtifactManager = archetypeArtifactManager;
     }
 
-    public void configureArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, Properties executionProperties) throws ArchetypeNotDefined, UnknownArchetype, ArchetypeNotConfigured,
-            IOException, PrompterException, ArchetypeGenerationConfigurationFailure {
+    public void configureArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, Properties executionProperties) throws Exception {
         ArtifactRepository localRepository = request.getLocalRepository();
 
         ArtifactRepository archetypeRepository = null;
 
-        List repositories = new ArrayList();
+        List<ArtifactRepository> repositories = new ArrayList<ArtifactRepository>();
 
         Properties properties = new Properties(executionProperties);
 

@@ -20,19 +20,12 @@
 package org.apache.maven.archetype.ui;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
-import org.apache.maven.archetype.exception.ArchetypeGenerationConfigurationFailure;
-import org.apache.maven.archetype.exception.ArchetypeNotConfigured;
-import org.apache.maven.archetype.exception.ArchetypeNotDefined;
-import org.apache.maven.archetype.exception.UnknownArchetype;
-import org.codehaus.plexus.components.interactivity.PrompterException;
 
-import java.io.IOException;
 import java.util.Properties;
 
 public interface ArchetypeGenerationConfigurator
 {
     String ROLE = ArchetypeGenerationConfigurator.class.getName();
 
-    public void configureArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, Properties commandLineProperties) throws ArchetypeNotDefined, UnknownArchetype, ArchetypeNotConfigured,
-            IOException, PrompterException, ArchetypeGenerationConfigurationFailure;
+    public void configureArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, Properties commandLineProperties) throws Exception;
 }

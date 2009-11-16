@@ -25,11 +25,9 @@ import org.apache.maven.archetype.common.ArchetypeFilesResolver;
 import org.apache.maven.archetype.common.Constants;
 import org.apache.maven.archetype.exception.ArchetypeNotConfigured;
 import org.apache.maven.archetype.exception.ArchetypeNotDefined;
-import org.apache.maven.archetype.exception.TemplateCreationException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.components.interactivity.PrompterException;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
@@ -61,8 +59,8 @@ public class DefaultArchetypeCreationConfigurator implements ArchetypeCreationCo
     @Requirement
     private ArchetypeFilesResolver archetypeFilesResolver;
 
-    public Properties configureArchetypeCreation(MavenProject project, Boolean interactiveMode, Properties commandLineProperties, File propertyFile, List<String> languages) throws IOException,
-            ArchetypeNotDefined, ArchetypeNotConfigured, PrompterException, TemplateCreationException {
+    public Properties configureArchetypeCreation(MavenProject project, Boolean interactiveMode, Properties commandLineProperties, File propertyFile, List<String> languages) throws Exception
+    {
         Properties properties = initialiseArchetypeProperties(commandLineProperties, propertyFile);
 
         ArchetypeDefinition archetypeDefinition = archetypeFactory.createArchetypeDefinition(properties);

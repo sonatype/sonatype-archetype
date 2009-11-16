@@ -23,17 +23,12 @@ import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.catalog.Archetype;
 import org.apache.maven.archetype.common.ArchetypeDefinition;
-import org.apache.maven.archetype.exception.ArchetypeNotDefined;
 import org.apache.maven.archetype.exception.ArchetypeSelectionFailure;
-import org.apache.maven.archetype.exception.UnknownArchetype;
-import org.apache.maven.archetype.exception.UnknownGroup;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.components.interactivity.PrompterException;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.StringUtils;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -58,8 +53,7 @@ public class DefaultArchetypeSelector implements ArchetypeSelector
     @Requirement
     private org.apache.maven.archetype.Archetype archetype;
 
-    public void selectArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, String catalogs) throws ArchetypeNotDefined, UnknownArchetype, UnknownGroup, IOException,
-            PrompterException, ArchetypeSelectionFailure {
+    public void selectArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, String catalogs) throws Exception {
         // This should be an internal class
         ArchetypeDefinition definition = new ArchetypeDefinition();
 
@@ -212,12 +206,12 @@ public class DefaultArchetypeSelector implements ArchetypeSelector
         }
     }
 
-    private Map getArchetypesByCatalog(String catalogs) {
+    private Map<String,List<Archetype>> getArchetypesByCatalog(String catalogs) {
         if (catalogs == null) {
             throw new NullPointerException("catalogs can not be null");
         }
 
-        Map archetypes = new HashMap();
+        Map<String,List<Archetype>> archetypes = new HashMap<String,List<Archetype>>();
 
         Iterator ca = new ArrayIterator(StringUtils.split(catalogs, ","));
         while (ca.hasNext()) {
@@ -230,7 +224,7 @@ public class DefaultArchetypeSelector implements ArchetypeSelector
                 archetypes.put("local", archetype.getDefaultLocalCatalog().getArchetypes());
             }
             else if ("remote".equalsIgnoreCase(catalog)) {
-                List archetypesFromRemote = archetype.getRemoteCatalog().getArchetypes();
+                List<Archetype> archetypesFromRemote = archetype.getRemoteCatalog().getArchetypes();
                 if (archetypesFromRemote.size() > 0) {
                     archetypes.put("remote", archetypesFromRemote);
                 }
