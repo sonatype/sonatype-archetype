@@ -54,6 +54,7 @@ extends AbstractMojo
      * The repository to crawl.
      *
      * @parameter  expression="${repository}" default-value="${settings.localRepository}"
+     * @required
      */
     private File repository;
 
@@ -62,12 +63,6 @@ extends AbstractMojo
     {
         System.err.println ( "repository " + repository );
         System.err.println ( "catalogFile " + catalogFile );
-        if ( repository == null )
-        {
-            throw new MojoFailureException (
-                "The repository is not defined. Use -Drepository=/path/to/repository"
-            );
-        }
 
         ArchetypeCatalog catalog = crawler.crawl ( repository );
         if ( catalogFile == null )

@@ -143,12 +143,13 @@ public class GenerateMojo
      *  @readonly
      */
     private MavenSession session;
-    /**
-     * Additional goals that can be specified by the user during the creation of the archetype.
-     *
-     * @parameter expression="${goals}"
-     */
-    private String goals;
+
+//    /**
+//     * Additional goals that can be specified by the user during the creation of the archetype.
+//     *
+//     * @parameter expression="${goals}"
+//     */
+//    private String goals;
 
     public void execute()
         throws MojoExecutionException, MojoFailureException
@@ -199,19 +200,19 @@ public class GenerateMojo
             throw new MojoFailureException( ex.getMessage() );
         }
 
-        String artifactId = request.getArtifactId();
-
-        String postArchetypeGenerationGoals = request.getArchetypeGoals();
-
-        if ( StringUtils.isEmpty( postArchetypeGenerationGoals ) )
-        {
-            postArchetypeGenerationGoals = goals;
-        }
-
-        if ( StringUtils.isNotEmpty( postArchetypeGenerationGoals ) )
-        {
-            invokePostArchetypeGenerationGoals( postArchetypeGenerationGoals, artifactId );
-        }
+//        String artifactId = request.getArtifactId();
+//
+//        String postArchetypeGenerationGoals = request.getArchetypeGoals();
+//
+//        if ( StringUtils.isEmpty( postArchetypeGenerationGoals ) )
+//        {
+//            postArchetypeGenerationGoals = goals;
+//        }
+//
+//        if ( StringUtils.isNotEmpty( postArchetypeGenerationGoals ) )
+//        {
+//            invokePostArchetypeGenerationGoals( postArchetypeGenerationGoals, artifactId );
+//        }
     }
 
     private void invokePostArchetypeGenerationGoals( String goals, String artifactId )

@@ -249,15 +249,13 @@ public class CreateFromProjectMojo
         }
     }
 
-    private List getFilteredExtensions( String archetypeFilteredExtentions, File propertyFile )
+    private List<String> getFilteredExtensions( String archetypeFilteredExtentions, File propertyFile )
     {
-        List filteredExtensions = new ArrayList();
+        List<String> filteredExtensions = new ArrayList<String>();
 
         if( StringUtils.isNotEmpty( archetypeFilteredExtentions ) )
         {
-            filteredExtensions.addAll(
-                Arrays.asList( StringUtils.split( archetypeFilteredExtentions, "," ) )
-            );
+            filteredExtensions.addAll(Arrays.asList( StringUtils.split( archetypeFilteredExtentions, "," ) ));
             getLog().debug("Found in command line extensions = " + filteredExtensions);
         }
 
@@ -272,11 +270,9 @@ public class CreateFromProjectMojo
                     properties.getProperty( Constants.ARCHETYPE_FILTERED_EXTENSIONS );
                 if( StringUtils.isNotEmpty( extensions ) )
                 {
-                    filteredExtensions.addAll(
-                        Arrays.asList( StringUtils.split( extensions, "," ) )
-                    );
+                    filteredExtensions.addAll(Arrays.asList( StringUtils.split( extensions, "," ) ));
                 }
-            getLog().debug("Found in propertyFile " +  propertyFile.getName() + " extensions = " + filteredExtensions);
+                getLog().debug("Found in propertyFile " +  propertyFile.getName() + " extensions = " + filteredExtensions);
             }
             catch( IOException e )
             {
@@ -293,7 +289,7 @@ public class CreateFromProjectMojo
         return filteredExtensions;
     }
 
-    private List getLanguages(String archetypeLanguages, File propertyFile) {
+    private List<String> getLanguages(String archetypeLanguages, File propertyFile) {
         List<String> resultingLanguages = new ArrayList<String>();
 
         if ( StringUtils.isNotEmpty( archetypeLanguages ) )
@@ -309,15 +305,12 @@ public class CreateFromProjectMojo
                 Properties properties = new Properties();
                 properties.load( new FileInputStream( propertyFile ) );
 
-                String languages =
-                    properties.getProperty( Constants.ARCHETYPE_LANGUAGES );
+                String languages = properties.getProperty( Constants.ARCHETYPE_LANGUAGES );
                 if( StringUtils.isNotEmpty( languages ) )
                 {
-                    resultingLanguages.addAll(
-                        Arrays.asList( StringUtils.split( languages, "," ) )
-                    );
+                    resultingLanguages.addAll(Arrays.asList( StringUtils.split( languages, "," ) ));
                 }
-            getLog().debug("Found in propertyFile " +  propertyFile.getName() + " languages = " + resultingLanguages);
+                getLog().debug("Found in propertyFile " +  propertyFile.getName() + " languages = " + resultingLanguages);
             }
             catch( IOException e )
             {
