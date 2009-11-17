@@ -172,11 +172,11 @@ public class CreateFromProjectMojo
                 propertyFile.getParentFile().mkdirs();
             }
 
-            List languages = getLanguages(archetypeLanguages, propertyFile);
+            List<String> languages = getLanguages(archetypeLanguages, propertyFile);
 
             Properties properties = configurator.configureArchetypeCreation(project, new Boolean(interactive), executionProperties, propertyFile, languages);
 
-            List filtereds = getFilteredExtensions(archetypeFilteredExtentions, propertyFile);
+            List<String> filtereds = getFilteredExtensions(archetypeFilteredExtentions, propertyFile);
 
             ArchetypeCreationRequest request = new ArchetypeCreationRequest().setProject(project)
             .setProperties(properties).setLanguages(languages)
