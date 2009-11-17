@@ -21,7 +21,7 @@ package org.apache.maven.archetype.test;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
-import org.apache.maven.archetype.Archetype;
+import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.archetype.common.ArchetypeRegistryManager;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.codehaus.plexus.PlexusTestCase;
@@ -38,7 +38,7 @@ public class ArchetypeGenerationTest
     public void testProjectGenerationFromAnArchetype()
         throws Exception
     {
-        Archetype archetype = (Archetype) lookup( Archetype.ROLE );
+        ArchetypeManager archetypeManager = (ArchetypeManager) lookup( ArchetypeManager.ROLE );
 
         // In the embedder the localRepository will be retrieved from the embedder itself and users won't
         // have to go through this muck.
@@ -49,7 +49,7 @@ public class ArchetypeGenerationTest
             new File( getBasedir(), "target/test-classes/repositories/local" )
                 .toURI().toURL().toExternalForm(), "local-repo" );
 
-        ArchetypeCatalog catalog = archetype.getLocalCatalog( 
+        ArchetypeCatalog catalog = archetypeManager.getLocalCatalog(
             new File( getBasedir(), "target/test-classes/repositories/central" ).getAbsolutePath()
                  );
 
@@ -96,7 +96,7 @@ public class ArchetypeGenerationTest
 
         // Then generate away!
 
-        ArchetypeGenerationResult result = archetype.generateProjectFromArchetype( agr );
+        ArchetypeGenerationResult result = archetypeManager.generateProjectFromArchetype( agr );
 
         if ( result.getCause() != null )
         {

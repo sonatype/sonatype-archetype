@@ -24,8 +24,6 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 
 public interface ArchetypeGenerator
 {
-    String ROLE = ArchetypeGenerator.class.getName();
-
     void generateArchetype( ArchetypeGenerationRequest request,
                             ArchetypeGenerationResult result );
 }

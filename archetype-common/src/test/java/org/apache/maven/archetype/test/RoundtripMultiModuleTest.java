@@ -24,7 +24,7 @@ import org.apache.maven.archetype.ArchetypeCreationRequest;
 import org.apache.maven.archetype.ArchetypeCreationResult;
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
-import org.apache.maven.archetype.Archetype;
+import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import org.apache.maven.archetype.catalog.io.xpp3.ArchetypeCatalogXpp3Writer;
 import org.apache.maven.archetype.common.ArchetypeRegistryManager;
@@ -65,7 +65,7 @@ public class RoundtripMultiModuleTest
         throws Exception
     {
 
-        Archetype archetype = (Archetype) lookup( Archetype.ROLE );
+        ArchetypeManager archetypeManager = (ArchetypeManager) lookup( ArchetypeManager.ROLE );
 
         ArchetypeRegistryManager registryManager = (ArchetypeRegistryManager) lookup( ArchetypeRegistryManager.ROLE );
 
@@ -111,7 +111,7 @@ public class RoundtripMultiModuleTest
             .setPostPhase( "package" )
             ;
 
-        ArchetypeCreationResult creationResult = archetype.createArchetypeFromProject( acr );
+        ArchetypeCreationResult creationResult = archetypeManager.createArchetypeFromProject( acr );
 
         if ( creationResult.getCause() != null )
         {
@@ -148,7 +148,7 @@ public class RoundtripMultiModuleTest
         File archetypeDirectory = new File( generatedArchetypeDirectory,
             "src"+File.separator+"main"+File.separator+"resources" );
 
-        File archetypeArchive = archetype.archiveArchetype( archetypeDirectory,
+        File archetypeArchive = archetypeManager.archiveArchetype( archetypeDirectory,
             new File( generatedArchetypeProject.getBuild().getDirectory() ),
             generatedArchetypeProject.getBuild().getFinalName() );
 
@@ -191,7 +191,7 @@ public class RoundtripMultiModuleTest
             setGroupId( "com.mycompany" ).setArtifactId( "myapp" ).setVersion( "1.0-SNAPSHOT" ).
             setPackage( "com.mycompany.myapp" ).setOutputDirectory( outputDirectory ).
             setLocalRepository( localRepository ).setArchetypeRepository( "http://localhost:18881/repo/" );
-        ArchetypeGenerationResult generationResult = archetype.generateProjectFromArchetype( agr );
+        ArchetypeGenerationResult generationResult = archetypeManager.generateProjectFromArchetype( agr );
 
         if ( generationResult.getCause() != null )
         {

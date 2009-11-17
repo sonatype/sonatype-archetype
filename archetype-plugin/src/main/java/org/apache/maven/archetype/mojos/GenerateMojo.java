@@ -19,7 +19,7 @@
 
 package org.apache.maven.archetype.mojos;
 
-import org.apache.maven.archetype.Archetype;
+import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
 import org.apache.maven.archetype.generator.ArchetypeGenerator;
@@ -31,7 +31,6 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.ContextEnabled;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
 import java.util.List;
@@ -50,7 +49,7 @@ public class GenerateMojo
     implements ContextEnabled
 {
     /** @component */
-    private Archetype archetype;
+    private ArchetypeManager archetypeManager;
 
     /** @component */
     private ArchetypeSelector selector;
@@ -166,7 +165,7 @@ public class GenerateMojo
 
             configurator.configureArchetype(request, interactiveMode, executionProperties);
 
-            ArchetypeGenerationResult generationResult = archetype.generateProjectFromArchetype(request);
+            ArchetypeGenerationResult generationResult = archetypeManager.generateProjectFromArchetype(request);
             if (generationResult.getCause() != null) {
                 throw new MojoFailureException(generationResult.getCause(), generationResult.getCause().getMessage(), generationResult.getCause().getMessage());
             }

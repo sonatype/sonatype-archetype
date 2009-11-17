@@ -23,7 +23,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.maven.archetype.Archetype;
+import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
@@ -52,9 +52,9 @@ public class InternalCatalogArchetypesVerification
         File outputDirectory = new File(getBasedir(), "target/internal-archetypes-projects");
         outputDirectory.mkdirs();
 
-        Archetype archetype = (Archetype) lookup(Archetype.class.getName());
+        ArchetypeManager archetypeManager = (ArchetypeManager) lookup(ArchetypeManager.class.getName());
 
-        ArchetypeCatalog result = archetype.getInternalCatalog();
+        ArchetypeCatalog result = archetypeManager.getInternalCatalog();
 
         List archetypesUsed = new ArrayList();
         List archetypesRemoved = new ArrayList();
@@ -76,11 +76,11 @@ public class InternalCatalogArchetypesVerification
             }
             System.err.println("\n\n\n\n\n\nTesting archetype " + ar);
             ArchetypeGenerationRequest request = new ArchetypeGenerationRequest(ar).setGroupId("groupId" + count).setArtifactId("artifactId" + count).setVersion("version" + count).setPackage("package" + count).setOutputDirectory(outputDirectory.getPath()).setLocalRepository(localRepository);
-            ArchetypeGenerationResult generationResult = archetype.generateProjectFromArchetype(request);
+            ArchetypeGenerationResult generationResult = archetypeManager.generateProjectFromArchetype(request);
             if (generationResult != null && generationResult.getCause() != null) {
                 ar.setVersion(a.getVersion());
                 request = new ArchetypeGenerationRequest(ar).setGroupId("groupId" + count).setArtifactId("artifactId" + count).setVersion("version" + count).setPackage("package" + count).setOutputDirectory(outputDirectory.getPath()).setLocalRepository(localRepository);
-                generationResult = archetype.generateProjectFromArchetype(request);
+                generationResult = archetypeManager.generateProjectFromArchetype(request);
                 if (generationResult != null && generationResult.getCause() != null) {
                     archetypesRemoved.add(a);
                 } else {

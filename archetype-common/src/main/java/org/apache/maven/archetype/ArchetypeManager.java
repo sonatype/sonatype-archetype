@@ -19,16 +19,15 @@
 
 package org.apache.maven.archetype;
 
+import org.apache.maven.archetype.catalog.Archetype;
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 
 import java.io.File;
 import java.io.IOException;
 
-// TODO: Consider renaming to ArchetypeManager, leave Archetype name for org.apache.maven.archetype.catalog.Archetype
-
 /** @author Jason van Zyl */
-public interface Archetype
+public interface ArchetypeManager
 {
     /**
      * A command to create an archetype from an existing Maven project given the supplied creation
@@ -102,7 +101,7 @@ public interface Archetype
      */
     File archiveArchetype(File archetypeDirectory, File outputDirectory, String finalName) throws DependencyResolutionRequiredException, IOException;
 
-    void updateLocalCatalog(org.apache.maven.archetype.catalog.Archetype archetype, String path);
+    void updateLocalCatalog(Archetype archetype, String path);
 
-    void updateLocalCatalog(org.apache.maven.archetype.catalog.Archetype archetype);
+    void updateLocalCatalog(Archetype archetype);
 }

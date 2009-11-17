@@ -19,7 +19,7 @@
 
 package org.apache.maven.archetype.mojos;
 
-import org.apache.maven.archetype.Archetype;
+import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.archetype.ArchetypeCreationRequest;
 import org.apache.maven.archetype.ArchetypeCreationResult;
 import org.apache.maven.archetype.common.Constants;
@@ -56,7 +56,7 @@ public class CreateFromProjectMojo
     ArchetypeCreationConfigurator configurator;
 
     /** @component */
-    Archetype archetype;
+    ArchetypeManager archetypeManager;
 
     /**
      * Enable the interactive mode to define the archetype from the project.
@@ -176,16 +176,16 @@ public class CreateFromProjectMojo
 
             Properties properties = configurator.configureArchetypeCreation(project, new Boolean(interactive), executionProperties, propertyFile, languages);
 
-            List<String> filtereds = getFilteredExtensions(archetypeFilteredExtentions, propertyFile);
+            List<String> filteredExtensions = getFilteredExtensions(archetypeFilteredExtentions, propertyFile);
 
             ArchetypeCreationRequest request = new ArchetypeCreationRequest().setProject(project)
             .setProperties(properties).setLanguages(languages)
-            .setFilteredExtensions(filtereds)
+            .setFilteredExtensions(filteredExtensions)
             .setPreserveCData(preserveCData).setKeepParent(keepParent).setPartialArchetype(partialArchetype)
             .setArchetypeRegistryFile(archetypeRegistryFile).setLocalRepository(localRepository);
 //            .setPackageName(packageName).setPostPhase(archetypePostPhase);
 
-            ArchetypeCreationResult result = archetype.createArchetypeFromProject(request);
+            ArchetypeCreationResult result = archetypeManager.createArchetypeFromProject(request);
 
             if (result.getCause() != null) {
                 throw new MojoFailureException(result.getCause(), result.getCause().getMessage(), result.getCause().getMessage());

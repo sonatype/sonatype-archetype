@@ -19,7 +19,6 @@ package org.apache.maven.archetype;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Writer;
 import java.net.URL;
 import org.apache.commons.io.IOUtils;
@@ -48,9 +47,9 @@ public class ArchetypeCatalogsTest
         throws Exception
     {
 
-        Archetype archetype = (Archetype) lookup( Archetype.class.getName() );
+        ArchetypeManager archetypeManager = (ArchetypeManager) lookup( ArchetypeManager.class.getName() );
 
-        ArchetypeCatalog result = archetype.getRemoteCatalog( "http://localhost:18881/repo/" );
+        ArchetypeCatalog result = archetypeManager.getRemoteCatalog( "http://localhost:18881/repo/" );
 
         assertEquals( 1, result.getArchetypes().size() );
         assertEquals( "groupId", ((org.apache.maven.archetype.catalog.Archetype) result.getArchetypes().
@@ -67,9 +66,9 @@ public class ArchetypeCatalogsTest
         throws Exception
     {
 
-        Archetype archetype = (Archetype) lookup( Archetype.class.getName() );
+        ArchetypeManager archetypeManager = (ArchetypeManager) lookup( ArchetypeManager.class.getName() );
 
-        ArchetypeCatalog result = archetype.getLocalCatalog( getTestFile( "target/test-classes/repositories/test-catalog" ).
+        ArchetypeCatalog result = archetypeManager.getLocalCatalog( getTestFile( "target/test-classes/repositories/test-catalog" ).
             getAbsolutePath() );
 
         assertEquals( 1, result.getArchetypes().size() );

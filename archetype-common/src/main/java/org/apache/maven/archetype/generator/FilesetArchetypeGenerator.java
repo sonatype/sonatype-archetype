@@ -32,8 +32,6 @@ import java.io.File;
 /** @author rafale */
 public interface FilesetArchetypeGenerator
 {
-    String ROLE = FilesetArchetypeGenerator.class.getName();
-
     void generateArchetype( ArchetypeGenerationRequest request,
                             File archetypeFile,
                             String basedir )

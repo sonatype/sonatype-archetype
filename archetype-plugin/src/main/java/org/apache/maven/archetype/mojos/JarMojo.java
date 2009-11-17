@@ -19,15 +19,13 @@
 
 package org.apache.maven.archetype.mojos;
 
-import org.apache.maven.archetype.Archetype;
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * @author rafale
@@ -76,11 +74,11 @@ public class JarMojo
      * 
      * @component
      */
-    private Archetype archetype;
+    private ArchetypeManager archetypeManager;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            File jarFile = archetype.archiveArchetype(archetypeDirectory, outputDirectory, finalName);
+            File jarFile = archetypeManager.archiveArchetype(archetypeDirectory, outputDirectory, finalName);
 
             project.getArtifact().setFile(jarFile);
         }

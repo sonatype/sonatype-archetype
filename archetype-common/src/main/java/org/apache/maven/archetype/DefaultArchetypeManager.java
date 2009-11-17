@@ -41,9 +41,9 @@ import java.util.zip.ZipOutputStream;
 /**
  * @author Jason van Zyl
  */
-@Component(role = Archetype.class)
-public class DefaultArchetype
-    implements Archetype
+@Component(role = ArchetypeManager.class)
+public class DefaultArchetypeManager
+    implements ArchetypeManager
 {
     @Requirement
     private Logger log;

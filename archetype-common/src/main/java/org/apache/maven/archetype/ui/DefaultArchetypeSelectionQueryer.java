@@ -38,7 +38,7 @@ import java.util.Map;
 public class DefaultArchetypeSelectionQueryer
     implements ArchetypeSelectionQueryer
 {
-    @Requirement(hint = "archetype")
+    @Requirement //(hint = "archetype")
     private Prompter prompter;
 
     public boolean confirmSelection(ArchetypeDefinition archetypeDefinition) throws PrompterException {
