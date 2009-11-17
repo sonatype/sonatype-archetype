@@ -24,25 +24,19 @@ public class UnknownArchetype
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public UnknownArchetype()
-    {
+    private static final long serialVersionUID=1;
+
+    public UnknownArchetype() {}
+
+    public UnknownArchetype(String msg) {
+        super(msg);
     }
 
-    public UnknownArchetype( String msg )
-    {
-        super( msg );
+    public UnknownArchetype(Throwable cause) {
+        super(cause);
     }
 
-    public UnknownArchetype( Throwable cause )
-    {
-        super( cause );
-    }
-
-    public UnknownArchetype( String msg,
-                             Throwable cause )
-    {
-        super( msg, cause );
+    public UnknownArchetype(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

@@ -25,26 +25,16 @@ import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import java.util.Properties;
 
 /**
- * Sources we can get Archetypes from. This may be the local registry, a Wiki, or,
- * a Maven Repository application. We might also want to get all the Archetypes based
- * on some predetermined criteria and that could be anything given the source. A simple
- * use-case might be to grab all Archetypes for a particular groupId, or Archetypes for
- * webapps, or who knows what.
- *
+ * Sources we can get Archetypes from. This may be the local registry, a Wiki, or, a Maven
+ * Repository application. We might also want to get all the Archetypes based on some predetermined
+ * criteria and that could be anything given the source. A simple use-case might be to grab all
+ * Archetypes for a particular groupId, or Archetypes for webapps, or who knows what.
+ * 
  * @author Jason van Zyl
  */
 public interface ArchetypeDataSource
 {
-    String ROLE = ArchetypeDataSource.class.getName();
+   ArchetypeCatalog getArchetypeCatalog(Properties properties) throws ArchetypeDataSourceException;
 
-//    List getArchetypes( Properties properties )
-//        throws ArchetypeDataSourceException;
-
-    ArchetypeCatalog getArchetypeCatalog( Properties properties )
-        throws ArchetypeDataSourceException;
-
-    void updateCatalog( Properties properties, Archetype archetype )
-        throws ArchetypeDataSourceException;
-
-//    ArchetypeDataSourceDescriptor getDescriptor();
+    void updateCatalog(Properties properties, Archetype archetype) throws ArchetypeDataSourceException;
 }

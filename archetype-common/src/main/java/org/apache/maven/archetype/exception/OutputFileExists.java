@@ -24,25 +24,19 @@ public class OutputFileExists
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public OutputFileExists()
-    {
+    private static final long serialVersionUID=1;
+
+    public OutputFileExists() {}
+
+    public OutputFileExists(String msg) {
+        super(msg);
     }
 
-    public OutputFileExists( String msg )
-    {
-        super( msg );
+    public OutputFileExists(Throwable cause) {
+        super(cause);
     }
 
-    public OutputFileExists( Throwable cause )
-    {
-        super( cause );
-    }
-
-    public OutputFileExists( String msg,
-                             Throwable cause )
-    {
-        super( msg, cause );
+    public OutputFileExists(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

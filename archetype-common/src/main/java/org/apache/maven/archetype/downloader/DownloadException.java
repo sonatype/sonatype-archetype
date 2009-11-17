@@ -7,7 +7,7 @@ package org.apache.maven.archetype.downloader;
 public class DownloadException
     extends Exception
 {
-    // /CLOVER:OFF
+    ///CLOVER:OFF
 
     private static final long serialVersionUID=1;
 

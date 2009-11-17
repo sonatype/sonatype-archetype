@@ -35,29 +35,15 @@ public class InternalCatalogArchetypeDataSource
     extends CatalogArchetypeDataSource
 {
 
-    public ArchetypeCatalog getArchetypeCatalog( Properties properties )
-        throws ArchetypeDataSourceException
-    {
-        Reader reader = new InputStreamReader(
-            getClass().getClassLoader().getResourceAsStream( "archetype-catalog.xml" ) );
+    public ArchetypeCatalog getArchetypeCatalog(Properties properties) throws ArchetypeDataSourceException {
+        Reader reader=new InputStreamReader(getClass().getClassLoader().getResourceAsStream("archetype-catalog.xml"));
 
-        return readCatalog( reader );
+        return readCatalog(reader);
     }
 
-    public List getArchetypes( Properties properties )
-        throws ArchetypeDataSourceException
-    {
-        Reader reader = new InputStreamReader(
-            getClass().getClassLoader().getResourceAsStream( "archetype-catalog.xml" ) );
+    public List getArchetypes(Properties properties) throws ArchetypeDataSourceException {
+        Reader reader=new InputStreamReader(getClass().getClassLoader().getResourceAsStream("archetype-catalog.xml"));
 
-        return createArchetypeMap( readCatalog( reader ) );
+        return createArchetypeMap(readCatalog(reader));
     }
-
-//    public void updateCatalog( Properties properties,
-//                               Archetype archetype,
-//                               Settings settings )
-//        throws ArchetypeDataSourceException
-//    {
-//        throw new ArchetypeDataSourceException( "Not supported yet." );
-//    }
 }

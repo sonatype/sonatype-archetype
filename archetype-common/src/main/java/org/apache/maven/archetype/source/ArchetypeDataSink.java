@@ -1,3 +1,4 @@
+
 package org.apache.maven.archetype.source;
 
 import org.apache.maven.archetype.catalog.Archetype;
@@ -9,12 +10,7 @@ import java.util.Properties;
 /** @author Jason van Zyl */
 public interface ArchetypeDataSink
 {
-    void putArchetypes( List<Archetype> archetypes,
-                        Writer writer )
-        throws ArchetypeDataSinkException;
+    void putArchetypes(List<Archetype> archetypes, Writer writer) throws ArchetypeDataSinkException;
 
-    void putArchetypes( ArchetypeDataSource source,
-                        Properties properties,
-                        Writer writer )
-        throws ArchetypeDataSourceException, ArchetypeDataSinkException;
+    void putArchetypes(ArchetypeDataSource source, Properties properties, Writer writer) throws ArchetypeDataSourceException, ArchetypeDataSinkException;
 }

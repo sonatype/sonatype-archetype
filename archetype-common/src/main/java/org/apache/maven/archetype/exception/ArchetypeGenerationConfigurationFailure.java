@@ -24,25 +24,19 @@ public class ArchetypeGenerationConfigurationFailure
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID=1;
 
-    public ArchetypeGenerationConfigurationFailure()
-    {
+    public ArchetypeGenerationConfigurationFailure() {}
+
+    public ArchetypeGenerationConfigurationFailure(String msg) {
+        super(msg);
     }
 
-    public ArchetypeGenerationConfigurationFailure( String msg )
-    {
-        super( msg );
+    public ArchetypeGenerationConfigurationFailure(Throwable cause) {
+        super(cause);
     }
 
-    public ArchetypeGenerationConfigurationFailure( Throwable cause )
-    {
-        super( cause );
-    }
-
-    public ArchetypeGenerationConfigurationFailure( String msg,
-                                                    Throwable cause )
-    {
-        super( msg, cause );
+    public ArchetypeGenerationConfigurationFailure(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

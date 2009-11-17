@@ -24,25 +24,19 @@ public class ArchetypeSelectionFailure
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public ArchetypeSelectionFailure()
-    {
+    private static final long serialVersionUID=1;
+
+    public ArchetypeSelectionFailure() {}
+
+    public ArchetypeSelectionFailure(String msg) {
+        super(msg);
     }
 
-    public ArchetypeSelectionFailure( String msg )
-    {
-        super( msg );
+    public ArchetypeSelectionFailure(Throwable cause) {
+        super(cause);
     }
 
-    public ArchetypeSelectionFailure( Throwable cause )
-    {
-        super( cause );
-    }
-
-    public ArchetypeSelectionFailure( String msg,
-                                      Throwable cause )
-    {
-        super( msg, cause );
+    public ArchetypeSelectionFailure(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

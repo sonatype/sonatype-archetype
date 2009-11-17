@@ -24,25 +24,19 @@ public class TemplateCreationException
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public TemplateCreationException()
-    {
+    private static final long serialVersionUID=1;
+
+    public TemplateCreationException() {}
+
+    public TemplateCreationException(String msg) {
+        super(msg);
     }
 
-    public TemplateCreationException( String msg )
-    {
-        super( msg );
+    public TemplateCreationException(Throwable cause) {
+        super(cause);
     }
 
-    public TemplateCreationException( Throwable cause )
-    {
-        super( cause );
-    }
-
-    public TemplateCreationException( String msg,
-                                      Throwable cause )
-    {
-        super( msg, cause );
+    public TemplateCreationException(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

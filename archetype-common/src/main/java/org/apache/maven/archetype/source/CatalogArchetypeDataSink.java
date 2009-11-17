@@ -1,3 +1,4 @@
+
 package org.apache.maven.archetype.source;
 
 import org.apache.maven.archetype.catalog.Archetype;
@@ -14,39 +15,29 @@ import java.util.Properties;
 public class CatalogArchetypeDataSink
     implements ArchetypeDataSink
 {
-    private ArchetypeCatalogXpp3Writer catalogWriter = new ArchetypeCatalogXpp3Writer();
+    private ArchetypeCatalogXpp3Writer catalogWriter=new ArchetypeCatalogXpp3Writer();
 
-    public void putArchetypes( List<Archetype> archetypes,
-                               Writer writer )
-        throws ArchetypeDataSinkException
-    {
-        ArchetypeCatalog catalog = new ArchetypeCatalog();
+    public void putArchetypes(List<Archetype> archetypes, Writer writer) throws ArchetypeDataSinkException {
+        ArchetypeCatalog catalog=new ArchetypeCatalog();
 
         for (Archetype archetype : archetypes) {
-            catalog.addArchetype( archetype );
+            catalog.addArchetype(archetype);
         }
 
-        try
-        {
-            catalogWriter.write( writer, catalog );
+        try {
+            catalogWriter.write(writer, catalog);
         }
-        catch ( IOException e )
-        {
-            throw new ArchetypeDataSinkException( "Error writing archetype catalog.", e );
+        catch (IOException e) {
+            throw new ArchetypeDataSinkException("Error writing archetype catalog.", e);
         }
-        finally
-        {
-            IOUtil.close( writer );
+        finally {
+            IOUtil.close(writer);
         }
     }
 
-    public void putArchetypes( ArchetypeDataSource source,
-                               Properties properties,
-                               Writer writer )
-        throws ArchetypeDataSourceException, ArchetypeDataSinkException
-    {
-        List<Archetype> archetypes = source.getArchetypeCatalog( properties ).getArchetypes();
+    public void putArchetypes(ArchetypeDataSource source, Properties properties, Writer writer) throws ArchetypeDataSourceException, ArchetypeDataSinkException {
+        List<Archetype> archetypes=source.getArchetypeCatalog(properties).getArchetypes();
 
-        putArchetypes( archetypes, writer );
+        putArchetypes(archetypes, writer);
     }
 }

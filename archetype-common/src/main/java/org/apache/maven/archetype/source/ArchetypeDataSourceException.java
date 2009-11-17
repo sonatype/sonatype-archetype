@@ -25,21 +25,17 @@ public class ArchetypeDataSourceException
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public ArchetypeDataSourceException( String s )
-    {
-        super( s );
+    private static final long serialVersionUID=1;
+
+    public ArchetypeDataSourceException(String s) {
+        super(s);
     }
 
-    public ArchetypeDataSourceException( String s,
-                                         Throwable throwable )
-    {
-        super( s, throwable );
+    public ArchetypeDataSourceException(String s, Throwable throwable) {
+        super(s, throwable);
     }
 
-    public ArchetypeDataSourceException( Throwable throwable )
-    {
-        super( throwable );
+    public ArchetypeDataSourceException(Throwable throwable) {
+        super(throwable);
     }
 }

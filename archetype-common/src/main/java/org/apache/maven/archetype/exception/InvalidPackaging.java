@@ -24,25 +24,19 @@ public class InvalidPackaging
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public InvalidPackaging()
-    {
+    private static final long serialVersionUID=1;
+
+    public InvalidPackaging() {}
+
+    public InvalidPackaging(String msg) {
+        super(msg);
     }
 
-    public InvalidPackaging( String msg )
-    {
-        super( msg );
+    public InvalidPackaging(Throwable cause) {
+        super(cause);
     }
 
-    public InvalidPackaging( Throwable cause )
-    {
-        super( cause );
-    }
-
-    public InvalidPackaging( String msg,
-                             Throwable cause )
-    {
-        super( msg, cause );
+    public InvalidPackaging(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

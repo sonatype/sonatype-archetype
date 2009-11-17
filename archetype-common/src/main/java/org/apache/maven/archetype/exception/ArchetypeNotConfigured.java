@@ -26,35 +26,30 @@ public class ArchetypeNotConfigured
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
+    private static final long serialVersionUID=1;
+
     private List missingProperties;
 
     public List getMissingProperties() {
         return missingProperties;
     }
-    
-    public ArchetypeNotConfigured( List missingProperties )
-    {
-        this.missingProperties = missingProperties;
+
+    public ArchetypeNotConfigured(List missingProperties) {
+        this.missingProperties=missingProperties;
     }
 
-    public ArchetypeNotConfigured( String msg, List missingProperties )
-    {
-        super( msg );
-        this.missingProperties = missingProperties;
+    public ArchetypeNotConfigured(String msg, List missingProperties) {
+        super(msg);
+        this.missingProperties=missingProperties;
     }
 
-    public ArchetypeNotConfigured( Throwable cause, List missingProperties )
-    {
-        super( cause );
-        this.missingProperties = missingProperties;
+    public ArchetypeNotConfigured(Throwable cause, List missingProperties) {
+        super(cause);
+        this.missingProperties=missingProperties;
     }
 
-    public ArchetypeNotConfigured( String msg,
-                                   Throwable cause, List missingProperties )
-    {
-        super( msg, cause );
-        this.missingProperties = missingProperties;
+    public ArchetypeNotConfigured(String msg, Throwable cause, List missingProperties) {
+        super(msg, cause);
+        this.missingProperties=missingProperties;
     }
 }

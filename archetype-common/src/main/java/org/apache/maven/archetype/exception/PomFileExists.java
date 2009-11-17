@@ -24,25 +24,19 @@ public class PomFileExists
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public PomFileExists()
-    {
+    private static final long serialVersionUID=1;
+
+    public PomFileExists() {}
+
+    public PomFileExists(String msg) {
+        super(msg);
     }
 
-    public PomFileExists( String msg )
-    {
-        super( msg );
+    public PomFileExists(Throwable cause) {
+        super(cause);
     }
 
-    public PomFileExists( Throwable cause )
-    {
-        super( cause );
-    }
-
-    public PomFileExists( String msg,
-                          Throwable cause )
-    {
-        super( msg, cause );
+    public PomFileExists(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

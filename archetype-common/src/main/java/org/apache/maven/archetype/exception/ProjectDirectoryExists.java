@@ -24,25 +24,19 @@ public class ProjectDirectoryExists
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public ProjectDirectoryExists()
-    {
+    private static final long serialVersionUID=1;
+
+    public ProjectDirectoryExists() {}
+
+    public ProjectDirectoryExists(String msg) {
+        super(msg);
     }
 
-    public ProjectDirectoryExists( String msg )
-    {
-        super( msg );
+    public ProjectDirectoryExists(Throwable cause) {
+        super(cause);
     }
 
-    public ProjectDirectoryExists( Throwable cause )
-    {
-        super( cause );
-    }
-
-    public ProjectDirectoryExists( String msg,
-                                   Throwable cause )
-    {
-        super( msg, cause );
+    public ProjectDirectoryExists(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

@@ -1,3 +1,4 @@
+
 package org.apache.maven.archetype.source;
 
 /** @author Jason van Zyl */
@@ -6,21 +7,17 @@ public class ArchetypeDataSinkException
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public ArchetypeDataSinkException( String s )
-    {
-        super( s );
+    private static final long serialVersionUID=1;
+
+    public ArchetypeDataSinkException(String s) {
+        super(s);
     }
 
-    public ArchetypeDataSinkException( String s,
-                                       Throwable throwable )
-    {
-        super( s, throwable );
+    public ArchetypeDataSinkException(String s, Throwable throwable) {
+        super(s, throwable);
     }
 
-    public ArchetypeDataSinkException( Throwable throwable )
-    {
-        super( throwable );
+    public ArchetypeDataSinkException(Throwable throwable) {
+        super(throwable);
     }
 }

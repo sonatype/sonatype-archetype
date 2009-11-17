@@ -24,25 +24,19 @@ public class UnknownGroup
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public UnknownGroup()
-    {
+    private static final long serialVersionUID=1;
+
+    public UnknownGroup() {}
+
+    public UnknownGroup(String msg) {
+        super(msg);
     }
 
-    public UnknownGroup( String msg )
-    {
-        super( msg );
+    public UnknownGroup(Throwable cause) {
+        super(cause);
     }
 
-    public UnknownGroup( Throwable cause )
-    {
-        super( cause );
-    }
-
-    public UnknownGroup( String msg,
-                         Throwable cause )
-    {
-        super( msg, cause );
+    public UnknownGroup(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

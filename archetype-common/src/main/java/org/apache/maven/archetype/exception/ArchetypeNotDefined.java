@@ -24,25 +24,19 @@ public class ArchetypeNotDefined
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
-    
-    public ArchetypeNotDefined()
-    {
+    private static final long serialVersionUID=1;
+
+    public ArchetypeNotDefined() {}
+
+    public ArchetypeNotDefined(String msg) {
+        super(msg);
     }
 
-    public ArchetypeNotDefined( String msg )
-    {
-        super( msg );
+    public ArchetypeNotDefined(Throwable cause) {
+        super(cause);
     }
 
-    public ArchetypeNotDefined( Throwable cause )
-    {
-        super( cause );
-    }
-
-    public ArchetypeNotDefined( String msg,
-                                Throwable cause )
-    {
-        super( msg, cause );
+    public ArchetypeNotDefined(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }
