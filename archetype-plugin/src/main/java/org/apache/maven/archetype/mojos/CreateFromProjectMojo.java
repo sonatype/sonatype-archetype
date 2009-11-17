@@ -70,7 +70,7 @@ public class CreateFromProjectMojo
      * 
      * @parameter expression="${archetype.filteredExtentions}"
      */
-    private String archetypeFilteredExtentions;
+    private String archetypeFilteredExtensions;
 
     /**
      * Directory names which are checked for project's sources main package.
@@ -176,7 +176,7 @@ public class CreateFromProjectMojo
 
             Properties properties = configurator.configureArchetypeCreation(project, new Boolean(interactive), executionProperties, propertyFile, languages);
 
-            List<String> filteredExtensions = getFilteredExtensions(archetypeFilteredExtentions, propertyFile);
+            List<String> filteredExtensions = getFilteredExtensions(archetypeFilteredExtensions, propertyFile);
 
             ArchetypeCreationRequest request = new ArchetypeCreationRequest().setProject(project)
             .setProperties(properties).setLanguages(languages)
