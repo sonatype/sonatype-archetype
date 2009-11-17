@@ -31,7 +31,8 @@ import java.util.Iterator;
 import java.util.Properties;
 
 @Component(role = ArchetypeFactory.class)
-public class DefaultArchetypeFactory implements ArchetypeFactory
+public class DefaultArchetypeFactory
+    implements ArchetypeFactory
 {
     @Requirement
     private Logger log;

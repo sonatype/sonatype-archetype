@@ -24,13 +24,11 @@ public class ArchetypeCreationResult
 {
     private Exception cause;
 
-    public Exception getCause()
-    {
+    public Exception getCause() {
         return cause;
     }
 
-    public void setCause( final Exception cause )
-    {
+    public void setCause(final Exception cause) {
         this.cause = cause;
     }
 }

@@ -1,3 +1,4 @@
+
 package org.apache.maven.archetype.ui.prompt;
 
 /*
@@ -39,11 +40,11 @@ import java.util.List;
 
 /**
  * Default input handler, that uses the console.
- *
+ * 
  * @author Brett Porter
  * @version $Id: DefaultInputHandler.java 7276 2008-04-11 17:50:25Z bentmann $
  */
-@Component(role=InputHandler.class)
+@Component(role = InputHandler.class)
 public class DefaultInputHandler
     implements InputHandler, Initializable, Disposable
 {
@@ -52,46 +53,34 @@ public class DefaultInputHandler
 
     private BufferedReader consoleReader;
 
-    public String readLine()
-        throws IOException
-    {
+    public String readLine() throws IOException {
         return consoleReader.readLine();
     }
 
-    public String readPassword()
-        throws IOException
-    {
+    public String readPassword() throws IOException {
         return consoleReader.readLine();
     }
 
-    public List readMultipleLines()
-        throws IOException
-    {
+    public List readMultipleLines() throws IOException {
         List<String> lines = new ArrayList<String>();
         String line = readLine();
-        while ( line != null && line.length() > 0 )
-        {
-            lines.add( line );
+        while (line != null && line.length() > 0) {
+            lines.add(line);
             line = readLine();
         }
         return lines;
     }
 
-    public void initialize()
-        throws InitializationException
-    {
-        consoleReader = new BufferedReader( new InputStreamReader( System.in ) );
+    public void initialize() throws InitializationException {
+        consoleReader = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    public void dispose()
-    {
-        try
-        {
+    public void dispose() {
+        try {
             consoleReader.close();
         }
-        catch ( IOException e )
-        {
-            log.error( "Error closing input stream must be ignored", e );
+        catch (IOException e) {
+            log.error("Error closing input stream must be ignored", e);
         }
     }
 }

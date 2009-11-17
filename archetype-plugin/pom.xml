@@ -42,31 +42,8 @@ under the License.
         </dependency>
 
         <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>easymock</groupId>
-            <artifactId>easymock</artifactId>
-            <version>1.2_Java1.3</version>
-            <!-- with 2.0 compilation failure -->
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -81,6 +58,7 @@ under the License.
                 <executions>
                     <execution>
                         <goals>
+                            <goal>descriptor</goal>
                             <goal>helpmojo</goal>
                         </goals>
                     </execution>

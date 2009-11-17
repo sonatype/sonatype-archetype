@@ -31,7 +31,7 @@ import org.apache.maven.project.MavenProject;
  * Inject any plugin-specific artifact metadata to the project's artifact, for subsequent
  * installation and deployment. The first use-case for this is to add the LATEST metadata (which is
  * plugin-specific) for shipping alongside the plugin's artifact.
- *
+ * 
  * @phase package
  * @goal add-archetype-metadata
  */
@@ -40,49 +40,38 @@ public class AddArchetypeMetadataMojo
 {
     /**
      * The prefix for the plugin goal.
-     *
+     * 
      * @parameter
      */
     private String goalPrefix;
 
     /**
      * The project artifact, which should have the LATEST metadata added to it.
-     *
+     * 
      * @parameter expression="${project}"
      * @required
      * @readonly
      */
     private MavenProject project;
 
-    public void execute()
-        throws
-        MojoExecutionException
-    {
+    public void execute() throws MojoExecutionException {
         Artifact projectArtifact = project.getArtifact();
 
         Versioning versioning = new Versioning();
-        versioning.setLatest( projectArtifact.getVersion() );
+        versioning.setLatest(projectArtifact.getVersion());
         versioning.updateTimestamp();
 
-        ArtifactRepositoryMetadata metadata =
-            new ArtifactRepositoryMetadata( projectArtifact, versioning );
-        projectArtifact.addMetadata( metadata );
+        ArtifactRepositoryMetadata metadata = new ArtifactRepositoryMetadata(projectArtifact, versioning);
+        projectArtifact.addMetadata(metadata);
 
-        GroupRepositoryMetadata groupMetadata =
-            new GroupRepositoryMetadata( project.getGroupId() );
-        groupMetadata.addPluginMapping(
-            getGoalPrefix(),
-            project.getArtifactId(),
-            project.getName()
-        );
+        GroupRepositoryMetadata groupMetadata = new GroupRepositoryMetadata(project.getGroupId());
+        groupMetadata.addPluginMapping(getGoalPrefix(), project.getArtifactId(), project.getName());
 
-        projectArtifact.addMetadata( groupMetadata );
+        projectArtifact.addMetadata(groupMetadata);
     }
 
-    private String getGoalPrefix()
-    {
-        if ( goalPrefix == null )
-        {
+    private String getGoalPrefix() {
+        if (goalPrefix == null) {
             goalPrefix = project.getArtifactId();
         }
 

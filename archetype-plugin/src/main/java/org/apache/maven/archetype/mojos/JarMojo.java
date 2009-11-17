@@ -30,9 +30,9 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @author           rafale
- * @goal             jar
- * @phase            package
+ * @author rafale
+ * @goal jar
+ * @phase package
  * @requiresProject
  */
 public class JarMojo
@@ -40,32 +40,32 @@ public class JarMojo
 {
     /**
      * Directory containing the classes.
-     *
-     * @parameter  expression="${project.build.outputDirectory}"
+     * 
+     * @parameter expression="${project.build.outputDirectory}"
      * @required
      */
     private File archetypeDirectory;
 
     /**
      * Name of the generated JAR.
-     *
-     * @parameter  alias="jarName" expression="${project.build.finalName}"
+     * 
+     * @parameter alias="jarName" expression="${project.build.finalName}"
      * @required
      */
     private String finalName;
 
     /**
      * Directory containing the generated JAR.
-     *
-     * @parameter  expression="${project.build.directory}"
+     * 
+     * @parameter expression="${project.build.directory}"
      * @required
      */
     private File outputDirectory;
 
     /**
      * The maven project.
-     *
-     * @parameter  expression="${project}"
+     * 
+     * @parameter expression="${project}"
      * @required
      * @readonly
      */
@@ -73,27 +73,19 @@ public class JarMojo
 
     /**
      * The archetype component.
-     *
+     * 
      * @component
      */
     private Archetype archetype;
 
-    public void execute( )
-        throws MojoExecutionException, MojoFailureException
-    {
-        try
-        {
-            File jarFile = archetype.archiveArchetype( archetypeDirectory, outputDirectory, finalName );
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        try {
+            File jarFile = archetype.archiveArchetype(archetypeDirectory, outputDirectory, finalName);
 
-            project.getArtifact().setFile( jarFile );
+            project.getArtifact().setFile(jarFile);
         }
-        catch ( DependencyResolutionRequiredException ex )
-        {
-            throw new MojoExecutionException( ex.getMessage(  ), ex );
-        }
-        catch ( IOException ex )
-        {
-            throw new MojoExecutionException( ex.getMessage(  ), ex );
+        catch (Exception ex) {
+            throw new MojoExecutionException(ex.getMessage(), ex);
         }
     }
 }

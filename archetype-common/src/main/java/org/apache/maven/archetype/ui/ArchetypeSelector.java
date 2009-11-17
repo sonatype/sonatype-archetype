@@ -27,17 +27,5 @@ import org.apache.maven.archetype.ArchetypeGenerationRequest;
 //      should take care of reporting the error. The selector should not be downloading anything.
 public interface ArchetypeSelector
 {
-    String ROLE = ArchetypeSelector.class.getName();
-
-    // void selectArchetype( ArchetypeGenerationRequest request,
-    // Boolean interactiveMode )
-    // throws
-    // ArchetypeNotDefined,
-    // UnknownArchetype,
-    // UnknownGroup,
-    // IOException,
-    // PrompterException,
-    // ArchetypeSelectionFailure;
-
     void selectArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, String catalogs) throws Exception;
 }

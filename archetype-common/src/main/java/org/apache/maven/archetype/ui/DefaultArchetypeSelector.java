@@ -36,7 +36,8 @@ import java.util.Map;
 import java.util.Properties;
 
 @Component(role = ArchetypeSelector.class)
-public class DefaultArchetypeSelector implements ArchetypeSelector
+public class DefaultArchetypeSelector
+    implements ArchetypeSelector
 {
     static final String DEFAULT_ARCHETYPE_GROUPID = "org.apache.maven.archetypes";
 

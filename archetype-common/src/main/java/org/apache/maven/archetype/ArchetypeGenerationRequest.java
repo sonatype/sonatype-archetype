@@ -44,7 +44,7 @@ public class ArchetypeGenerationRequest
     private ArtifactRepository localRepository;
 
     private List<ArtifactRepository> remoteArtifactRepositories;
-    
+
     private Proxy activeProxy;
 
     private List<Server> servers = new ArrayList<Server>();
@@ -73,258 +73,212 @@ public class ArchetypeGenerationRequest
 
     private String packageName;
 
-    private Properties properties = new Properties(  );
+    private Properties properties = new Properties();
 
-    public ArchetypeGenerationRequest( )
-    {
+    public ArchetypeGenerationRequest() {}
+
+    public ArchetypeGenerationRequest(final Archetype archetype) {
+        this.archetypeGroupId = archetype.getGroupId();
+        this.archetypeArtifactId = archetype.getArtifactId();
+        this.archetypeVersion = archetype.getVersion();
+        this.archetypeRepository = archetype.getRepository();
     }
 
-    public ArchetypeGenerationRequest( final Archetype archetype )
-    {
-        this.archetypeGroupId = archetype.getGroupId(  );
-
-        this.archetypeArtifactId = archetype.getArtifactId(  );
-
-        this.archetypeVersion = archetype.getVersion(  );
-
-        this.archetypeRepository = archetype.getRepository(  );
-    }
-
-    public String getArchetypeGroupId( )
-    {
+    public String getArchetypeGroupId() {
         return archetypeGroupId;
     }
 
-    public ArchetypeGenerationRequest setArchetypeGroupId( final String archetypeGroupId )
-    {
+    public ArchetypeGenerationRequest setArchetypeGroupId(final String archetypeGroupId) {
         this.archetypeGroupId = archetypeGroupId;
 
         return this;
     }
 
-    public String getArchetypeArtifactId( )
-    {
+    public String getArchetypeArtifactId() {
         return archetypeArtifactId;
     }
 
-    public ArchetypeGenerationRequest setArchetypeArtifactId( final String archetypeArtifactId )
-    {
+    public ArchetypeGenerationRequest setArchetypeArtifactId(final String archetypeArtifactId) {
         this.archetypeArtifactId = archetypeArtifactId;
 
         return this;
     }
 
-    public String getArchetypeVersion( )
-    {
+    public String getArchetypeVersion() {
         return archetypeVersion;
     }
 
-    public ArchetypeGenerationRequest setArchetypeVersion( final String archetypeVersion )
-    {
+    public ArchetypeGenerationRequest setArchetypeVersion(final String archetypeVersion) {
         this.archetypeVersion = archetypeVersion;
 
         return this;
     }
 
-    public String getArchetypeGoals( )
-    {
+    public String getArchetypeGoals() {
         return archetypeGoals;
     }
 
-    public ArchetypeGenerationRequest setArchetypeGoals( final String archetypeGoals )
-    {
+    public ArchetypeGenerationRequest setArchetypeGoals(final String archetypeGoals) {
         this.archetypeGoals = archetypeGoals;
 
         return this;
     }
 
-    public String getArchetypeName( )
-    {
+    public String getArchetypeName() {
         return archetypeName;
     }
 
-    public ArchetypeGenerationRequest setArchetypeName( final String archetypeName )
-    {
+    public ArchetypeGenerationRequest setArchetypeName(final String archetypeName) {
         this.archetypeName = archetypeName;
 
         return this;
     }
 
-    public String getArchetypeRepository( )
-    {
+    public String getArchetypeRepository() {
         return archetypeRepository;
     }
 
-    public ArchetypeGenerationRequest setArchetypeRepository( final String archetypeRepository )
-    {
+    public ArchetypeGenerationRequest setArchetypeRepository(final String archetypeRepository) {
         this.archetypeRepository = archetypeRepository;
 
         return this;
     }
 
-    public String getArtifactId( )
-    {
+    public String getArtifactId() {
         return artifactId;
     }
 
-    public ArchetypeGenerationRequest setArtifactId( final String artifactId )
-    {
+    public ArchetypeGenerationRequest setArtifactId(final String artifactId) {
         this.artifactId = artifactId;
 
         return this;
     }
 
-    public String getGroupId( )
-    {
+    public String getGroupId() {
         return groupId;
     }
 
-    public ArchetypeGenerationRequest setGroupId( final String groupId )
-    {
+    public ArchetypeGenerationRequest setGroupId(final String groupId) {
         this.groupId = groupId;
 
         return this;
     }
 
-    public String getVersion( )
-    {
+    public String getVersion() {
         return version;
     }
 
-    public ArchetypeGenerationRequest setVersion( final String version )
-    {
+    public ArchetypeGenerationRequest setVersion(final String version) {
         this.version = version;
 
         return this;
     }
 
-    public String getPackage( )
-    {
+    public String getPackage() {
         return packageName;
     }
 
-    public ArchetypeGenerationRequest setPackage( final String packageName )
-    {
+    public ArchetypeGenerationRequest setPackage(final String packageName) {
         this.packageName = packageName;
 
         return this;
     }
 
-    public Properties getProperties( )
-    {
+    public Properties getProperties() {
         return properties;
     }
 
-    public ArchetypeGenerationRequest setProperties( final Properties additionalProperties )
-    {
+    public ArchetypeGenerationRequest setProperties(final Properties additionalProperties) {
         this.properties = additionalProperties;
 
         return this;
     }
 
-    public ArtifactRepository getLocalRepository( )
-    {
+    public ArtifactRepository getLocalRepository() {
         return localRepository;
     }
 
-    public ArchetypeGenerationRequest setLocalRepository( final ArtifactRepository localRepository )
-    {
+    public ArchetypeGenerationRequest setLocalRepository(final ArtifactRepository localRepository) {
         this.localRepository = localRepository;
 
         return this;
     }
 
-    public String getOutputDirectory( )
-    {
+    public String getOutputDirectory() {
         return outputDirectory;
     }
 
-    public ArchetypeGenerationRequest setOutputDirectory( final String outputDirectory )
-    {
+    public ArchetypeGenerationRequest setOutputDirectory(final String outputDirectory) {
         this.outputDirectory = outputDirectory;
 
         return this;
     }
 
-    public boolean isInteractiveMode( )
-    {
+    public boolean isInteractiveMode() {
         return interactiveMode;
     }
 
-    public ArchetypeGenerationRequest setInteractiveMode( final boolean interactiveMode )
-    {
+    public ArchetypeGenerationRequest setInteractiveMode(final boolean interactiveMode) {
         this.interactiveMode = interactiveMode;
 
         return this;
     }
 
-    public boolean isOffline( )
-    {
+    public boolean isOffline() {
         return offline;
     }
 
-    public ArchetypeGenerationRequest setOffline( final boolean offline )
-    {
+    public ArchetypeGenerationRequest setOffline(final boolean offline) {
         this.offline = offline;
 
         return this;
     }
 
-    public TransferListener getTransferListener( )
-    {
+    public TransferListener getTransferListener() {
         return transferListener;
     }
 
-    public ArchetypeGenerationRequest setTransferListener( final TransferListener transferListener )
-    {
+    public ArchetypeGenerationRequest setTransferListener(final TransferListener transferListener) {
         this.transferListener = transferListener;
 
         return this;
     }
 
-    public Proxy getActiveProxy( )
-    {
+    public Proxy getActiveProxy() {
         return activeProxy;
     }
 
-    public ArchetypeGenerationRequest setActiveProxy( final Proxy activeProxy )
-    {
+    public ArchetypeGenerationRequest setActiveProxy(final Proxy activeProxy) {
         this.activeProxy = activeProxy;
 
         return this;
     }
 
-    public ArchetypeGenerationRequest addMirror( final Mirror mirror )
-    {
-        mirrors.add( mirror );
+    public ArchetypeGenerationRequest addMirror(final Mirror mirror) {
+        mirrors.add(mirror);
 
         return this;
     }
 
-    public List<Mirror> getMirrors( )
-    {
+    public List<Mirror> getMirrors() {
         return mirrors;
     }
 
-    public ArchetypeGenerationRequest addMirror( final Server server )
-    {
-        servers.add( server );
+    public ArchetypeGenerationRequest addMirror(final Server server) {
+        servers.add(server);
 
         return this;
     }
 
-    public List<Server> getServers( )
-    {
+    public List<Server> getServers() {
         return servers;
     }
-    
-    public List<ArtifactRepository> getRemoteArtifactRepositories()
-    {
+
+    public List<ArtifactRepository> getRemoteArtifactRepositories() {
         return remoteArtifactRepositories;
     }
 
-    public ArchetypeGenerationRequest setRemoteArtifactRepositories( final List<ArtifactRepository> remoteArtifactRepositories )
-    {
+    public ArchetypeGenerationRequest setRemoteArtifactRepositories(final List<ArtifactRepository> remoteArtifactRepositories) {
         this.remoteArtifactRepositories = remoteArtifactRepositories;
 
         return this;

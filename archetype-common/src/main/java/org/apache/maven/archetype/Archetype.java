@@ -28,23 +28,25 @@ import java.io.IOException;
 /** @author Jason van Zyl */
 public interface Archetype
 {
-    String ROLE = Archetype.class.getName();
+    /**
+     * A command to create an archetype from an existing Maven project given the supplied creation
+     * request.
+     * 
+     * @param request
+     * @return The result of creating the archetype from the existing project. It contains any
+     *         errors that might have occurred.
+     */
+    ArchetypeCreationResult createArchetypeFromProject(ArchetypeCreationRequest request);
 
     /**
-     * A command to create an archetype from an existing Maven project given the supplied creation request.
-     *
+     * A command to generate a Maven project from an archetype given the supplied generation
+     * request.
+     * 
      * @param request
-     * @return The result of creating the archetype from the existing project. It contains any errors that might have occurred.
+     * @return The result of creating the project from the existing archetype. It contains any
+     *         errors that might have occurred.
      */
-    ArchetypeCreationResult createArchetypeFromProject( ArchetypeCreationRequest request );
-
-    /**
-     * A command to generate a Maven project from an archetype given the supplied generation request.
-     *
-     * @param request
-     * @return The result of creating the project from the existing archetype. It contains any errors that might have occurred.
-     */
-    ArchetypeGenerationResult generateProjectFromArchetype( ArchetypeGenerationRequest request );
+    ArchetypeGenerationResult generateProjectFromArchetype(ArchetypeGenerationRequest request);
 
     /**
      * Gives the catalog of archetypes internal to the plugin.
@@ -55,39 +57,40 @@ public interface Archetype
 
     /**
      * Gives the catalog of archetypes located in $user.home/.m2/repository/archetype-catalog.xml.
+     * 
      * @return the catalog.
      */
     ArchetypeCatalog getDefaultLocalCatalog();
 
     /**
-     * Gives the catalog of archetypes located in the given path.
-     * if path is a file, it used as is.
+     * Gives the catalog of archetypes located in the given path. if path is a file, it used as is.
      * if path is a directory, archetype-catalog.xml is appended to it.
-     *
+     * 
      * @param path the catalog file path or directory containing the catalog file.
      * @return the catalog.
      */
-    ArchetypeCatalog getLocalCatalog( String path );
+    ArchetypeCatalog getLocalCatalog(String path);
 
     /**
-     * Gives the catalog of archetypes located at http://repo1.maven.org/maven2/archetype-catalog.xml.
-     *
+     * Gives the catalog of archetypes located at
+     * http://repo1.maven.org/maven2/archetype-catalog.xml.
+     * 
      * @return the catalog.
      */
     ArchetypeCatalog getRemoteCatalog();
 
     /**
-     * Gives the catalog of archetypes located at the given url.
-     * if the url doesn't define a catalog, then 'archetype-catalog.xml' is appended to it for search.
-     *
+     * Gives the catalog of archetypes located at the given url. if the url doesn't define a
+     * catalog, then 'archetype-catalog.xml' is appended to it for search.
+     * 
      * @param url the catalog url or base url containing the catalog file.
      * @return the catalog.
      */
-    ArchetypeCatalog getRemoteCatalog( String url );
+    ArchetypeCatalog getRemoteCatalog(String url);
 
     /**
      * Creates a jar file for an archetype.
-     *
+     * 
      * @param archetypeDirectory
      * @param outputDirectory
      * @param finalName
@@ -95,11 +98,7 @@ public interface Archetype
      * @throws org.apache.maven.artifact.DependencyResolutionRequiredException
      * @throws java.io.IOException
      */
-    File archiveArchetype(
-        File archetypeDirectory,
-        File outputDirectory,
-        String finalName )
-        throws DependencyResolutionRequiredException, IOException;
+    File archiveArchetype(File archetypeDirectory, File outputDirectory, String finalName) throws DependencyResolutionRequiredException, IOException;
 
     void updateLocalCatalog(org.apache.maven.archetype.catalog.Archetype archetype, String path);
 

@@ -28,7 +28,8 @@ import org.codehaus.plexus.component.annotations.Requirement;
 import java.util.Iterator;
 
 @Component(role = ArchetypeGenerationQueryer.class)
-public class DefaultArchetypeGenerationQueryer implements ArchetypeGenerationQueryer
+public class DefaultArchetypeGenerationQueryer
+    implements ArchetypeGenerationQueryer
 {
     @Requirement
     private Prompter prompter;

@@ -27,7 +27,5 @@ import java.util.Properties;
 
 public interface ArchetypeCreationConfigurator
 {
-    String ROLE = ArchetypeCreationConfigurator.class.getName();
-
     Properties configureArchetypeCreation(MavenProject project, Boolean interactiveMode, Properties commandLineProperties, File propertyFile, List<String> languages) throws Exception;
 }

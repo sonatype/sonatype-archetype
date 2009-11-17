@@ -41,104 +41,88 @@ import java.util.zip.ZipOutputStream;
 /**
  * @author Jason van Zyl
  */
-@Component(role=Archetype.class)
+@Component(role = Archetype.class)
 public class DefaultArchetype
     implements Archetype
 {
     @Requirement
     private Logger log;
 
-    @Requirement(hint="fileset")
+    @Requirement(hint = "fileset")
     private ArchetypeCreator creator;
 
     @Requirement
     private ArchetypeGenerator generator;
 
-    @Requirement(role=ArchetypeDataSource.class)
+    @Requirement(role = ArchetypeDataSource.class)
     private Map<String,ArchetypeDataSource> archetypeSources;
 
-    public ArchetypeCreationResult createArchetypeFromProject( ArchetypeCreationRequest request )
-    {
+    public ArchetypeCreationResult createArchetypeFromProject(ArchetypeCreationRequest request) {
         ArchetypeCreationResult result = new ArchetypeCreationResult();
 
-        creator.createArchetype( request, result );
+        creator.createArchetype(request, result);
 
         return result;
     }
 
-    public ArchetypeGenerationResult generateProjectFromArchetype( ArchetypeGenerationRequest request )
-    {
+    public ArchetypeGenerationResult generateProjectFromArchetype(ArchetypeGenerationRequest request) {
         ArchetypeGenerationResult result = new ArchetypeGenerationResult();
 
-        generator.generateArchetype( request, result );
+        generator.generateArchetype(request, result);
 
         return result;
     }
 
-    public File archiveArchetype( File archetypeDirectory,
-                                  File outputDirectory,
-                                  String finalName )
-        throws DependencyResolutionRequiredException, IOException
-    {
-        File jarFile = new File( outputDirectory, finalName + ".jar" );
+    public File archiveArchetype(File archetypeDirectory, File outputDirectory, String finalName) throws DependencyResolutionRequiredException, IOException {
+        File jarFile = new File(outputDirectory, finalName + ".jar");
 
-        zip( archetypeDirectory, jarFile );
+        zip(archetypeDirectory, jarFile);
 
         return jarFile;
     }
 
-    //i need to make maven artifact compatible
+    // i need to make maven artifact compatible
 
-    public void zip( File sourceDirectory,
-                     File archive )
-        throws IOException
-    {
-        if ( !archive.getParentFile().exists() )
-        {
+    public void zip(File sourceDirectory, File archive) throws IOException {
+        if (!archive.getParentFile().exists()) {
             archive.getParentFile().mkdirs();
         }
 
-        ZipOutputStream zos = new ZipOutputStream( new FileOutputStream( archive ) );
+        ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(archive));
 
-        zos.setLevel( 9 );
+        zos.setLevel(9);
 
-        zipper( zos, sourceDirectory.getAbsolutePath().length(), sourceDirectory );
+        zipper(zos, sourceDirectory.getAbsolutePath().length(), sourceDirectory);
 
         zos.close();
     }
 
-    private void zipper( ZipOutputStream zos,
-                         int offset,
-                         File currentSourceDirectory )
-        throws IOException
-    {
+    private void zipper(ZipOutputStream zos, int offset, File currentSourceDirectory) throws IOException {
         File[] files = currentSourceDirectory.listFiles();
 
-        for ( int i = 0; i < files.length; i++ )
-        {
-            if ( files[i].isDirectory() )
-            {
-                zipper( zos, offset, files[i] );
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isDirectory()) {
+                zipper(zos, offset, files[i]);
             }
-            else
-            {
-                String fileName = files[i].getAbsolutePath().substring( offset + 1 );
-                
-                if(File.separatorChar != '/'){ fileName = fileName.replace('\\', '/'); }
+            else {
+                String fileName = files[i].getAbsolutePath().substring(offset + 1);
 
-                ZipEntry e = new ZipEntry( fileName );
+                if (File.separatorChar != '/') {
+                    fileName = fileName.replace('\\', '/');
+                }
 
-                zos.putNextEntry( e );
+                ZipEntry e = new ZipEntry(fileName);
 
-                FileInputStream is = new FileInputStream( files[i] );
+                zos.putNextEntry(e);
+
+                FileInputStream is = new FileInputStream(files[i]);
 
                 byte[] buf = new byte[4096];
 
                 int n;
 
-                while ( ( n = is.read( buf ) ) > 0 )
-                {
-                    zos.write( buf, 0, n );
+                while ((n = is.read(buf)) > 0) {
+                    zos.write(buf, 0, n);
                 }
 
                 is.close();
@@ -150,61 +134,50 @@ public class DefaultArchetype
         }
     }
 
-    public ArchetypeCatalog getInternalCatalog()
-    {
-        try
-        {
-            ArchetypeDataSource source = archetypeSources.get( "internal-catalog" );
+    public ArchetypeCatalog getInternalCatalog() {
+        try {
+            ArchetypeDataSource source = archetypeSources.get("internal-catalog");
             assert source != null;
 
-            return source.getArchetypeCatalog( new Properties() );
+            return source.getArchetypeCatalog(new Properties());
         }
-        catch ( ArchetypeDataSourceException e )
-        {
+        catch (ArchetypeDataSourceException e) {
             return new ArchetypeCatalog();
         }
     }
 
-    public ArchetypeCatalog getDefaultLocalCatalog()
-    {
+    public ArchetypeCatalog getDefaultLocalCatalog() {
         return getLocalCatalog("${user.home}/.m2/archetype-catalog.xml");
     }
 
-    public ArchetypeCatalog getLocalCatalog( String path )
-    {
-        try
-        {
-            Properties properties=new Properties();
+    public ArchetypeCatalog getLocalCatalog(String path) {
+        try {
+            Properties properties = new Properties();
             properties.setProperty("file", path);
-            ArchetypeDataSource source = archetypeSources.get( "catalog" );
+            ArchetypeDataSource source = archetypeSources.get("catalog");
             assert source != null;
 
-            return source.getArchetypeCatalog( properties );
+            return source.getArchetypeCatalog(properties);
         }
-        catch ( ArchetypeDataSourceException e )
-        {
+        catch (ArchetypeDataSourceException e) {
             return new ArchetypeCatalog();
         }
     }
 
-    public ArchetypeCatalog getRemoteCatalog()
-    {
+    public ArchetypeCatalog getRemoteCatalog() {
         return getRemoteCatalog("http://repo1.maven.org/maven2");
     }
 
-    public ArchetypeCatalog getRemoteCatalog( String url )
-    {
-        try
-        {
-            Properties properties=new Properties();
+    public ArchetypeCatalog getRemoteCatalog(String url) {
+        try {
+            Properties properties = new Properties();
             properties.setProperty("repository", url);
-            ArchetypeDataSource source = archetypeSources.get( "remote-catalog" );
+            ArchetypeDataSource source = archetypeSources.get("remote-catalog");
             assert source != null;
 
-            return source.getArchetypeCatalog( properties );
+            return source.getArchetypeCatalog(properties);
         }
-        catch ( ArchetypeDataSourceException e )
-        {
+        catch (ArchetypeDataSourceException e) {
             return new ArchetypeCatalog();
         }
     }
@@ -215,18 +188,15 @@ public class DefaultArchetype
 
     public void updateLocalCatalog(org.apache.maven.archetype.catalog.Archetype archetype, String path) {
         log.debug("Updating local catalog; archetype: " + archetype + ", path: " + path);
-        
-        try
-        {
-            Properties properties=new Properties();
+
+        try {
+            Properties properties = new Properties();
             properties.setProperty("file", path);
-            ArchetypeDataSource source = archetypeSources.get( "catalog" );
+            ArchetypeDataSource source = archetypeSources.get("catalog");
             assert source != null;
-            
+
             source.updateCatalog(properties, archetype);
         }
-        catch ( ArchetypeDataSourceException e )
-        {
-        }
+        catch (ArchetypeDataSourceException e) {}
     }
 }

@@ -28,20 +28,19 @@ import org.apache.maven.plugin.MojoFailureException;
 import java.io.File;
 
 /**
- * Crawl a Maven 2 repository (Filesystem, not HTTP)
- * and creates a catalog file.
+ * Crawl a Maven 2 repository (Filesystem, not HTTP) and creates a catalog file.
  * 
- * @author           rafale
- * @requiresProject  false
- * @goal             crawl
+ * @author rafale
+ * @requiresProject false
+ * @goal crawl
  */
 public class CrawlMojo
-extends AbstractMojo
+    extends AbstractMojo
 {
     /**
      * The archetype's catalog to update.
-     *
-     * @parameter  expression="${catalog}"
+     * 
+     * @parameter expression="${catalog}"
      */
     private File catalogFile;
 
@@ -52,23 +51,20 @@ extends AbstractMojo
 
     /**
      * The repository to crawl.
-     *
-     * @parameter  expression="${repository}" default-value="${settings.localRepository}"
+     * 
+     * @parameter expression="${repository}" default-value="${settings.localRepository}"
      * @required
      */
     private File repository;
 
-    public void execute ()
-    throws MojoExecutionException, MojoFailureException
-    {
-        System.err.println ( "repository " + repository );
-        System.err.println ( "catalogFile " + catalogFile );
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        System.err.println("repository " + repository);
+        System.err.println("catalogFile " + catalogFile);
 
-        ArchetypeCatalog catalog = crawler.crawl ( repository );
-        if ( catalogFile == null )
-        {
-            catalogFile = new File ( repository, "archetype-catalog.xml" );
+        ArchetypeCatalog catalog = crawler.crawl(repository);
+        if (catalogFile == null) {
+            catalogFile = new File(repository, "archetype-catalog.xml");
         }
-        crawler.writeCatalog ( catalog, catalogFile );
+        crawler.writeCatalog(catalog, catalogFile);
     }
 }

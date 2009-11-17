@@ -27,8 +27,6 @@ import java.util.Properties;
 
 public interface ArchetypeFactory
 {
-    String ROLE = ArchetypeFactory.class.getName();
-
     ArchetypeConfiguration createArchetypeConfiguration(org.apache.maven.archetype.old.descriptor.ArchetypeDescriptor archetypeDescriptor, Properties properties);
 
     ArchetypeConfiguration createArchetypeConfiguration(org.apache.maven.archetype.metadata.ArchetypeDescriptor archetypeDescriptor, Properties properties);

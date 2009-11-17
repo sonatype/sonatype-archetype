@@ -32,7 +32,6 @@ under the License.
 
     <artifactId>archetype-common</artifactId>
     <name>Maven Archetype Common</name>
-    <packaging>jar</packaging>
 
     <properties>
         <!-- HACK: Tests fail all over right now, so skip them -->

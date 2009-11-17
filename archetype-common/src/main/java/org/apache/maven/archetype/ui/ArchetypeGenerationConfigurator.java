@@ -25,7 +25,5 @@ import java.util.Properties;
 
 public interface ArchetypeGenerationConfigurator
 {
-    String ROLE = ArchetypeGenerationConfigurator.class.getName();
-
-    public void configureArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, Properties commandLineProperties) throws Exception;
+    void configureArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, Properties commandLineProperties) throws Exception;
 }

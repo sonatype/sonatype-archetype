@@ -24,8 +24,6 @@ import org.apache.maven.archetype.ui.prompt.PrompterException;
 
 public interface ArchetypeCreationQueryer
 {
-    String ROLE = ArchetypeCreationQueryer.class.getName();
-
     String getArchetypeArtifactId(String defaultValue) throws PrompterException;
 
     String getArchetypeGroupId(String defaultValue) throws PrompterException;

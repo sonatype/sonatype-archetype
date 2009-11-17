@@ -1,3 +1,4 @@
+
 package org.apache.maven.archetype.ui.prompt;
 
 /*
@@ -26,20 +27,22 @@ package org.apache.maven.archetype.ui.prompt;
 
 /**
  * Error while prompting.
- *
+ * 
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
  * @version $Id: PrompterException.java 2649 2005-10-10 16:51:51Z brett $
  */
 public class PrompterException
     extends Exception
 {
-    public PrompterException( String message )
-    {
-        super( message );
+    ///CLOVER:OFF
+    
+    private static final long serialVersionUID = 1;
+    
+    public PrompterException(String message) {
+        super(message);
     }
 
-    public PrompterException( String message, Throwable cause )
-    {
-        super( message, cause );
+    public PrompterException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

@@ -20,7 +20,8 @@ import java.util.List;
  * @author raphaelpieroni
  */
 @Component(role = Prompter.class, hint = "archetype")
-public class ArchetypePrompter implements Prompter
+public class ArchetypePrompter
+    implements Prompter
 {
 
     @Requirement

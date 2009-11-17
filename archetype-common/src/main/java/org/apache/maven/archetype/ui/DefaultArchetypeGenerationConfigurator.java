@@ -45,7 +45,8 @@ import java.util.Properties;
 
 // TODO: this seems to have more responsibilities than just a configurator
 @Component(role = ArchetypeGenerationConfigurator.class)
-public class DefaultArchetypeGenerationConfigurator implements ArchetypeGenerationConfigurator
+public class DefaultArchetypeGenerationConfigurator
+    implements ArchetypeGenerationConfigurator
 {
     @Requirement
     private Logger log;
@@ -266,7 +267,8 @@ public class DefaultArchetypeGenerationConfigurator implements ArchetypeGenerati
         }
     }
 
-    public static class RequiredPropertyComparator implements Comparator
+    public static class RequiredPropertyComparator
+        implements Comparator
     {
         private final ArchetypeConfiguration archetypeConfiguration;
 

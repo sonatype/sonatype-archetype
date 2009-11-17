@@ -27,7 +27,6 @@ import org.apache.maven.artifact.repository.DefaultArtifactRepository;
 import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.ProjectBuilder;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
@@ -137,7 +136,7 @@ public class DefaultArchetypeCreatorTest
             .setPackageName( p.getProperty( Constants.PACKAGE ) )
             .setProperties( p )
             .setLanguages( languages )
-            .setFiltereds( filtereds )
+            .setFilteredExtensions( filtereds )
             .setDefaultEncoding( "UTF-8" )
             .setPartialArchetype( false )
             .setPreserveCData( false )

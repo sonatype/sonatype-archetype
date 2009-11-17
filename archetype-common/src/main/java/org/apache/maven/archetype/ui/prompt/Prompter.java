@@ -1,3 +1,4 @@
+
 package org.apache.maven.archetype.ui.prompt;
 
 /*
@@ -28,23 +29,21 @@ import java.util.List;
 
 /**
  * Prompt the user for input.
- *
+ * 
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
  * @version $Id: Prompter.java 2649 2005-10-10 16:51:51Z brett $
  */
 public interface Prompter
 {
-    String ROLE = Prompter.class.getName();
+    String prompt(String message) throws PrompterException;
 
-    String prompt( String message ) throws PrompterException;
+    String prompt(String message, String defaultReply) throws PrompterException;
 
-    String prompt( String message, String defaultReply ) throws PrompterException;
+    String prompt(String message, List possibleValues) throws PrompterException;
 
-    String prompt( String message, List possibleValues ) throws PrompterException;
+    String prompt(String message, List possibleValues, String defaultReply) throws PrompterException;
 
-    String prompt( String message, List possibleValues, String defaultReply ) throws PrompterException;
+    String promptForPassword(String message) throws PrompterException;
 
-    String promptForPassword( String message ) throws PrompterException;
-
-    void showMessage( String message ) throws PrompterException;
+    void showMessage(String message) throws PrompterException;
 }

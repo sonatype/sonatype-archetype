@@ -1,3 +1,4 @@
+
 package org.apache.maven.archetype.ui.prompt;
 
 /*
@@ -34,37 +35,30 @@ import java.io.PrintWriter;
 
 /**
  * Default output handler, that uses the console.
- *
+ * 
  * @author Brett Porter
  * @version $Id: DefaultOutputHandler.java 2648 2005-10-10 16:41:24Z brett $
  */
-@Component(role=OutputHandler.class)
+@Component(role = OutputHandler.class)
 public class DefaultOutputHandler
     implements Initializable, Disposable, OutputHandler
 {
     private PrintWriter consoleWriter;
 
-    public void initialize()
-        throws InitializationException
-    {
-        consoleWriter = new PrintWriter( System.out );
+    public void initialize() throws InitializationException {
+        consoleWriter = new PrintWriter(System.out);
     }
 
-    public void dispose()
-    {
+    public void dispose() {
         consoleWriter.close();
     }
 
-    public void write( String line )
-        throws IOException
-    {
-        consoleWriter.print( line );
+    public void write(String line) throws IOException {
+        consoleWriter.print(line);
         consoleWriter.flush();
     }
 
-    public void writeLine( String line )
-        throws IOException
-    {
+    public void writeLine(String line) throws IOException {
         consoleWriter.println();
     }
 }

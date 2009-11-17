@@ -35,7 +35,8 @@ import java.util.List;
 import java.util.Map;
 
 @Component(role = ArchetypeSelectionQueryer.class)
-public class DefaultArchetypeSelectionQueryer implements ArchetypeSelectionQueryer
+public class DefaultArchetypeSelectionQueryer
+    implements ArchetypeSelectionQueryer
 {
     @Requirement(hint = "archetype")
     private Prompter prompter;
@@ -50,7 +51,7 @@ public class DefaultArchetypeSelectionQueryer implements ArchetypeSelectionQuery
 
     public Archetype selectArchetype(List<Archetype> archetypes) throws PrompterException {
         String query = "Choose archetype:\n";
-        Map<String, Archetype> answerMap = new HashMap<String, Archetype>();
+        Map<String,Archetype> answerMap = new HashMap<String,Archetype>();
         List<String> answers = new ArrayList<String>();
         int counter = 1;
 
@@ -67,14 +68,14 @@ public class DefaultArchetypeSelectionQueryer implements ArchetypeSelectionQuery
         return answerMap.get(answer);
     }
 
-    public Archetype selectArchetype(Map<String, List<Archetype>> catalogs) throws PrompterException {
+    public Archetype selectArchetype(Map<String,List<Archetype>> catalogs) throws PrompterException {
         return selectArchetype(catalogs, null);
     }
 
-    public Archetype selectArchetype(Map<String, List<Archetype>> catalogs, ArchetypeDefinition defaultDefinition) throws PrompterException {
+    public Archetype selectArchetype(Map<String,List<Archetype>> catalogs, ArchetypeDefinition defaultDefinition) throws PrompterException {
         String query = "Choose archetype:\n";
-        Map<String, List<Archetype>> archetypeAnswerMap = new HashMap<String, List<Archetype>>();
-        Map<String, String> reversedArchetypeAnswerMap = new HashMap<String, String>();
+        Map<String,List<Archetype>> archetypeAnswerMap = new HashMap<String,List<Archetype>>();
+        Map<String,String> reversedArchetypeAnswerMap = new HashMap<String,String>();
         List<String> answers = new ArrayList<String>();
         List<Archetype> archetypeVersions;
         int counter = 1;
@@ -129,7 +130,7 @@ public class DefaultArchetypeSelectionQueryer implements ArchetypeSelectionQuery
 
     private Archetype selectVersion(List<Archetype> archetypes) throws PrompterException {
         String query = "Choose version: \n";
-        Map<String, Archetype> answerMap = new HashMap<String, Archetype>();
+        Map<String,Archetype> answerMap = new HashMap<String,Archetype>();
         List<String> answers = new ArrayList<String>();
 
         Collections.sort(archetypes, new Comparator<Archetype>()

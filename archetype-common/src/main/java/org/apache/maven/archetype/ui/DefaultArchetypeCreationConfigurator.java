@@ -45,7 +45,8 @@ import java.util.List;
 import java.util.Properties;
 
 @Component(role = ArchetypeCreationConfigurator.class)
-public class DefaultArchetypeCreationConfigurator implements ArchetypeCreationConfigurator
+public class DefaultArchetypeCreationConfigurator
+    implements ArchetypeCreationConfigurator
 {
     @Requirement
     private Logger log;
@@ -59,8 +60,7 @@ public class DefaultArchetypeCreationConfigurator implements ArchetypeCreationCo
     @Requirement
     private ArchetypeFilesResolver archetypeFilesResolver;
 
-    public Properties configureArchetypeCreation(MavenProject project, Boolean interactiveMode, Properties commandLineProperties, File propertyFile, List<String> languages) throws Exception
-    {
+    public Properties configureArchetypeCreation(MavenProject project, Boolean interactiveMode, Properties commandLineProperties, File propertyFile, List<String> languages) throws Exception {
         Properties properties = initialiseArchetypeProperties(commandLineProperties, propertyFile);
 
         ArchetypeDefinition archetypeDefinition = archetypeFactory.createArchetypeDefinition(properties);
@@ -209,12 +209,7 @@ public class DefaultArchetypeCreationConfigurator implements ArchetypeCreationCo
             properties.setProperty(Constants.ARCHETYPE_VERSION, project.getVersion());
         }
 
-        if (StringUtils.isEmpty(properties.getProperty(Constants.PACKAGE/*
-                                                                         * , properties.getProperty
-                                                                         * ( Constants.PACKAGE_NAME
-                                                                         * )
-                                                                         */
-        ))) {
+        if (StringUtils.isEmpty(properties.getProperty(Constants.PACKAGE))) {
             if (StringUtils.isEmpty(resolvedPackage)) {
                 resolvedPackage = project.getGroupId();
             }

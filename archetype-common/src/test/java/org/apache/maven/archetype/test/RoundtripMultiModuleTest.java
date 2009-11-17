@@ -106,7 +106,7 @@ public class RoundtripMultiModuleTest
 
         ArchetypeCreationRequest acr = new ArchetypeCreationRequest().setProject( project ).
             setLocalRepository( localRepository )
-            .setFiltereds(Constants.DEFAULT_FILTERED_EXTENSIONS)
+            .setFilteredExtensions(Constants.DEFAULT_FILTERED_EXTENSIONS)
             .setLanguages(Constants.DEFAULT_LANGUAGES)
             .setPostPhase( "package" )
             ;

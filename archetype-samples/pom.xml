@@ -1,29 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.sonatype.maven.archetype</groupId>
+        <artifactId>maven-archetype</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-  <parent>
-    <artifactId>maven-archetype</artifactId>
-    <groupId>org.sonatype.maven.archetype</groupId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
-
-  <groupId>org.apache.maven.archetypes</groupId>
-  <artifactId>archetype-samples</artifactId>
+    <groupId>org.apache.maven.archetypes</groupId>
+    <artifactId>archetype-samples</artifactId>
 
 
-  <name>Maven Archetype Samples</name>
-  <packaging>pom</packaging>
+    <name>Maven Archetype Samples</name>
+    <packaging>pom</packaging>
 
-  <!--modules>
-    <module>quickstart</module>
-    <module>mojo</module>
-    <module>webapp</module>
-  </modules-->
+    <!--modules>
+      <module>quickstart</module>
+      <module>mojo</module>
+      <module>webapp</module>
+    </modules-->
 
-  <properties>
-    <archetype.properties>archetype.properties</archetype.properties>
-  </properties>
+    <properties>
+        <archetype.properties>archetype.properties</archetype.properties>
+    </properties>
 
 </project>
