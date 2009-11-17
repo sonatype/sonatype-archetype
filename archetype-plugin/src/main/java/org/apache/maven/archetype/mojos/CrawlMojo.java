@@ -58,8 +58,8 @@ public class CrawlMojo
     private File repository;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        System.err.println("repository " + repository);
-        System.err.println("catalogFile " + catalogFile);
+        getLog().debug("repository " + repository);
+        getLog().debug("catalogFile " + catalogFile);
 
         ArchetypeCatalog catalog = crawler.crawl(repository);
         if (catalogFile == null) {
