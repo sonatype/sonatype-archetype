@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.apache.maven.archetype.ui;
+package org.apache.maven.archetype.ui.prompt;
 
 import org.apache.maven.archetype.ui.prompt.InputHandler;
 import org.apache.maven.archetype.ui.prompt.OutputHandler;
