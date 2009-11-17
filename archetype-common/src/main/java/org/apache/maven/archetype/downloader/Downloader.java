@@ -1,3 +1,4 @@
+
 package org.apache.maven.archetype.downloader;
 
 import org.apache.maven.artifact.repository.ArtifactRepository;
@@ -10,21 +11,9 @@ import java.util.List;
  */
 public interface Downloader
 {
-    String ROLE = Downloader.class.getName();
+    File download(String groupId, String artifactId, String version, ArtifactRepository archetypeRepository, ArtifactRepository localRepository, List<ArtifactRepository> remoteRepositories)
+            throws DownloadException, DownloadNotFoundException;
 
-    public File download( String groupId,
-                          String artifactId,
-                          String version,
-                          ArtifactRepository archetypeRepository,
-                          ArtifactRepository localRepository,
-                          List<ArtifactRepository> remoteRepositories )
-        throws DownloadException, DownloadNotFoundException;
-
-    public File downloadOld( String groupId,
-                          String artifactId,
-                          String version,
-                          ArtifactRepository archetypeRepository,
-                          ArtifactRepository localRepository,
-                          List<ArtifactRepository> remoteRepositories )
-        throws DownloadException, DownloadNotFoundException;
+    File downloadOld(String groupId, String artifactId, String version, ArtifactRepository archetypeRepository, ArtifactRepository localRepository, List<ArtifactRepository> remoteRepositories)
+            throws DownloadException, DownloadNotFoundException;
 }

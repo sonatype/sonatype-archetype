@@ -24,13 +24,11 @@ import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import java.io.File;
 
 /**
- * @author  rafale
+ * @author rafale
  */
 public interface RepositoryCrawler
 {
-    String ROLE = RepositoryCrawler.class.getName ();
+    ArchetypeCatalog crawl(File repository);
 
-    ArchetypeCatalog crawl ( File repository );
-    
-    boolean writeCatalog (ArchetypeCatalog archetypeCatalog, File archetypeCatalogFile);
+    boolean writeCatalog(ArchetypeCatalog archetypeCatalog, File archetypeCatalogFile);
 }

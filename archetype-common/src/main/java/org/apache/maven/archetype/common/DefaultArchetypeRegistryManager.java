@@ -46,11 +46,12 @@ import java.util.List;
 public class DefaultArchetypeRegistryManager
     implements ArchetypeRegistryManager
 {
-//    private static File DEFAULT_REGISTRY = new File( System.getProperty( "user.home" ), ".m2/archetype.xml" );
+    // private static File DEFAULT_REGISTRY = new File( System.getProperty( "user.home" ),
+    // ".m2/archetype.xml" );
 
     @Requirement
     private Logger log;
-    
+
     /**
      * Used to create ArtifactRepository objects given the urls of the remote repositories.
      */
@@ -64,119 +65,86 @@ public class DefaultArchetypeRegistryManager
     private ArtifactRepositoryLayout defaultArtifactRepositoryLayout;
 
     public List<String> getFilteredExtensions(String archetypeFilteredExtentions, File archetypeRegistryFile) throws IOException {
-        List<String> filteredExtensions = new ArrayList<String>();
+        List<String> filteredExtensions=new ArrayList<String>();
 
-        if ( StringUtils.isNotEmpty( archetypeFilteredExtentions ) )
-        {
-            filteredExtensions.addAll( Arrays.asList( StringUtils.split( archetypeFilteredExtentions, "," ) ) );
+        if (StringUtils.isNotEmpty(archetypeFilteredExtentions)) {
+            filteredExtensions.addAll(Arrays.asList(StringUtils.split(archetypeFilteredExtentions, ",")));
         }
 
-        try
-        {
-            ArchetypeRegistry registry = readArchetypeRegistry( archetypeRegistryFile );
+        try {
+            ArchetypeRegistry registry=readArchetypeRegistry(archetypeRegistryFile);
 
-            filteredExtensions.addAll( registry.getFilteredExtensions() );
+            filteredExtensions.addAll(registry.getFilteredExtensions());
         }
-        catch ( IOException e )
-        {
-            log.warn( "Can not read ~/m2/archetype.xml" );
+        catch (IOException e) {
+            log.warn("Can not read ~/m2/archetype.xml");
         }
-        catch ( XmlPullParserException e )
-        {
-            log.warn( "Can not read ~/m2/archetype.xml" );
+        catch (XmlPullParserException e) {
+            log.warn("Can not read ~/m2/archetype.xml");
         }
 
-        if ( filteredExtensions.isEmpty() )
-        {
-            filteredExtensions.addAll( Constants.DEFAULT_FILTERED_EXTENSIONS );
+        if (filteredExtensions.isEmpty()) {
+            filteredExtensions.addAll(Constants.DEFAULT_FILTERED_EXTENSIONS);
         }
 
         return filteredExtensions;
     }
 
-    public List<String> getLanguages( String archetypeLanguages,
-                              File archetypeRegistryFile )
-        throws IOException
-    {
-        List<String> languages = new ArrayList<String>();
+    public List<String> getLanguages(String archetypeLanguages, File archetypeRegistryFile) throws IOException {
+        List<String> languages=new ArrayList<String>();
 
-        if ( StringUtils.isNotEmpty( archetypeLanguages ) )
-        {
-            languages.addAll( Arrays.asList( StringUtils.split( archetypeLanguages, "," ) ) );
+        if (StringUtils.isNotEmpty(archetypeLanguages)) {
+            languages.addAll(Arrays.asList(StringUtils.split(archetypeLanguages, ",")));
         }
 
-        try
-        {
-            ArchetypeRegistry registry = readArchetypeRegistry( archetypeRegistryFile );
+        try {
+            ArchetypeRegistry registry=readArchetypeRegistry(archetypeRegistryFile);
 
-            languages.addAll( registry.getLanguages() );
+            languages.addAll(registry.getLanguages());
         }
-        catch ( IOException e )
-        {
-            log.warn( "Can not read ~/m2/archetype.xml" );
+        catch (IOException e) {
+            log.warn("Can not read ~/m2/archetype.xml");
         }
-        catch ( XmlPullParserException e )
-        {
-            log.warn( "Can not read ~/m2/archetype.xml" );
+        catch (XmlPullParserException e) {
+            log.warn("Can not read ~/m2/archetype.xml");
         }
 
-        if ( languages.isEmpty() )
-        {
-            languages.addAll( Constants.DEFAULT_LANGUAGES );
+        if (languages.isEmpty()) {
+            languages.addAll(Constants.DEFAULT_LANGUAGES);
         }
 
         return languages;
     }
 
-    public ArchetypeRegistry readArchetypeRegistry( File archetypeRegistryFile )
-        throws
-        IOException,
-        XmlPullParserException
-    {
-        if ( !archetypeRegistryFile.exists() )
-        {
+    public ArchetypeRegistry readArchetypeRegistry(File archetypeRegistryFile) throws IOException, XmlPullParserException {
+        if (!archetypeRegistryFile.exists()) {
             return getDefaultArchetypeRegistry();
         }
-        else
-        {
-            return readArchetypeRegistry( new FileReader( archetypeRegistryFile ) );
+        else {
+            return readArchetypeRegistry(new FileReader(archetypeRegistryFile));
         }
     }
 
-    public ArchetypeRegistry readArchetypeRegistry( Reader reader )
-        throws
-        IOException,
-        XmlPullParserException
-    {
-        ArchetypeRegistryXpp3Reader xpp3Reader = new ArchetypeRegistryXpp3Reader();
+    public ArchetypeRegistry readArchetypeRegistry(Reader reader) throws IOException, XmlPullParserException {
+        ArchetypeRegistryXpp3Reader xpp3Reader=new ArchetypeRegistryXpp3Reader();
 
-        try
-        {
-            return xpp3Reader.read( reader );
+        try {
+            return xpp3Reader.read(reader);
         }
-        finally
-        {
-            IOUtil.close( reader );
+        finally {
+            IOUtil.close(reader);
         }
     }
 
-    public void writeArchetypeRegistry(
-        File archetypeRegistryFile,
-        ArchetypeRegistry archetypeRegistry
-    )
-        throws
-        IOException
-    {
-        ArchetypeRegistryXpp3Writer writer = new ArchetypeRegistryXpp3Writer();
-        FileWriter fileWriter = new FileWriter( archetypeRegistryFile );
+    public void writeArchetypeRegistry(File archetypeRegistryFile, ArchetypeRegistry archetypeRegistry) throws IOException {
+        ArchetypeRegistryXpp3Writer writer=new ArchetypeRegistryXpp3Writer();
+        FileWriter fileWriter=new FileWriter(archetypeRegistryFile);
 
-        try
-        {
-            writer.write( fileWriter, archetypeRegistry );
+        try {
+            writer.write(fileWriter, archetypeRegistry);
         }
-        finally
-        {
-            IOUtil.close( fileWriter );
+        finally {
+            IOUtil.close(fileWriter);
         }
     }
 
@@ -184,41 +152,29 @@ public class DefaultArchetypeRegistryManager
      * Code stealed from MavenArchetypeMojo
      * (org.apache.maven.plugins:maven-archetype-plugin:1.0-alpha4).
      */
-    public ArtifactRepository createRepository( String url,
-                                                String repositoryId )
-    {
+    public ArtifactRepository createRepository(String url, String repositoryId) {
         // snapshots vs releases
         // offline = to turning the update policy off
 
         // TODO: we'll need to allow finer grained creation of repositories but this will do for now
 
-        String updatePolicyFlag = ArtifactRepositoryPolicy.UPDATE_POLICY_ALWAYS;
+        String updatePolicyFlag=ArtifactRepositoryPolicy.UPDATE_POLICY_ALWAYS;
 
-        String checksumPolicyFlag = ArtifactRepositoryPolicy.CHECKSUM_POLICY_WARN;
+        String checksumPolicyFlag=ArtifactRepositoryPolicy.CHECKSUM_POLICY_WARN;
 
-        ArtifactRepositoryPolicy snapshotsPolicy =
-            new ArtifactRepositoryPolicy( true, updatePolicyFlag, checksumPolicyFlag );
+        ArtifactRepositoryPolicy snapshotsPolicy=new ArtifactRepositoryPolicy(true, updatePolicyFlag, checksumPolicyFlag);
 
-        ArtifactRepositoryPolicy releasesPolicy =
-            new ArtifactRepositoryPolicy( true, updatePolicyFlag, checksumPolicyFlag );
+        ArtifactRepositoryPolicy releasesPolicy=new ArtifactRepositoryPolicy(true, updatePolicyFlag, checksumPolicyFlag);
 
-        return
-            artifactRepositoryFactory.createArtifactRepository(
-                repositoryId,
-                url,
-                defaultArtifactRepositoryLayout,
-                snapshotsPolicy,
-                releasesPolicy
-            );
+        return artifactRepositoryFactory.createArtifactRepository(repositoryId, url, defaultArtifactRepositoryLayout, snapshotsPolicy, releasesPolicy);
     }
 
-    public ArchetypeRegistry getDefaultArchetypeRegistry()
-    {
-        ArchetypeRegistry registry = new ArchetypeRegistry();
+    public ArchetypeRegistry getDefaultArchetypeRegistry() {
+        ArchetypeRegistry registry=new ArchetypeRegistry();
 
-        registry.getLanguages().addAll( Constants.DEFAULT_LANGUAGES );
+        registry.getLanguages().addAll(Constants.DEFAULT_LANGUAGES);
 
-        registry.getFilteredExtensions().addAll( Constants.DEFAULT_FILTERED_EXTENSIONS );
+        registry.getFilteredExtensions().addAll(Constants.DEFAULT_FILTERED_EXTENSIONS);
 
         return registry;
     }

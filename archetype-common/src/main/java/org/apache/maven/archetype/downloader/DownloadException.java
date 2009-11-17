@@ -1,3 +1,4 @@
+
 package org.apache.maven.archetype.downloader;
 
 /**
@@ -6,23 +7,19 @@ package org.apache.maven.archetype.downloader;
 public class DownloadException
     extends Exception
 {
-    ///CLOVER:OFF
+    // /CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID=1;
 
-    public DownloadException( String string )
-    {
-        super( string );
+    public DownloadException(String string) {
+        super(string);
     }
 
-    public DownloadException( String string,
-                              Throwable throwable )
-    {
-        super( string, throwable );
+    public DownloadException(String string, Throwable throwable) {
+        super(string, throwable);
     }
 
-    public DownloadException( Throwable throwable )
-    {
-        super( throwable );
+    public DownloadException(Throwable throwable) {
+        super(throwable);
     }
 }

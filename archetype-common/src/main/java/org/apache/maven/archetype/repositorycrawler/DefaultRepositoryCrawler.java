@@ -39,146 +39,108 @@ import java.io.IOException;
 import java.util.Iterator;
 
 /**
- * @author            rafale
+ * @author rafale
  */
 @Component(role=RepositoryCrawler.class)
 public class DefaultRepositoryCrawler
-implements RepositoryCrawler
+    implements RepositoryCrawler
 {
     @Requirement
     private Logger log;
-    
+
     @Requirement
     private ArchetypeArtifactManager archetypeArtifactManager;
 
-    public ArchetypeCatalog crawl ( File repository )
-    {
-        if ( repository.isDirectory () )
-        {
-            ArchetypeCatalog catalog = new ArchetypeCatalog ();
-            Iterator jars =
-                FileUtils.listFiles ( repository, new String[] { "jar" }, true ).iterator ();
+    public ArchetypeCatalog crawl(File repository) {
+        if (repository.isDirectory()) {
+            ArchetypeCatalog catalog=new ArchetypeCatalog();
+            Iterator jars=FileUtils.listFiles(repository, new String[] { "jar" }, true).iterator();
 
-            while ( jars.hasNext () )
-            {
-                File jar = (File) jars.next ();
-                log.info ( "Scanning " + jar );
-                if ( archetypeArtifactManager.isFileSetArchetype ( jar )
-                    || archetypeArtifactManager.isOldArchetype ( jar )
-                )
-                {
-                    try
-                    {
-                        Archetype archetype = new Archetype ();
+            while (jars.hasNext()) {
+                File jar=(File) jars.next();
+                log.info("Scanning " + jar);
+                if (archetypeArtifactManager.isFileSetArchetype(jar) || archetypeArtifactManager.isOldArchetype(jar)) {
+                    try {
+                        Archetype archetype=new Archetype();
 
-                        Model pom = archetypeArtifactManager.getArchetypePom ( jar );
+                        Model pom=archetypeArtifactManager.getArchetypePom(jar);
 
-                        if ( archetypeArtifactManager.isFileSetArchetype ( jar ) )
-                        {
-                            org.apache.maven.archetype.metadata.ArchetypeDescriptor descriptor =
-                                archetypeArtifactManager.getFileSetArchetypeDescriptor ( jar );
-                            archetype.setDescription ( descriptor.getName () );
+                        if (archetypeArtifactManager.isFileSetArchetype(jar)) {
+                            org.apache.maven.archetype.metadata.ArchetypeDescriptor descriptor=archetypeArtifactManager.getFileSetArchetypeDescriptor(jar);
+                            archetype.setDescription(descriptor.getName());
                         }
-                        else
-                        {
-                            org.apache.maven.archetype.old.descriptor.ArchetypeDescriptor descriptor =
-                                archetypeArtifactManager.getOldArchetypeDescriptor ( jar );
-                            archetype.setDescription ( descriptor.getId () );
+                        else {
+                            org.apache.maven.archetype.old.descriptor.ArchetypeDescriptor descriptor=archetypeArtifactManager.getOldArchetypeDescriptor(jar);
+                            archetype.setDescription(descriptor.getId());
                         }
-                        if ( pom != null )
-                        {
-                            if ( pom.getGroupId () != null )
-                            {
-                                archetype.setGroupId ( pom.getGroupId () );
+                        if (pom != null) {
+                            if (pom.getGroupId() != null) {
+                                archetype.setGroupId(pom.getGroupId());
                             }
-                            else
-                            {
-                                archetype.setGroupId ( pom.getParent ().getGroupId () );
+                            else {
+                                archetype.setGroupId(pom.getParent().getGroupId());
                             }
-                            archetype.setArtifactId ( pom.getArtifactId () );
-                            if ( pom.getVersion () != null )
-                            {
-                                archetype.setVersion ( pom.getVersion () );
+                            archetype.setArtifactId(pom.getArtifactId());
+                            if (pom.getVersion() != null) {
+                                archetype.setVersion(pom.getVersion());
                             }
-                            else
-                            {
-                                archetype.setVersion ( pom.getParent ().getVersion () );
+                            else {
+                                archetype.setVersion(pom.getParent().getVersion());
                             }
-                            log.info ( "\tArchetype " + archetype + " found in pom" );
+                            log.info("\tArchetype " + archetype + " found in pom");
                         }
-                        else
-                        {
-                            String version = jar.getParentFile ().getName ();
+                        else {
+                            String version=jar.getParentFile().getName();
 
-                            String artifactId = jar.getParentFile ().getParentFile ().getName ();
+                            String artifactId=jar.getParentFile().getParentFile().getName();
 
-                            String groupIdSep =
-                                StringUtils.replace (
-                                    jar.getParentFile ().getParentFile ().getParentFile ()
-                                    .getPath (),
-                                    repository.getPath (),
-                                    ""
-                                );
-                            String groupId = groupIdSep.replace ( File.separatorChar, '.' );
-                            groupId =
-                                groupId.startsWith ( "." ) ? groupId.substring ( 1 ) : groupId;
-                            groupId =
-                                groupId.endsWith ( "." )
-                                ? groupId.substring ( 0, groupId.length () - 1 )
-                                : groupId;
+                            String groupIdSep=StringUtils.replace(jar.getParentFile().getParentFile().getParentFile().getPath(), repository.getPath(), "");
+                            String groupId=groupIdSep.replace(File.separatorChar, '.');
+                            groupId=groupId.startsWith(".") ? groupId.substring(1) : groupId;
+                            groupId=groupId.endsWith(".") ? groupId.substring(0, groupId.length() - 1) : groupId;
 
-                            archetype.setGroupId ( groupId );
-                            archetype.setArtifactId ( artifactId );
-                            archetype.setVersion ( version );
+                            archetype.setGroupId(groupId);
+                            archetype.setArtifactId(artifactId);
+                            archetype.setVersion(version);
 
-                            log.info (
-                                "\tArchetype " + archetype + " defined by repository path"
-                            );
+                            log.info("\tArchetype " + archetype + " defined by repository path");
                         } // end if-else
 
-                        catalog.addArchetype ( archetype );
+                        catalog.addArchetype(archetype);
                     }
-                    catch ( XmlPullParserException ex )
-                    {
-                        ex.printStackTrace ();
+                    catch (XmlPullParserException ex) {
+                        ex.printStackTrace();
                     }
-                    catch ( IOException ex )
-                    {
-                        ex.printStackTrace ();
+                    catch (IOException ex) {
+                        ex.printStackTrace();
                     }
-                    catch ( UnknownArchetype ex )
-                    {
-                        ex.printStackTrace ();
+                    catch (UnknownArchetype ex) {
+                        ex.printStackTrace();
                     } // end try-catch
                 } // end if
             } // end while
             return catalog;
         }
-        else
-        {
-            log.warn ( "File is not a directory" );
+        else {
+            log.warn("File is not a directory");
             return null;
         } // end if-else
     }
 
-    public boolean writeCatalog ( ArchetypeCatalog archetypeCatalog, File archetypeCatalogFile )
-    {
-        FileWriter fileWriter = null;
-        try
-        {
-            ArchetypeCatalogXpp3Writer catalogWriter = new ArchetypeCatalogXpp3Writer ();
+    public boolean writeCatalog(ArchetypeCatalog archetypeCatalog, File archetypeCatalogFile) {
+        FileWriter fileWriter=null;
+        try {
+            ArchetypeCatalogXpp3Writer catalogWriter=new ArchetypeCatalogXpp3Writer();
 
-            fileWriter = new FileWriter ( archetypeCatalogFile );
-            catalogWriter.write ( fileWriter, archetypeCatalog );
+            fileWriter=new FileWriter(archetypeCatalogFile);
+            catalogWriter.write(fileWriter, archetypeCatalog);
             return true;
         }
-        catch ( IOException ex )
-        {
-            log.warn ( "Catalog can not be writen to " + archetypeCatalogFile, ex );
+        catch (IOException ex) {
+            log.warn("Catalog can not be writen to " + archetypeCatalogFile, ex);
             return false;
         }
-        finally
-        {
+        finally {
             IOUtils.closeQuietly(fileWriter);
         }
     }

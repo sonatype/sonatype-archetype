@@ -24,63 +24,53 @@ import java.util.List;
 
 public interface Constants
 {
-    String ARCHETYPE_ARTIFACT_ID = "archetype.artifactId";
+    String ARCHETYPE_ARTIFACT_ID="archetype.artifactId";
 
-    String ARCHETYPE_GROUP_ID = "archetype.groupId";
+    String ARCHETYPE_GROUP_ID="archetype.groupId";
 
-    String ARCHETYPE_VERSION = "archetype.version";
+    String ARCHETYPE_VERSION="archetype.version";
 
-    String ARCHETYPE_REPOSITORY = "archetype.repository";
+    String ARCHETYPE_REPOSITORY="archetype.repository";
 
-    String ARCHETYPE_DESCRIPTOR = "META-INF/maven/archetype-metadata.xml";
+    String ARCHETYPE_DESCRIPTOR="META-INF/maven/archetype-metadata.xml";
 
-    String ARCHETYPE_POST_GENERATION_GOALS = "archetype.goals";
+    String ARCHETYPE_POST_GENERATION_GOALS="archetype.goals";
 
-    String ARCHETYPE_POM = "pom.xml";
+    String ARCHETYPE_POM="pom.xml";
 
-    String ARCHETYPE_RESOURCES = "archetype-resources";
+    String ARCHETYPE_RESOURCES="archetype-resources";
 
-    String ARCHETYPE_SUFFIX = "-archetype";
+    String ARCHETYPE_SUFFIX="-archetype";
 
-    String ARTIFACT_ID = "artifactId";
+    String ARTIFACT_ID="artifactId";
 
-    String ARCHETYPE_FILTERED_EXTENSIONS = "archetype.filteredExtensions";
-    
-    String ARCHETYPE_LANGUAGES = "archetype.languages";
+    String ARCHETYPE_FILTERED_EXTENSIONS="archetype.filteredExtensions";
 
-    List<String> DEFAULT_FILTERED_EXTENSIONS = Arrays.asList(
-            "java", "xml", "txt", "groovy", "cs", "mdo", "aj", "jsp", "gsp", "vm", "html",
-            "xhtml", "properties", ".classpath", ".project");
+    String ARCHETYPE_LANGUAGES="archetype.languages";
 
-    List<String> DEFAULT_LANGUAGES = Arrays.asList("java", "groovy", "csharp", "aspectj");
+    List<String> DEFAULT_FILTERED_EXTENSIONS=Arrays.asList("java", "xml", "txt", "groovy", "cs", "mdo", "aj", "jsp", "gsp", "vm", "html", "xhtml", "properties", ".classpath", ".project");
 
-    String GROUP_ID = "groupId";
+    List<String> DEFAULT_LANGUAGES=Arrays.asList("java", "groovy", "csharp", "aspectj");
 
-    String MAIN = "main";
+    String GROUP_ID="groupId";
 
-    String OLD_ARCHETYPE_DESCRIPTOR = "META-INF/maven/archetype.xml";
+    String MAIN="main";
 
-    String OLDER_ARCHETYPE_DESCRIPTOR = "META-INF/archetype.xml";
+    String OLD_ARCHETYPE_DESCRIPTOR="META-INF/maven/archetype.xml";
 
-    String PACKAGE = "package";
+    String OLDER_ARCHETYPE_DESCRIPTOR="META-INF/archetype.xml";
 
-    /*String PACKAGE_NAME = "packageName";*/
+    String PACKAGE="package";
 
-    String PACKAGE_IN_PATH_FORMAT = "packageInPathFormat";
+    String PACKAGE_IN_PATH_FORMAT="packageInPathFormat";
 
-    String PARENT_ARTIFACT_ID = "parentArtifactId";
+    String PARENT_ARTIFACT_ID="parentArtifactId";
 
-    String POM_PATH = Constants.ARCHETYPE_RESOURCES + "/" + Constants.ARCHETYPE_POM;
+    String RESOURCES="resources";
 
-    String RESOURCES = "resources";
+    String SRC="src";
 
-    String SITE = "site";
+    String TMP=".tmp";
 
-    String SRC = "src";
-
-    String TEST = "test";
-
-    String TMP = ".tmp";
-
-    String VERSION = "version";
+    String VERSION="version";
 }

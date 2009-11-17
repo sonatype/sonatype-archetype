@@ -32,20 +32,9 @@ import java.util.zip.ZipFile;
 
 public interface ArchetypeArtifactManager
 {
-    String ROLE = ArchetypeArtifactManager.class.getName();
+    Model getArchetypePom(File jar) throws XmlPullParserException, UnknownArchetype, IOException;
 
-    Model getArchetypePom(File jar)
-        throws XmlPullParserException, UnknownArchetype, IOException;
-
-    File getArchetypeFile(
-        final String groupId,
-        final String artifactId,
-        final String version,
-        ArtifactRepository archetypeRepository,
-        final ArtifactRepository localRepository,
-        final List<ArtifactRepository> repositories
-    )
-        throws UnknownArchetype;
+    File getArchetypeFile(String groupId, String artifactId, String version, ArtifactRepository archetypeRepository, ArtifactRepository localRepository, List<ArtifactRepository> repositories) throws UnknownArchetype;
 
     ClassLoader getArchetypeJarLoader(File archetypeFile) throws UnknownArchetype;
 
@@ -53,61 +42,24 @@ public interface ArchetypeArtifactManager
 
     boolean isFileSetArchetype(File archetypeFile);
 
-    boolean isFileSetArchetype(
-        String groupId,
-        String artifactId,
-        String version,
-        ArtifactRepository archetypeRepository,
-        ArtifactRepository localRepository,
-        List<ArtifactRepository> repositories
-    );
+    boolean isFileSetArchetype(String groupId, String artifactId, String version, ArtifactRepository archetypeRepository, ArtifactRepository localRepository, List<ArtifactRepository> repositories);
 
     boolean isOldArchetype(File archetypeFile);
 
-    boolean isOldArchetype(
-        String groupId,
-        String artifactId,
-        String version,
-        ArtifactRepository archetypeRepository,
-        ArtifactRepository localRepository,
-        List<ArtifactRepository> repositories
-    );
+    boolean isOldArchetype(String groupId, String artifactId, String version, ArtifactRepository archetypeRepository, ArtifactRepository localRepository, List<ArtifactRepository> repositories);
 
-    boolean exists(
-        String archetypeGroupId,
-        String archetypeArtifactId,
-        String archetypeVersion,
-        ArtifactRepository archetypeRepository,
-        ArtifactRepository localRepository,
-        List<ArtifactRepository> repos
-    );
+    boolean exists(String archetypeGroupId, String archetypeArtifactId, String archetypeVersion, ArtifactRepository archetypeRepository, ArtifactRepository localRepository,
+            List<ArtifactRepository> repos);
 
     ArchetypeDescriptor getFileSetArchetypeDescriptor(File archetypeFile) throws UnknownArchetype;
 
-    org.apache.maven.archetype.metadata.ArchetypeDescriptor getFileSetArchetypeDescriptor(
-        String groupId,
-        String artifactId,
-        String version,
-        ArtifactRepository archetypeRepository,
-        ArtifactRepository localRepository,
-        List<ArtifactRepository> repositories
-    )
-    throws UnknownArchetype;
+    org.apache.maven.archetype.metadata.ArchetypeDescriptor getFileSetArchetypeDescriptor(String groupId, String artifactId, String version, ArtifactRepository archetypeRepository,
+            ArtifactRepository localRepository, List<ArtifactRepository> repositories) throws UnknownArchetype;
 
     List<String> getFilesetArchetypeResources(File archetypeFile) throws UnknownArchetype;
 
-    org.apache.maven.archetype.old.descriptor.ArchetypeDescriptor getOldArchetypeDescriptor(
-        File archetypeFile
-    )
-        throws UnknownArchetype;
+    org.apache.maven.archetype.old.descriptor.ArchetypeDescriptor getOldArchetypeDescriptor(File archetypeFile) throws UnknownArchetype;
 
-    org.apache.maven.archetype.old.descriptor.ArchetypeDescriptor getOldArchetypeDescriptor(
-        String groupId,
-        String artifactId,
-        String version,
-        ArtifactRepository archetypeRepository,
-        ArtifactRepository localRepository,
-        List<ArtifactRepository> repositories
-    )
-        throws UnknownArchetype;
+    org.apache.maven.archetype.old.descriptor.ArchetypeDescriptor getOldArchetypeDescriptor(String groupId, String artifactId, String version, ArtifactRepository archetypeRepository,
+            ArtifactRepository localRepository, List<ArtifactRepository> repositories) throws UnknownArchetype;
 }

@@ -32,6 +32,7 @@ import org.apache.maven.model.Model;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.Logger;
+import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
@@ -131,7 +132,7 @@ public class DefaultArchetypeArtifactManager
             return pomManager.readPom(zipFile.getInputStream(pom));
         }
         finally {
-            closeZipFile(zipFile);
+            close(zipFile);
         }
     }
 
@@ -164,7 +165,7 @@ public class DefaultArchetypeArtifactManager
             return false;
         }
         finally {
-            closeZipFile(zipFile);
+            close(zipFile);
         }
     }
 
@@ -186,7 +187,7 @@ public class DefaultArchetypeArtifactManager
             return false;
         }
         finally {
-            closeZipFile(zipFile);
+            close(zipFile);
         }
     }
 
@@ -207,7 +208,7 @@ public class DefaultArchetypeArtifactManager
             return false;
         }
         finally {
-            closeZipFile(zipFile);
+            close(zipFile);
         }
     }
 
@@ -228,7 +229,7 @@ public class DefaultArchetypeArtifactManager
             return false;
         }
         finally {
-            closeZipFile(zipFile);
+            close(zipFile);
         }
     }
 
@@ -267,7 +268,7 @@ public class DefaultArchetypeArtifactManager
             throw new UnknownArchetype(e);
         }
         finally {
-            closeZipFile(zipFile);
+            close(zipFile);
         }
     }
 
@@ -286,7 +287,7 @@ public class DefaultArchetypeArtifactManager
             throw new UnknownArchetype(e);
         }
         finally {
-            closeZipFile(zipFile);
+            close(zipFile);
         }
     }
 
@@ -315,7 +316,7 @@ public class DefaultArchetypeArtifactManager
             return archetypeResources;
         }
         finally {
-            closeZipFile(zipFile);
+            close(zipFile);
         }
     }
 
@@ -333,7 +334,7 @@ public class DefaultArchetypeArtifactManager
             throw new UnknownArchetype(e);
         }
         finally {
-            closeZipFile(zipFile);
+            close(zipFile);
         }
     }
 
@@ -353,16 +354,18 @@ public class DefaultArchetypeArtifactManager
             throw new UnknownArchetype(e);
         }
         finally {
-            closeZipFile(zipFile);
+            close(zipFile);
         }
     }
 
-    private void closeZipFile(ZipFile zipFile) {
-        try {
-            zipFile.close();
-        }
-        catch (Exception e) {
-            log.error("Fail to close zipFile");
+    private void close(ZipFile zipFile) {
+        if (zipFile != null) {
+            try {
+                zipFile.close();
+            }
+            catch (Exception e) {
+                log.error("Fail to close zipFile");
+            }
         }
     }
 
@@ -445,7 +448,7 @@ public class DefaultArchetypeArtifactManager
             throw e;
         }
         finally {
-            reader.close();
+            IOUtil.close(reader);
         }
     }
 
@@ -479,9 +482,7 @@ public class DefaultArchetypeArtifactManager
                 descriptor=builder.build(reader);
             }
             finally {
-                if (reader != null) {
-                    reader.close();
-                }
+                IOUtil.close(reader);
             }
         }
 

@@ -1,3 +1,4 @@
+
 package org.apache.maven.archetype.downloader;
 
 import org.apache.maven.artifact.Artifact;
@@ -26,62 +27,45 @@ public class DefaultDownloader
     @Requirement
     private ArtifactFactory artifactFactory;
 
-    public File download( String groupId,
-                          String artifactId,
-                          String version,
-                          ArtifactRepository archetypeRepository,
-                          ArtifactRepository localRepository,
-                          List<ArtifactRepository> remoteRepositories )
-        throws DownloadException, DownloadNotFoundException
-   {
-        Artifact artifact = artifactFactory.createArtifact( groupId, artifactId, version, Artifact.SCOPE_RUNTIME, "jar" );
+    public File download(String groupId, String artifactId, String version, ArtifactRepository archetypeRepository, ArtifactRepository localRepository, List<ArtifactRepository> remoteRepositories)
+            throws DownloadException, DownloadNotFoundException
+    {
+        Artifact artifact=artifactFactory.createArtifact(groupId, artifactId, version, Artifact.SCOPE_RUNTIME, "jar");
 
-        List<ArtifactRepository> repositories = new ArrayList<ArtifactRepository>(remoteRepositories);
-        if ( repositories.isEmpty() && archetypeRepository != null )
-        {
+        List<ArtifactRepository> repositories=new ArrayList<ArtifactRepository>(remoteRepositories);
+        if (repositories.isEmpty() && archetypeRepository != null) {
             repositories.add(archetypeRepository);
         }
-        else if ( repositories.isEmpty() && localRepository != null )
-        {
+        else if (repositories.isEmpty() && localRepository != null) {
             repositories.add(localRepository);
-            
+
         }
-        ArtifactRepository localRepo = localRepository;
-        try
-        {
-            artifactResolver.resolve( artifact, repositories, localRepo );
+        ArtifactRepository localRepo=localRepository;
+        try {
+            artifactResolver.resolve(artifact, repositories, localRepo);
         }
-        catch ( ArtifactResolutionException e )
-        {
-            throw new DownloadException( "Error downloading.", e );
+        catch (ArtifactResolutionException e) {
+            throw new DownloadException("Error downloading.", e);
         }
-        catch ( ArtifactNotFoundException e )
-        {
-            throw new DownloadNotFoundException( "Requested download does not exist.", e );
+        catch (ArtifactNotFoundException e) {
+            throw new DownloadNotFoundException("Requested download does not exist.", e);
         }
 
         return artifact.getFile();
     }
-    public File downloadOld( String groupId,
-                          String artifactId,
-                          String version,
-                          ArtifactRepository archetypeRepository,
-                          ArtifactRepository localRepository,
-                          List<ArtifactRepository> remoteRepositories )
-        throws DownloadException, DownloadNotFoundException
-   {
-        Artifact artifact = artifactFactory.createArtifact( groupId, artifactId, version, Artifact.SCOPE_RUNTIME, "jar" );
-        try
-        {
-            artifactResolver.resolve( artifact, remoteRepositories, localRepository );
+
+    public File downloadOld(String groupId, String artifactId, String version, ArtifactRepository archetypeRepository, ArtifactRepository localRepository, List<ArtifactRepository> remoteRepositories)
+            throws DownloadException, DownloadNotFoundException
+    {
+        Artifact artifact=artifactFactory.createArtifact(groupId, artifactId, version, Artifact.SCOPE_RUNTIME, "jar");
+        try {
+            artifactResolver.resolve(artifact, remoteRepositories, localRepository);
         }
-        catch ( ArtifactResolutionException e )
-        {
-            throw new DownloadException( "Error downloading.", e );
+        catch (ArtifactResolutionException e) {
+            throw new DownloadException("Error downloading.", e);
         }
-        catch ( ArtifactNotFoundException e )
-        {
-            throw new DownloadNotFoundException( "Requested download does not exist.", e );
+        catch (ArtifactNotFoundException e) {
+            throw new DownloadNotFoundException("Requested download does not exist.", e);
         }
 
         return artifact.getFile();
