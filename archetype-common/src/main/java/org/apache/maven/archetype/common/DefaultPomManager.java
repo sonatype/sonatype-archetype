@@ -52,6 +52,9 @@ import org.dom4j.io.XMLWriter;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -81,10 +84,10 @@ public class DefaultPomManager
         boolean found=false;
 
         StringWriter writer=new StringWriter();
-        Reader fileReader=new FileReader(pom);
+        Reader fileReader = null;
 
         try {
-            fileReader=new FileReader(pom);
+            fileReader=new BufferedReader(new FileReader(pom));
 
             SAXReader reader=new SAXReader();
             Document document=reader.read(fileReader);
@@ -105,6 +108,7 @@ public class DefaultPomManager
                 modules.setText("\n  ");
                 project.addText("\n");
             }
+
             // TODO: change to while loop
             for (Iterator i=modules.elementIterator("module"); i.hasNext() && !found;) {
                 Element module=(Element) i.next();
@@ -112,6 +116,7 @@ public class DefaultPomManager
                     found=true;
                 }
             }
+
             if (!found) {
                 Node lastTextNode=null;
                 for (Iterator i=modules.nodeIterator(); i.hasNext();) {
@@ -136,7 +141,7 @@ public class DefaultPomManager
                 xmlWriter.write(document);
 
                 FileUtils.fileWrite(pom.getAbsolutePath(), writer.toString());
-            } // end if
+            }
         }
         finally {
             IOUtil.close(fileReader);
@@ -146,7 +151,7 @@ public class DefaultPomManager
     public void addParent(File pom, File parentPom) throws IOException, XmlPullParserException {
         Model generatedModel=readPom(pom);
         if (null != generatedModel.getParent()) {
-            log.info("Parent element not overwrited in " + pom);
+            log.info("Parent element not overwritten in " + pom);
             return;
         }
 
@@ -242,30 +247,15 @@ public class DefaultPomManager
         writePom(model, pom, pom);
     }
 
-    public Model readPom(final File pomFile) throws IOException, XmlPullParserException { // TODO
-                                                                                          // ensure
-                                                                                          // correct
-                                                                                          // encoding
-                                                                                          // by
-                                                                                          // using
-                                                                                          // default
-                                                                                          // one
-                                                                                          // from
-                                                                                          // method
-                                                                                          // argument
-                                                                                          // !!!
-
+    public Model readPom(final File pomFile) throws IOException, XmlPullParserException {
         Model model;
         Reader pomReader=null;
         try {
             FileCharsetDetector detector=new FileCharsetDetector(pomFile);
-
             String fileEncoding=detector.isFound() ? detector.getCharset() : "UTF-8";
 
-            pomReader=new InputStreamReader(new FileInputStream(pomFile), fileEncoding);
-
+            pomReader=new InputStreamReader(new BufferedInputStream(new FileInputStream(pomFile)), fileEncoding);
             MavenXpp3Reader reader=new MavenXpp3Reader();
-
             model=reader.read(pomReader);
 
             if (StringUtils.isEmpty(model.getModelEncoding())) {
@@ -274,35 +264,18 @@ public class DefaultPomManager
         }
         finally {
             IOUtil.close(pomReader);
-            pomReader=null;
         }
         return model;
     }
 
-    public Model readPom(InputStream pomStream) throws IOException, XmlPullParserException { // TODO
-                                                                                             // ensure
-                                                                                             // correct
-                                                                                             // encoding
-                                                                                             // by
-                                                                                             // using
-                                                                                             // default
-                                                                                             // one
-                                                                                             // from
-                                                                                             // method
-                                                                                             // argument
-                                                                                             // !!!
-
+    public Model readPom(InputStream pomStream) throws IOException, XmlPullParserException {
         Model model;
         Reader pomReader=null;
         try {
             // FileCharsetDetector detector = new FileCharsetDetector( pomStream );
-
             String fileEncoding= /* detector.isFound() ? detector.getCharset() : */"UTF-8";
-
             pomReader=new InputStreamReader(pomStream, fileEncoding);
-
             MavenXpp3Reader reader=new MavenXpp3Reader();
-
             model=reader.read(pomReader);
 
             if (StringUtils.isEmpty(model.getModelEncoding())) {
@@ -311,7 +284,6 @@ public class DefaultPomManager
         }
         finally {
             IOUtil.close(pomReader);
-            pomReader=null;
         }
         return model;
     }
@@ -324,7 +296,7 @@ public class DefaultPomManager
         String fileEncoding=StringUtils.isEmpty(model.getModelEncoding()) ? model.getModelEncoding() : "UTF-8";
 
         try {
-            inputStream=new FileInputStream(initialPomFile);
+            inputStream=new BufferedInputStream(new FileInputStream(initialPomFile));
 
             SAXBuilder builder=new SAXBuilder();
             org.jdom.Document doc=builder.build(inputStream);
@@ -334,7 +306,7 @@ public class DefaultPomManager
             // The cdata parts of the pom are not preserved from initial to target
             MavenJDOMWriter writer=new MavenJDOMWriter();
 
-            outputStreamWriter=new OutputStreamWriter(new FileOutputStream(pomFile), fileEncoding);
+            outputStreamWriter=new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(pomFile)), fileEncoding);
 
             Format form=Format.getRawFormat().setEncoding(fileEncoding);
             writer.write(model, doc, outputStreamWriter, form);
@@ -342,10 +314,10 @@ public class DefaultPomManager
             outputStreamWriter=null;
         }
         catch (JDOMException exc) {
-            throw (IOException) new IOException("Cannot parse the POM by JDOM.");
+            throw new IOException("Cannot parse the POM by JDOM.");
         }
         catch (FileNotFoundException e) {
-            log.debug("Creating pom file " + pomFile);
+            log.debug("Creating pom file: " + pomFile);
 
             Writer pomWriter=null;
 
@@ -368,12 +340,9 @@ public class DefaultPomManager
         }
     }
 
-    private Map createDependencyMap(List dependencies) {
-        Map dependencyMap=new HashMap();
-        Iterator dependenciesIterator=dependencies.iterator();
-        while (dependenciesIterator.hasNext()) {
-            Dependency dependency=(Dependency) dependenciesIterator.next();
-
+    private Map<String,Dependency> createDependencyMap(List<Dependency> dependencies) {
+        Map<String,Dependency> dependencyMap=new HashMap<String,Dependency>();
+        for (Dependency dependency : dependencies) {
             dependencyMap.put(dependency.getManagementKey(), dependency);
         }
 
@@ -391,34 +360,30 @@ public class DefaultPomManager
     }
 
     private void mergeProfiles(Model model, Model generatedModel) {
-        List generatedProfiles=generatedModel.getProfiles();
+        List<Profile> generatedProfiles=generatedModel.getProfiles();
         if (generatedProfiles != null && generatedProfiles.size() > 0) {
-            List modelProfiles=model.getProfiles();
-            Map modelProfileIdMap=new HashMap();
+            List<Profile> modelProfiles=model.getProfiles();
+            Map<String,Profile> modelProfileIdMap=new HashMap<String,Profile>();
             if (modelProfiles == null) {
-                modelProfiles=new ArrayList();
+                modelProfiles=new ArrayList<Profile>();
                 model.setProfiles(modelProfiles);
             }
             else if (modelProfiles.size() > 0) {
                 // add profile ids from the model for later lookups to the modelProfileIds set
-                Iterator modelProfilesIterator=modelProfiles.iterator();
-                while (modelProfilesIterator.hasNext()) {
-                    Profile modelProfile=(Profile) modelProfilesIterator.next();
+                for (Profile modelProfile : modelProfiles) {
                     modelProfileIdMap.put(modelProfile.getId(), modelProfile);
                 }
             }
 
-            Iterator generatedProfilesIterator=generatedProfiles.iterator();
-            while (generatedProfilesIterator.hasNext()) {
-                Profile generatedProfile=(Profile) generatedProfilesIterator.next();
+            for (Profile generatedProfile : generatedProfiles) {
                 String generatedProfileId=generatedProfile.getId();
                 if (!modelProfileIdMap.containsKey(generatedProfileId)) {
                     model.addProfile(generatedProfile);
                 }
                 else {
                     log.warn("Try to merge profiles with id " + generatedProfileId);
-                    mergeModelBase((Profile) modelProfileIdMap.get(generatedProfileId), generatedProfile);
-                    mergeProfileBuild((Profile) modelProfileIdMap.get(generatedProfileId), generatedProfile);
+                    mergeModelBase(modelProfileIdMap.get(generatedProfileId), generatedProfile);
+                    mergeProfileBuild(modelProfileIdMap.get(generatedProfileId), generatedProfile);
                 }
             }
         }
@@ -437,15 +402,12 @@ public class DefaultPomManager
     private void mergeModelBase(ModelBase model, ModelBase generatedModel) {
         // ModelBase can be a Model or a Profile...
 
-        Map dependenciesByIds=createDependencyMap(model.getDependencies());
-        Map generatedDependenciesByIds=createDependencyMap(generatedModel.getDependencies());
+        Map<String,Dependency> dependenciesByIds=createDependencyMap(model.getDependencies());
+        Map<String,Dependency> generatedDependenciesByIds=createDependencyMap(generatedModel.getDependencies());
 
-        Iterator generatedDependencyIds=generatedDependenciesByIds.keySet().iterator();
-        while (generatedDependencyIds.hasNext()) {
-            String generatedDependencyId=(String) generatedDependencyIds.next();
-
+        for (String generatedDependencyId : generatedDependenciesByIds.keySet()) {
             if (!dependenciesByIds.containsKey(generatedDependencyId)) {
-                model.addDependency((Dependency) generatedDependenciesByIds.get(generatedDependencyId));
+                model.addDependency(generatedDependenciesByIds.get(generatedDependencyId));
             }
             else {
                 log.warn("Can not override property: " + generatedDependencyId);
@@ -479,12 +441,10 @@ public class DefaultPomManager
     }
 
     private void mergeBuildPlugins(BuildBase modelBuild, BuildBase generatedModelBuild) {
-        Map pluginsByIds=modelBuild.getPluginsAsMap();
-        List generatedPlugins=generatedModelBuild.getPlugins();
+        Map<String,Plugin> pluginsByIds=modelBuild.getPluginsAsMap();
+        List<Plugin> generatedPlugins=generatedModelBuild.getPlugins();
 
-        Iterator generatedPluginsIterator=generatedPlugins.iterator();
-        while (generatedPluginsIterator.hasNext()) {
-            Plugin generatedPlugin=(Plugin) generatedPluginsIterator.next();
+        for (Plugin generatedPlugin : generatedPlugins) {
             String generatedPluginsId=generatedPlugin.getKey();
 
             if (!pluginsByIds.containsKey(generatedPluginsId)) {
@@ -492,7 +452,7 @@ public class DefaultPomManager
             }
             else {
                 log.info("Try to merge plugin configuration of plugins with id: " + generatedPluginsId);
-                Plugin modelPlugin=(Plugin) pluginsByIds.get(generatedPluginsId);
+                Plugin modelPlugin=pluginsByIds.get(generatedPluginsId);
 
                 modelPlugin.setConfiguration(Xpp3DomUtils.mergeXpp3Dom((Xpp3Dom) generatedPlugin.getConfiguration(), (Xpp3Dom) modelPlugin.getConfiguration()));
             }
