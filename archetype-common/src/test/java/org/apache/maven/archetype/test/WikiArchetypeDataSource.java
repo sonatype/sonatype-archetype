@@ -76,7 +76,7 @@ implements ArchetypeDataSource
 
         List archetypes = new ArrayList();
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         try
         {

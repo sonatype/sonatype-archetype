@@ -199,7 +199,7 @@ public class DefaultArchetypeGenerationConfigurator
 
                 // in batch mode, we assume the defaults, and if still not configured fail
                 if (!archetypeConfiguration.isConfigured()) {
-                    StringBuffer exceptionMessage = new StringBuffer();
+                    StringBuilder exceptionMessage = new StringBuilder();
                     exceptionMessage.append("Archetype ");
                     exceptionMessage.append(request.getArchetypeGroupId());
                     exceptionMessage.append(":");

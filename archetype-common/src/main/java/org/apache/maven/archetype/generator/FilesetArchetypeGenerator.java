@@ -20,26 +20,11 @@
 package org.apache.maven.archetype.generator;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
-import org.apache.maven.archetype.exception.ArchetypeGenerationFailure;
-import org.apache.maven.archetype.exception.ArchetypeNotConfigured;
-import org.apache.maven.archetype.exception.OutputFileExists;
-import org.apache.maven.archetype.exception.PomFileExists;
-import org.apache.maven.archetype.exception.ProjectDirectoryExists;
-import org.apache.maven.archetype.exception.UnknownArchetype;
 
 import java.io.File;
 
 /** @author rafale */
 public interface FilesetArchetypeGenerator
 {
-    void generateArchetype( ArchetypeGenerationRequest request,
-                            File archetypeFile,
-                            String basedir )
-        throws
-            UnknownArchetype,
-            ArchetypeNotConfigured,
-            ProjectDirectoryExists,
-            PomFileExists,
-            OutputFileExists,
-            ArchetypeGenerationFailure;
+    void generateArchetype(ArchetypeGenerationRequest request, File archetypeFile, String basedir) throws Exception;
 }

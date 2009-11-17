@@ -24,6 +24,5 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 
 public interface ArchetypeGenerator
 {
-    void generateArchetype( ArchetypeGenerationRequest request,
-                            ArchetypeGenerationResult result );
+    void generateArchetype(ArchetypeGenerationRequest request, ArchetypeGenerationResult result);
 }
