@@ -25,6 +25,8 @@ import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import java.io.File;
 import java.io.IOException;
 
+// TODO: Consider renaming to ArchetypeManager, leave Archetype name for org.apache.maven.archetype.catalog.Archetype
+
 /** @author Jason van Zyl */
 public interface Archetype
 {

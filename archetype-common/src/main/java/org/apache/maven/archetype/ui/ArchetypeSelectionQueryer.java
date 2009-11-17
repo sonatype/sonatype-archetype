@@ -35,22 +35,6 @@ public interface ArchetypeSelectionQueryer
 
     boolean confirmSelection(ArchetypeDefinition archetypeDefinition) throws PrompterException;
 
-    // Archetype selectArchetype( List list )
-    // throws
-    // PrompterException;
-
-    // Archetype selectArtifact( List list )
-    // throws
-    // PrompterException;
-    //
-    // String selectGroup( List list )
-    // throws
-    // PrompterException;
-    //
-    // String selectVersion( List list )
-    // throws
-    // PrompterException;
-
     /**
      * Select an archetype from the given map.
      * 

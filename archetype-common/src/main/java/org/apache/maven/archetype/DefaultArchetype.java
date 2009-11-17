@@ -89,11 +89,8 @@ public class DefaultArchetype
         }
 
         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(archive));
-
         zos.setLevel(9);
-
         zipper(zos, sourceDirectory.getAbsolutePath().length(), sourceDirectory);
-
         zos.close();
     }
 
@@ -112,13 +109,11 @@ public class DefaultArchetype
                 }
 
                 ZipEntry e = new ZipEntry(fileName);
-
                 zos.putNextEntry(e);
 
                 FileInputStream is = new FileInputStream(files[i]);
 
                 byte[] buf = new byte[4096];
-
                 int n;
 
                 while ((n = is.read(buf)) > 0) {
@@ -126,9 +121,7 @@ public class DefaultArchetype
                 }
 
                 is.close();
-
                 zos.flush();
-
                 zos.closeEntry();
             }
         }
@@ -150,7 +143,11 @@ public class DefaultArchetype
         return getLocalCatalog("${user.home}/.m2/archetype-catalog.xml");
     }
 
-    public ArchetypeCatalog getLocalCatalog(String path) {
+    public ArchetypeCatalog getLocalCatalog(final String path) {
+        assert path != null;
+
+        log.debug("Fetching local catalog from: " + path);
+
         try {
             Properties properties = new Properties();
             properties.setProperty("file", path);
@@ -168,7 +165,11 @@ public class DefaultArchetype
         return getRemoteCatalog("http://repo1.maven.org/maven2");
     }
 
-    public ArchetypeCatalog getRemoteCatalog(String url) {
+    public ArchetypeCatalog getRemoteCatalog(final String url) {
+        assert url != null;
+
+        log.debug("Fetching remote catalog from: " + url);
+
         try {
             Properties properties = new Properties();
             properties.setProperty("repository", url);

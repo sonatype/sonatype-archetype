@@ -27,5 +27,5 @@ import org.apache.maven.archetype.ArchetypeGenerationRequest;
 //      should take care of reporting the error. The selector should not be downloading anything.
 public interface ArchetypeSelector
 {
-    void selectArchetype(ArchetypeGenerationRequest request, Boolean interactiveMode, String catalogs) throws Exception;
+    void selectArchetype(ArchetypeGenerationRequest request, boolean interactive, String catalogs) throws Exception;
 }
