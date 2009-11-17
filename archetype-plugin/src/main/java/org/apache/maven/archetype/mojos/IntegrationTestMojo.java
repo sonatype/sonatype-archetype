@@ -72,7 +72,7 @@ public class IntegrationTestMojo
      * @parameter expression="${archetype.test.skip}"
      * @readonly
      */
-    private boolean skip = false;
+    private boolean skip;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (!skip) {
