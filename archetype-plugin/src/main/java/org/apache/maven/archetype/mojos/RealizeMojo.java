@@ -41,10 +41,10 @@ import java.util.Properties;
  * 
  * @author rafale
  * @requiresProject false
- * @goal generate
+ * @goal realize
  * @execute phase="generate-sources"
  */
-public class GenerateMojo
+public class RealizeMojo
     extends AbstractMojo
     implements ContextEnabled
 {

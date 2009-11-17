@@ -45,11 +45,11 @@ import java.util.Properties;
  * 
  * @author rafale
  * @requiresProject true
- * @goal create-from-project
+ * @goal create
  * @execute phase="generate-sources"
  * @aggregator
  */
-public class CreateFromProjectMojo
+public class CreateMojo
     extends AbstractMojo
 {
     /** @component */
