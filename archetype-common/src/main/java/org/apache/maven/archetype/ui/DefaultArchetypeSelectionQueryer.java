@@ -21,13 +21,15 @@ package org.apache.maven.archetype.ui;
 
 import org.apache.maven.archetype.catalog.Archetype;
 import org.apache.maven.archetype.common.ArchetypeDefinition;
+import org.apache.maven.archetype.ui.prompt.Formatter;
 import org.apache.maven.archetype.ui.prompt.Prompter;
 import org.apache.maven.archetype.ui.prompt.PrompterException;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -36,17 +38,20 @@ import java.util.Map;
 
 @Component(role = ArchetypeSelectionQueryer.class)
 public class DefaultArchetypeSelectionQueryer
-    implements ArchetypeSelectionQueryer
+    implements ArchetypeSelectionQueryer, Initializable
 {
-    @Requirement //(hint = "archetype")
+    @Requirement
     private Prompter prompter;
 
-    public boolean confirmSelection(ArchetypeDefinition archetypeDefinition) throws PrompterException {
-        String query = "Confirm archetype selection: \n" + archetypeDefinition.getGroupId() + "/" + archetypeDefinition.getName() + "\n";
-
-        String answer = prompter.prompt(query, Arrays.asList("Y", "N"), "Y");
-
-        return "Y".equalsIgnoreCase(answer);
+    public void initialize() throws InitializationException {
+        prompter.setFormatter(new Formatter() {
+            public String format(String message, List<String> possibleValues, String defaultReply) {
+                if (defaultReply != null) {
+                    return message + defaultReply;
+                }
+                return message;
+            }
+        });
     }
 
     public Archetype selectArchetype(List<Archetype> archetypes) throws PrompterException {
@@ -84,7 +89,7 @@ public class DefaultArchetypeSelectionQueryer
         for (String catalog : catalogs.keySet()) {
             for (Archetype archetype : catalogs.get(catalog)) {
 
-                String mapKey = "" + counter;
+                String mapKey = String.valueOf(counter);
                 String archetypeKey = archetype.getGroupId() + ":" + archetype.getArtifactId();
                 if (reversedArchetypeAnswerMap.containsKey(archetypeKey)) {
                     mapKey = reversedArchetypeAnswerMap.get(archetypeKey);

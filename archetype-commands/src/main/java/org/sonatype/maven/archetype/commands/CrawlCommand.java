@@ -35,7 +35,7 @@ import java.io.File;
  * Crawl a repository looking for archetypes.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 3.0
+ * @since 1.0
  */
 @Command(name="archetype/crawl")
 public class CrawlCommand

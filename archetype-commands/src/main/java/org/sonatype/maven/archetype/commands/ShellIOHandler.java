@@ -17,72 +17,56 @@
 package org.sonatype.maven.archetype.commands;
 
 import jline.console.ConsoleReader;
-import org.apache.maven.archetype.ui.prompt.InputHandler;
+import org.apache.maven.archetype.ui.prompt.IOHandler;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.command.IO;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Shell {@link InputHandler}.
+ * Shell {@link IOHandler}
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 3.0
+ * @since 1.0
  */
-@Component(role = InputHandler.class, hint = "shell")
-public class ShellInputHandler
-    implements InputHandler, Initializable
+@Component(role = IOHandler.class)
+public class ShellIOHandler
+    implements IOHandler, Initializable
 {
-    private static final Logger log = LoggerFactory.getLogger(ShellInputHandler.class);
+    private IO io;
 
     private ConsoleReader reader;
 
-    public ShellInputHandler() {
-        System.out.println("HERE");
-        Thread.dumpStack();
-    }
-
     public void initialize() throws InitializationException {
+        this.io = ShellHolder.get().getIo();
+
         try {
-            IO io = ShellHolder.get().getIo();
-            reader = new ConsoleReader(
+            this.reader = new ConsoleReader(
                 io.streams.in,
                 io.out,
                 io.getTerminal());
-
-            log.info("Initialized reader: {}", reader);
         }
         catch (IOException e) {
             throw new InitializationException(e.getMessage(), e);
         }
     }
 
-    public String readLine() throws IOException {
-        log.info("Reading line");
+    public String readln() throws IOException {
         assert reader != null;
         return reader.readLine();
     }
 
-    public String readPassword() throws IOException {
-        log.info("Reading password");
-        assert reader != null;
-        return reader.readLine(new Character('*'));
+    public void write(final String line) throws IOException {
+        assert io != null;
+        io.out.print(line);
+        io.out.flush();
     }
 
-    public List readMultipleLines() throws IOException {
-        List<String> lines = new ArrayList<String>();
-        String line = readLine();
-        while (line != null && line.length() > 0) {
-            lines.add(line);
-            line = readLine();
-        }
-        return lines;
+    public void writeln(final String line) throws IOException {
+        assert io != null;
+        io.out.println(line);
     }
 }

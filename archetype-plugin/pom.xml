@@ -58,7 +58,6 @@ under the License.
                 <executions>
                     <execution>
                         <goals>
-                            <goal>descriptor</goal>
                             <goal>helpmojo</goal>
                         </goals>
                     </execution>
@@ -66,22 +65,5 @@ under the License.
             </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-plugin-plugin</artifactId>
-                <version>2.4.3</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
-    </reporting>
 
 </project>

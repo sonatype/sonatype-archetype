@@ -1,53 +1,35 @@
 
 package org.apache.maven.archetype.ui.prompt;
 
-/*
- * The MIT License
- *
- * Copyright (c) 2005, The Codehaus
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- * of the Software, and to permit persons to whom the Software is furnished to do
- * so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.util.StringUtils;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * Default prompter.
  * 
  * @author Brett Porter
- * @version $Id: DefaultPrompter.java 2649 2005-10-10 16:51:51Z brett $
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 1.0
  */
-@Component(role = Prompter.class)
+@Component(role = Prompter.class, instantiationStrategy="per-lookup")
 public class DefaultPrompter
     implements Prompter
 {
-    @Requirement
-    private OutputHandler outputHandler;
+    // TODO: i18n
 
     @Requirement
-    private InputHandler inputHandler;
+    private IOHandler io;
+
+    private Formatter formatter = new DefaultFormatter();
+
+    public void setFormatter(Formatter formatter) {
+        assert formatter != null;
+        this.formatter = formatter;
+    }
 
     public String prompt(String message) throws PrompterException {
         try {
@@ -58,7 +40,7 @@ public class DefaultPrompter
         }
 
         try {
-            return inputHandler.readLine();
+            return io.readln();
         }
         catch (IOException e) {
             throw new PrompterException("Failed to read user response", e);
@@ -74,7 +56,7 @@ public class DefaultPrompter
         }
 
         try {
-            String line = inputHandler.readLine();
+            String line = io.readln();
 
             if (StringUtils.isEmpty(line)) {
                 line = defaultReply;
@@ -87,7 +69,7 @@ public class DefaultPrompter
         }
     }
 
-    public String prompt(String message, List possibleValues, String defaultReply) throws PrompterException {
+    public String prompt(String message, List<String> possibleValues, String defaultReply) throws PrompterException {
         String formattedMessage = formatMessage(message, possibleValues, defaultReply);
 
         String line;
@@ -101,7 +83,7 @@ public class DefaultPrompter
             }
 
             try {
-                line = inputHandler.readLine();
+                line = io.readln();
             }
             catch (IOException e) {
                 throw new PrompterException("Failed to read user response", e);
@@ -113,7 +95,7 @@ public class DefaultPrompter
 
             if (line != null && !possibleValues.contains(line)) {
                 try {
-                    outputHandler.writeLine("Invalid selection.");
+                    io.writeln("Invalid selection.");
                 }
                 catch (IOException e) {
                     throw new PrompterException("Failed to present feedback", e);
@@ -125,65 +107,15 @@ public class DefaultPrompter
         return line;
     }
 
-    public String prompt(String message, List possibleValues) throws PrompterException {
+    public String prompt(String message, List<String> possibleValues) throws PrompterException {
         return prompt(message, possibleValues, null);
     }
 
-    public String promptForPassword(String message) throws PrompterException {
-        try {
-            writePrompt(message);
-        }
-        catch (IOException e) {
-            throw new PrompterException("Failed to present prompt", e);
-        }
-
-        try {
-            return inputHandler.readPassword();
-        }
-        catch (IOException e) {
-            throw new PrompterException("Failed to read user response", e);
-        }
-    }
-
-    private String formatMessage(String message, List possibleValues, String defaultReply) {
-        StringBuffer formatted = new StringBuffer(message.length() * 2);
-
-        formatted.append(message);
-
-        if (possibleValues != null && !possibleValues.isEmpty()) {
-            formatted.append(" (");
-
-            for (Iterator it = possibleValues.iterator(); it.hasNext();) {
-                String possibleValue = (String) it.next();
-
-                formatted.append(possibleValue);
-
-                if (it.hasNext()) {
-                    formatted.append('/');
-                }
-            }
-
-            formatted.append(')');
-        }
-
-        if (defaultReply != null) {
-            formatted.append(' ').append(defaultReply).append(": ");
-        }
-
-        return formatted.toString();
+    private String formatMessage(String message, List<String> possibleValues, String defaultReply) {
+        return formatter.format(message, possibleValues, defaultReply);
     }
 
     private void writePrompt(String message) throws IOException {
-        outputHandler.write(message + ": ");
-    }
-
-    public void showMessage(String message) throws PrompterException {
-        try {
-            writePrompt(message);
-        }
-        catch (IOException e) {
-            throw new PrompterException("Failed to present prompt", e);
-        }
-
+        io.write(message + ": ");
     }
 }
