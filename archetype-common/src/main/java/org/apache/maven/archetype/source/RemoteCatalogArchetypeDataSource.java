@@ -113,7 +113,7 @@ public class RemoteCatalogArchetypeDataSource
                 return readCatalog(new BufferedReader(new FileReader(catalog)));
             }
             catch (Exception ex) {
-                log.warn("Error reading archetype catalog " + repository, ex);
+                log.debug("Error reading archetype catalog: " + repository, ex);
                 return new ArchetypeCatalog();
             }
         }
