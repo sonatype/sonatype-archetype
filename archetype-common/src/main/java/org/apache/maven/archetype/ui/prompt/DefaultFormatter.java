@@ -34,7 +34,7 @@ public class DefaultFormatter
         }
 
         if (defaultReply != null) {
-            formatted.append(' ').append(defaultReply).append(": ");
+            formatted.append(' ').append(defaultReply);
         }
 
         return formatted.toString();

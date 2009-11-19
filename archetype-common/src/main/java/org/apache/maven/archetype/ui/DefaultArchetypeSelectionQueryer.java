@@ -28,7 +28,12 @@ import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
+import static org.fusesource.jansi.Ansi.ansi;
+import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.Attribute.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,8 +51,8 @@ public class DefaultArchetypeSelectionQueryer
     public void initialize() throws InitializationException {
         prompter.setFormatter(new Formatter() {
             public String format(String message, List<String> possibleValues, String defaultReply) {
-                if (defaultReply != null) {
-                    return message + defaultReply;
+                if (defaultReply != null && defaultReply.trim().length() != 0) {
+                    return String.format("%s (%s)", message, ansi().fg(CYAN).a(defaultReply).reset());
                 }
                 return message;
             }
@@ -55,20 +60,34 @@ public class DefaultArchetypeSelectionQueryer
     }
 
     public Archetype selectArchetype(List<Archetype> archetypes) throws PrompterException {
-        String query = "Choose archetype:\n";
+        StringWriter buff = new StringWriter();
+        PrintWriter out = new PrintWriter(buff);
+
+        out.println(ansi().a(INTENSITY_BOLD).a("Select archetype").reset().a("..."));
+
         Map<String,Archetype> answerMap = new HashMap<String,Archetype>();
         List<String> answers = new ArrayList<String>();
         int counter = 1;
 
         for (Archetype archetype : archetypes) {
-            answerMap.put("" + counter, archetype);
-            query += "" + counter + ": " + archetype.getArtifactId() + " (" + archetype.getDescription() + ":" + archetype.getArtifactId() + ")\n";
-            answers.add("" + counter);
+            String key = String.valueOf(counter);
+            answerMap.put(key, archetype);
+            answers.add(key);
+
+            out.format("%s: %s (%s: %s)",
+                ansi().a(INTENSITY_BOLD).a(key).reset(),
+                ansi().fg(GREEN).a(archetype.getArtifactId()).reset(),
+                ansi().a(INTENSITY_FAINT).a(archetype.getDescription()).reset(),
+                ansi().a(INTENSITY_FAINT).a(archetype.getArtifactId()).reset()
+            ).println();
+
             counter++;
         }
-        query += "Choose a number: ";
 
-        String answer = prompter.prompt(query, answers);
+        out.print(ansi().a(INTENSITY_BOLD).a("Choose a number").reset());
+        out.flush();
+
+        String answer = prompter.prompt(buff.toString(), answers);
 
         return answerMap.get(answer);
     }
@@ -78,7 +97,11 @@ public class DefaultArchetypeSelectionQueryer
     }
 
     public Archetype selectArchetype(Map<String,List<Archetype>> catalogs, ArchetypeDefinition defaultDefinition) throws PrompterException {
-        String query = "Choose archetype:\n";
+        StringWriter buff = new StringWriter();
+        PrintWriter out = new PrintWriter(buff);
+
+        out.println(ansi().a(INTENSITY_BOLD).a("Select archetype").reset().a("..."));
+
         Map<String,List<Archetype>> archetypeAnswerMap = new HashMap<String,List<Archetype>>();
         Map<String,String> reversedArchetypeAnswerMap = new HashMap<String,String>();
         List<String> answers = new ArrayList<String>();
@@ -91,6 +114,7 @@ public class DefaultArchetypeSelectionQueryer
 
                 String mapKey = String.valueOf(counter);
                 String archetypeKey = archetype.getGroupId() + ":" + archetype.getArtifactId();
+
                 if (reversedArchetypeAnswerMap.containsKey(archetypeKey)) {
                     mapKey = reversedArchetypeAnswerMap.get(archetypeKey);
                     archetypeVersions = archetypeAnswerMap.get(mapKey);
@@ -99,8 +123,14 @@ public class DefaultArchetypeSelectionQueryer
                     archetypeVersions = new ArrayList<Archetype>();
                     archetypeAnswerMap.put(mapKey, archetypeVersions);
                     reversedArchetypeAnswerMap.put(archetypeKey, mapKey);
-                    query += mapKey + ": " + catalog + " -> " + archetype.getArtifactId() + " (" + archetype.getDescription() + ")\n";
                     answers.add(mapKey);
+
+                    out.format("  %s: %s -> %s (%s)",
+                        ansi().a(INTENSITY_BOLD).a(mapKey).reset(),
+                        catalog,
+                        ansi().fg(GREEN).a(archetype.getArtifactId()).reset(),
+                        ansi().a(INTENSITY_FAINT).a(archetype.getDescription()).reset()
+                    ).println();
 
                     // the version is not tested. This is intentional.
                     if (defaultDefinition != null && archetype.getGroupId().equals(defaultDefinition.getGroupId()) && archetype.getArtifactId().equals(defaultDefinition.getArtifactId())) {
@@ -113,14 +143,15 @@ public class DefaultArchetypeSelectionQueryer
             }
         }
 
-        query += "Choose a number: ";
+        out.print(ansi().a(INTENSITY_BOLD).a("Select a number").reset());
+        out.flush();
 
         String answer;
         if (defaultSelection == 0) {
-            answer = prompter.prompt(query, answers);
+            answer = prompter.prompt(buff.toString(), answers);
         }
         else {
-            answer = prompter.prompt(query, answers, Integer.toString(defaultSelection));
+            answer = prompter.prompt(buff.toString(), answers, Integer.toString(defaultSelection));
         }
 
         archetypeVersions = archetypeAnswerMap.get(answer);
@@ -134,7 +165,11 @@ public class DefaultArchetypeSelectionQueryer
     }
 
     private Archetype selectVersion(List<Archetype> archetypes) throws PrompterException {
-        String query = "Choose version: \n";
+        StringWriter buff = new StringWriter();
+        PrintWriter out = new PrintWriter(buff);
+
+        out.println(ansi().a(INTENSITY_BOLD).a("Select version").reset().a("..."));
+
         Map<String,Archetype> answerMap = new HashMap<String,Archetype>();
         List<String> answers = new ArrayList<String>();
 
@@ -148,15 +183,22 @@ public class DefaultArchetypeSelectionQueryer
         int counter = 1;
         for (Archetype archetype : archetypes) {
             String archetypeVersion = archetype.getVersion();
-            answerMap.put("" + counter, archetype);
-            query += "" + counter + ": " + archetypeVersion + "\n";
-            answers.add("" + counter);
+            String key = String.valueOf(counter);
+            answerMap.put(key, archetype);
+            answers.add(key);
+
+            out.format("  %s: %s",
+                ansi().a(INTENSITY_BOLD).a(counter).reset(),
+                ansi().fg(GREEN).a(archetypeVersion).reset()
+            ).println();
 
             counter++;
         }
-        query += "Choose a number: ";
 
-        String answer = prompter.prompt(query, answers);
+        out.print(ansi().a(INTENSITY_BOLD).a("Choose a number").reset());
+        out.flush();
+
+        String answer = prompter.prompt(buff.toString(), answers);
 
         return answerMap.get(answer);
     }

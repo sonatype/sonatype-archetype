@@ -80,6 +80,11 @@ under the License.
         </dependency>
 
         <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
@@ -161,8 +166,6 @@ under the License.
             with 1.0-beta-4 some tests fail
             <scope>test</scope>
         </dependency>
-        -->
-        
         <dependency>
             <groupId>org.sonatype.maven.archetype</groupId>
             <artifactId>archetype-repository</artifactId>
@@ -176,6 +179,7 @@ under the License.
             <type>war</type>
             <scope>test</scope>
         </dependency>
+        -->
     </dependencies>
 
     <build>

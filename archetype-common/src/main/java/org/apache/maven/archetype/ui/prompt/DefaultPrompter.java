@@ -8,6 +8,10 @@ import org.codehaus.plexus.util.StringUtils;
 import java.io.IOException;
 import java.util.List;
 
+import static org.fusesource.jansi.Ansi.ansi;
+import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.Attribute.*;
+
 /**
  * Default prompter.
  * 
@@ -25,6 +29,10 @@ public class DefaultPrompter
     private IOHandler io;
 
     private Formatter formatter = new DefaultFormatter();
+
+    public IOHandler getIo() {
+        return io;
+    }
 
     public void setFormatter(Formatter formatter) {
         assert formatter != null;
@@ -95,7 +103,8 @@ public class DefaultPrompter
 
             if (line != null && !possibleValues.contains(line)) {
                 try {
-                    io.writeln("Invalid selection.");
+                    // FIXME: Really should be in the IOHandler, so we can render ANSI here and there, and also add a beep
+                    io.writeln(ansi().a(INTENSITY_BOLD).fg(RED).a("Invalid selection").reset().toString());
                 }
                 catch (IOException e) {
                     throw new PrompterException("Failed to present feedback", e);

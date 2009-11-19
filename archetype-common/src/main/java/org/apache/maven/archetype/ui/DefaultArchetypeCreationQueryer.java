@@ -21,19 +21,41 @@ package org.apache.maven.archetype.ui;
 
 import org.apache.maven.archetype.common.ArchetypeConfiguration;
 import org.apache.maven.archetype.common.Constants;
+import org.apache.maven.archetype.ui.prompt.Formatter;
 import org.apache.maven.archetype.ui.prompt.Prompter;
 import org.apache.maven.archetype.ui.prompt.PrompterException;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import static org.fusesource.jansi.Ansi.ansi;
+import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.Attribute.*;
 
 @Component(role = ArchetypeCreationQueryer.class)
 public class DefaultArchetypeCreationQueryer
-    implements ArchetypeCreationQueryer
+    implements ArchetypeCreationQueryer, Initializable
 {
     @Requirement
     private Prompter prompter;
+
+    public void initialize() throws InitializationException {
+        prompter.setFormatter(new Formatter() {
+            public String format(String message, List<String> possibleValues, String defaultReply) {
+                if (defaultReply != null && defaultReply.trim().length() != 0) {
+                    return String.format("%s (%s)", message, ansi().fg(CYAN).a(defaultReply).reset());
+                }
+                return message;
+            }
+        });
+    }
 
     public String getArchetypeArtifactId(String defaultValue) throws PrompterException {
         return getValue(Constants.ARCHETYPE_ARTIFACT_ID, defaultValue);
@@ -52,19 +74,25 @@ public class DefaultArchetypeCreationQueryer
     }
 
     public boolean askAddAnotherProperty() throws PrompterException {
-        String query = "Add a new custom property";
+        StringWriter buff = new StringWriter();
+        PrintWriter out = new PrintWriter(buff);
 
-        String answer = prompter.prompt(query, "Y");
+        out.println(ansi().a(INTENSITY_BOLD).a("Add a new custom property").reset().a("?"));
+        out.flush();
+
+        String answer = prompter.prompt(buff.toString(), "Y");
 
         return "Y".equalsIgnoreCase(answer);
     }
 
     public String askNewPropertyKey() throws PrompterException {
-        String query = "Define property key";
+        StringWriter buff = new StringWriter();
+        PrintWriter out = new PrintWriter(buff);
 
-        String answer = prompter.prompt(query);
+        out.println(ansi().a(INTENSITY_BOLD).a("Define property key").reset());
+        out.flush();
 
-        return answer;
+        return prompter.prompt(buff.toString());
     }
 
     public String askReplacementValue(String propertyKey, String defaultValue) throws PrompterException {
@@ -72,19 +100,22 @@ public class DefaultArchetypeCreationQueryer
     }
 
     public boolean confirmConfiguration(ArchetypeConfiguration archetypeConfiguration) throws PrompterException {
-        String query = "Confirm archetype configuration:\n";
-        query += Constants.ARCHETYPE_GROUP_ID + "=" + archetypeConfiguration.getGroupId() + "\n";
-        query += Constants.ARCHETYPE_ARTIFACT_ID + "=" + archetypeConfiguration.getArtifactId() + "\n";
-        query += Constants.ARCHETYPE_VERSION + "=" + archetypeConfiguration.getVersion() + "\n";
+        StringWriter buff = new StringWriter();
+        PrintWriter out = new PrintWriter(buff);
 
-        Iterator propertiesIter = archetypeConfiguration.getProperties().keySet().iterator();
+        out.println(ansi().a(INTENSITY_BOLD).a("Confirm archetype configuration").reset().a("..."));
 
-        while (propertiesIter.hasNext()) {
-            String property = (String) propertiesIter.next();
-            query += property + "=" + archetypeConfiguration.getProperty(property) + "\n";
+        out.format("  %s=%s", Constants.ARCHETYPE_GROUP_ID, archetypeConfiguration.getGroupId()).println();
+        out.format("  %s=%s", Constants.ARCHETYPE_ARTIFACT_ID, archetypeConfiguration.getArtifactId()).println();
+        out.format("  %s=%s", Constants.ARCHETYPE_VERSION, archetypeConfiguration.getVersion()).println();
+
+        for (Map.Entry entry : archetypeConfiguration.getProperties().entrySet()) {
+            out.format("  %s=%s", entry.getKey(), entry.getValue()).println();
         }
 
-        String answer = prompter.prompt(query, "Y");
+        out.flush();
+
+        String answer = prompter.prompt(buff.toString(), "Y");
 
         return "Y".equalsIgnoreCase(answer);
     }
@@ -102,15 +133,20 @@ public class DefaultArchetypeCreationQueryer
     }
 
     private String getValue(String requiredProperty, String defaultValue) throws PrompterException {
-        String query = "Define value for " + requiredProperty + ": ";
-        String answer;
+        StringWriter buff = new StringWriter();
+        PrintWriter out = new PrintWriter(buff);
+
+        out.format("%s '%s'",
+            ansi().a(INTENSITY_BOLD).a("Define value for property").reset(),
+            ansi().fg(GREEN).a(requiredProperty).reset());
+
+        out.flush();
 
         if ((defaultValue != null) && !defaultValue.equals("null")) {
-            answer = prompter.prompt(query, defaultValue);
+            return prompter.prompt(buff.toString(), defaultValue);
         }
         else {
-            answer = prompter.prompt(query);
+            return prompter.prompt(buff.toString());
         }
-        return answer;
     }
 }

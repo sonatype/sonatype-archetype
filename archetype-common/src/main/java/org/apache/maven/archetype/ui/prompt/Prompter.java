@@ -13,6 +13,8 @@ import java.util.List;
 public interface Prompter
 {
     void setFormatter(Formatter formatter);
+
+    IOHandler getIo();
     
     String prompt(String message) throws PrompterException;
 

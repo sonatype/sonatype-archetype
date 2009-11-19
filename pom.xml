@@ -48,6 +48,12 @@
                 <artifactId>gossip</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.fusesource.jansi</groupId>
+                <artifactId>jansi</artifactId>
+                <version>1.0</version>
+            </dependency>
             
             <dependency>
                 <groupId>org.apache.maven</groupId>
@@ -211,7 +217,9 @@
     </dependencies>
 
     <modules>
+        <!--
         <module>archetype-testing</module>
+        -->
         <module>archetype-common</module>
         <module>archetype-commands</module>
         <module>archetype-plugin</module>
