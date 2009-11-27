@@ -176,6 +176,9 @@ public class ListScanner
             // Mercurial
             "**/.hg",  "**/.hg/**",
 
+            // Bazaar
+            "**/.bzr", "**/.bzr/**",
+
             // SurroundSCM
             "**/.MySCMServerInfo",
 
