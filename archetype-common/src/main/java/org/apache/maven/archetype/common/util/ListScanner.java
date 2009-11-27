@@ -359,12 +359,12 @@ public class ListScanner
      * When a pattern ends with a '/' or '\', "**" is appended.
      * </p>
      * 
-     * @param excludes A list of exclude patterns. May be <code>null</code>, indicating that no
+     * @param excludesList A list of exclude patterns. May be <code>null</code>, indicating that no
      *            files should be excluded. If a non-<code>null</code> list is given, all elements
      *            must be non-<code>null</code>.
      */
-    public void setExcludes(List excludesList) {
-        String[] excludes=(String[]) excludesList.toArray(new String[excludesList.size()]);
+    public void setExcludes(List<String> excludesList) {
+        String[] excludes=excludesList.toArray(new String[excludesList.size()]);
         if (excludes == null) {
             this.excludes=null;
         }
@@ -392,12 +392,12 @@ public class ListScanner
      * When a pattern ends with a '/' or '\', "**" is appended.
      * </p>
      * 
-     * @param includes A list of include patterns. May be <code>null</code>, indicating that all
+     * @param includesList A list of include patterns. May be <code>null</code>, indicating that all
      *            files should be included. If a non-<code>null</code> list is given, all elements
      *            must be non-<code>null</code>.
      */
-    public void setIncludes(List includesList) {
-        String[] includes=(String[]) includesList.toArray(new String[includesList.size()]);
+    public void setIncludes(List<String> includesList) {
+        String[] includes=includesList.toArray(new String[includesList.size()]);
         if (includes == null) {
             this.includes=null;
         }
