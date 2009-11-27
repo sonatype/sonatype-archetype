@@ -173,6 +173,9 @@ public class ListScanner
             // GIT
             "**/.git", "**/.git/**",
 
+            // Mercurial
+            "**/.hg",  "**/.hg/**",
+
             // SurroundSCM
             "**/.MySCMServerInfo",
 
