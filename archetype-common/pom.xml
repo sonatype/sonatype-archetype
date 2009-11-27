@@ -26,12 +26,12 @@ under the License.
 
     <parent>
         <groupId>org.sonatype.maven.archetype</groupId>
-        <artifactId>maven-archetype</artifactId>
+        <artifactId>archetype</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>archetype-common</artifactId>
-    <name>Maven Archetype Common</name>
+    <name>Sonatype Archetype Common</name>
 
     <properties>
         <!-- HACK: Tests fail all over right now, so skip them -->

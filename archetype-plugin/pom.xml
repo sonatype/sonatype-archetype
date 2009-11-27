@@ -26,13 +26,13 @@ under the License.
 
     <parent>
         <groupId>org.sonatype.maven.archetype</groupId>
-        <artifactId>maven-archetype</artifactId>
+        <artifactId>archetype</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>archetype-plugin</artifactId>
 
-    <name>Maven Archetype Plugin</name>
+    <name>Sonatype Archetype Plugin</name>
     <packaging>maven-plugin</packaging>
 
     <dependencies>

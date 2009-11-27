@@ -26,12 +26,12 @@ under the License.
 
     <parent>
         <groupId>org.sonatype.maven.archetype</groupId>
-        <artifactId>maven-archetype</artifactId>
+        <artifactId>archetype</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>archetype-packaging</artifactId>
 
-    <name>Maven Archetype Packaging</name>
+    <name>Sonatype Archetype Packaging</name>
 
 </project>
