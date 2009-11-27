@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 
- <!-- START SNIPPET: modello-model -->
-
 <model xmlns="http://modello.codehaus.org/MODELLO/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://modello.codehaus.org/MODELLO/1.0.0 http://modello.codehaus.org/xsd/modello-1.0.0.xsd">
   <id>archetype</id>
@@ -75,6 +73,4 @@
     </class>
   </classes>
 </model>
-
- <!-- END SNIPPET: modello-model -->
 

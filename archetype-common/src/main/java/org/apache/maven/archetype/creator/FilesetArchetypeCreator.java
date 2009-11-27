@@ -183,14 +183,14 @@ public class FilesetArchetypeCreator
         }
 
         Extension extension = new Extension();
-        extension.setGroupId("org.apache.maven.archetype");
+        extension.setGroupId("org.sonatype.maven.archetype");
         extension.setArtifactId("archetype-packaging");
         extension.setVersion(getArchetypeVersion());
         model.getBuild().addExtension(extension);
 
         Plugin plugin = new Plugin();
-        plugin.setGroupId("org.apache.maven.plugins");
-        plugin.setArtifactId("maven-archetype-plugin");
+        plugin.setGroupId("org.sonatype.maven.archetype");
+        plugin.setArtifactId("archetype-plugin");
         plugin.setVersion(getArchetypeVersion());
         plugin.setExtensions(true);
         model.getBuild().addPlugin(plugin);
@@ -1282,7 +1282,7 @@ public class FilesetArchetypeCreator
         writer.write(new FileWriter(oldDescriptorFile), oldDescriptor);
     }
 
-    private static final String MAVEN_PROPERTIES = "META-INF/maven/org.apache.maven.archetype/archetype-common/pom.properties";
+    private static final String MAVEN_PROPERTIES = "META-INF/maven/org.sonatype.maven.archetype/archetype-common/pom.properties";
 
     public String getArchetypeVersion() {
         InputStream is = null;

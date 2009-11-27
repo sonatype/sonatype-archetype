@@ -17,7 +17,8 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-  <component-set>
+
+<component-set>
     <components>
         <component>
             <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
@@ -25,18 +26,26 @@
             <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
             <configuration>
                 <phases>
-                    <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
-                    <process-test-resources>org.apache.maven.plugins:maven-resources-plugin:testResources</process-test-resources>
+                    <process-resources>
+                        org.apache.maven.plugins:maven-resources-plugin:resources
+                    </process-resources>
+                    <process-test-resources>
+                        org.apache.maven.plugins:maven-resources-plugin:testResources
+                    </process-test-resources>
                     <package>
-                        org.apache.maven.plugins:maven-archetype-plugin:jar,
-                        org.apache.maven.plugins:maven-archetype-plugin:add-archetype-metadata
+                        org.sonatype.maven.archetype:archetype-plugin:jar,
+                        org.sonatype.maven.archetype:archetype-plugin:add-archetype-metadata
                     </package>
-                    <integration-test>org.apache.maven.plugins:maven-archetype-plugin:integration-test</integration-test>
+                    <integration-test>
+                        org.sonatype.maven.archetype:archetype-plugin:integration-test
+                    </integration-test>
                     <install>
                         org.apache.maven.plugins:maven-install-plugin:install,
-                        org.apache.maven.plugins:maven-archetype-plugin:update-local-catalog
+                        org.sonatype.maven.archetype:archetype-plugin:update-local-catalog
                     </install>
-                    <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                    <deploy>
+                        org.apache.maven.plugins:maven-deploy-plugin:deploy
+                    </deploy>
                 </phases>
             </configuration>
         </component>
@@ -51,6 +60,6 @@
                 <packaging>maven-archetype</packaging>
             </configuration>
         </component>
-
     </components>
+
 </component-set>

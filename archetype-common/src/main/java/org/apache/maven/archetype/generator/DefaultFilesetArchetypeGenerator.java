@@ -141,7 +141,7 @@ public class DefaultFilesetArchetypeGenerator
             Thread.currentThread().setContextClassLoader(archetypeJarLoader);
 
             if (archetypeDescriptor.isPartial()) {
-                log.debug("Procesing partial archetype " + archetypeDescriptor.getName());
+                log.debug("Processing partial archetype " + archetypeDescriptor.getName());
                 if (outputDirectoryFile.exists()) {
                     if (!pom.exists()) {
                         throw new PomFileExists("This is a partial archetype and the pom.xml file doesn't exist.");
