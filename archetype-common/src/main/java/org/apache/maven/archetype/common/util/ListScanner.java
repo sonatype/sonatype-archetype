@@ -148,42 +148,43 @@ public class ListScanner
      * 
      * @see #addDefaultExcludes()
      */
-    public static final String[] DEFAULTEXCLUDES= {
-    // Miscellaneous typical temporary files
-            "**/*~", "**/#*#", "**/.#*", "**/%*%", "**/._*",
+    public static final String[] DEFAULT_EXCLUDES = {
+        // Miscellaneous typical temporary files
+        "**/*~", "**/#*#", "**/.#*", "**/%*%", "**/._*",
 
-            // CVS
-            "**/CVS", "**/CVS/**", "**/.cvsignore",
+        // CVS
+        "**/CVS", "**/CVS/**", "**/.cvsignore",
 
-            // SCCS
-            "**/SCCS", "**/SCCS/**",
+        // SCCS
+        "**/SCCS", "**/SCCS/**",
 
-            // Visual SourceSafe
-            "**/vssver.scc",
+        // Visual SourceSafe
+        "**/vssver.scc",
 
-            // Subversion
-            "**/.svn", "**/.svn/**",
+        // Subversion
+        "**/.svn", "**/.svn/**",
 
-            // Arch
-            "**/.arch-ids", "**/.arch-ids/**",
+        // Arch
+        "**/.arch-ids", "**/.arch-ids/**",
 
-            // Bazaar
-            "**/.bzr", "**/.bzr/**",
+        // Bazaar
+        "**/.bzr", "**/.bzr/**",
 
-            // GIT
-            "**/.git", "**/.git/**",
+        // GIT
+        "**/.git", "**/.git/**",
 
-            // Mercurial
-            "**/.hg",  "**/.hg/**",
+        // Mercurial
+        "**/.hg",  "**/.hg/**",
 
-            // Bazaar
-            "**/.bzr", "**/.bzr/**",
+        // Bazaar
+        "**/.bzr", "**/.bzr/**",
 
-            // SurroundSCM
-            "**/.MySCMServerInfo",
+        // SurroundSCM
+        "**/.MySCMServerInfo",
 
-            // Mac
-            "**/.DS_Store" };
+        // Mac
+        "**/.DS_Store"
+    };
 
     /** The base directory to be scanned. */
     protected String basedir;
@@ -204,7 +205,7 @@ public class ListScanner
     public ListScanner() {}
 
     public static String getDefaultExcludes() {
-        return StringUtils.join(DEFAULTEXCLUDES, ",");
+        return StringUtils.join(DEFAULT_EXCLUDES, ",");
     }
 
     /**
@@ -312,12 +313,12 @@ public class ListScanner
     public void addDefaultExcludes() {
         int excludesLength=(excludes == null) ? 0 : excludes.length;
         String[] newExcludes;
-        newExcludes=new String[excludesLength + DEFAULTEXCLUDES.length];
+        newExcludes=new String[excludesLength + DEFAULT_EXCLUDES.length];
         if (excludesLength > 0) {
             System.arraycopy(excludes, 0, newExcludes, 0, excludesLength);
         }
-        for (int i=0; i < DEFAULTEXCLUDES.length; i++) {
-            newExcludes[i + excludesLength]=DEFAULTEXCLUDES[i].replace('/', File.separatorChar).replace('\\', File.separatorChar);
+        for (int i=0; i < DEFAULT_EXCLUDES.length; i++) {
+            newExcludes[i + excludesLength]= DEFAULT_EXCLUDES[i].replace('/', File.separatorChar).replace('\\', File.separatorChar);
         }
         excludes=newExcludes;
     }

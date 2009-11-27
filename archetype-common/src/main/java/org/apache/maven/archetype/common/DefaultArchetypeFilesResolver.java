@@ -276,7 +276,7 @@ public class DefaultArchetypeFilesResolver
         }
 
         String excludes="target";
-        Iterator defaultExcludes=Arrays.asList(ListScanner.DEFAULTEXCLUDES).iterator();
+        Iterator defaultExcludes=Arrays.asList(ListScanner.DEFAULT_EXCLUDES).iterator();
         while (defaultExcludes.hasNext()) {
             excludes+="," + defaultExcludes.next() + "/**";
         }

@@ -520,7 +520,7 @@ public class FilesetArchetypeCreator
 
         String excludes = "pom.xml,archetype.properties*,**/target/**";
 
-        for (String exclude : ListScanner.DEFAULTEXCLUDES) {
+        for (String exclude : ListScanner.DEFAULT_EXCLUDES) {
             excludes += "," + exclude + "/**";
         }
 
@@ -1000,7 +1000,7 @@ public class FilesetArchetypeCreator
             excludes += "," + module + "/**";
         }
 
-        for (String exclude : ListScanner.DEFAULTEXCLUDES) {
+        for (String exclude : ListScanner.DEFAULT_EXCLUDES) {
             excludes += "," + exclude + "/**";
         }
 
