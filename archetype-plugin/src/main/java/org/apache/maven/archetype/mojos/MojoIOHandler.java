@@ -29,7 +29,7 @@ import java.io.PrintWriter;
  * Mojo {@link IOHandler}
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 1.0
+ * @since 0.7
  */
 @Component(role=IOHandler.class)
 public class MojoIOHandler

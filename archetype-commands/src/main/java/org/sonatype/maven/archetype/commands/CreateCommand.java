@@ -49,7 +49,7 @@ import java.util.Properties;
  * Create an archetype from an existing project.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 1.0
+ * @since 0.7
  */
 @Command(name="archetype/create")
 public class CreateCommand

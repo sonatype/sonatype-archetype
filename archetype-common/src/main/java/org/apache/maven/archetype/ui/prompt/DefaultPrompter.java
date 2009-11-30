@@ -17,7 +17,7 @@ import static org.fusesource.jansi.Ansi.Attribute.*;
  * 
  * @author Brett Porter
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 1.0
+ * @since 0.7
  */
 @Component(role = Prompter.class, instantiationStrategy="per-lookup")
 public class DefaultPrompter
