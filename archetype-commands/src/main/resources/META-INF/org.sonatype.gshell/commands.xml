@@ -23,7 +23,7 @@
 
     <command-set id="archetype">
         <enabled>true</enabled>
-        <autoRegisterPriority>20</autoRegisterPriority>
+        <autoRegisterPriority>60</autoRegisterPriority>
         <command>
             <action>org.sonatype.maven.archetype.commands.RealizeCommand</action>
         </command>
