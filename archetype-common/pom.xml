@@ -30,7 +30,7 @@ under the License.
     </parent>
 
     <artifactId>archetype-common</artifactId>
-    <name>Sonatype Archetype Common</name>
+    <name>Sonatype Archetype :: Common</name>
 
     <properties>
         <!-- HACK: Tests fail all over right now, so skip them -->

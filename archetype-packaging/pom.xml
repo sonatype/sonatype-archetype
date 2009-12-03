@@ -31,6 +31,6 @@ under the License.
 
     <artifactId>archetype-packaging</artifactId>
 
-    <name>Sonatype Archetype Packaging</name>
+    <name>Sonatype Archetype :: Packaging</name>
 
 </project>

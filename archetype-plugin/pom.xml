@@ -31,7 +31,7 @@ under the License.
 
     <artifactId>archetype-plugin</artifactId>
 
-    <name>Sonatype Archetype Plugin</name>
+    <name>Sonatype Archetype :: Plugin</name>
     <packaging>maven-plugin</packaging>
 
     <dependencies>
