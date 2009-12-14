@@ -28,8 +28,6 @@ import org.apache.maven.project.ProjectBuilder;
 import org.apache.maven.project.ProjectBuildingRequest;
 import org.apache.maven.project.ProjectBuildingResult;
 import org.apache.maven.repository.RepositorySystem;
-import org.sonatype.gshell.VariableNames;
-import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
@@ -39,6 +37,8 @@ import org.sonatype.gshell.plexus.PlexusRuntime;
 import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.vars.Variables;
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 import java.io.File;
 import java.util.Collections;
@@ -54,7 +54,6 @@ import java.util.Properties;
 @Command(name="archetype/create")
 public class CreateCommand
     extends CommandActionSupport
-    implements VariableNames
 {
     private final PlexusRuntime plexus;
 

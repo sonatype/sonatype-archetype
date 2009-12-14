@@ -23,8 +23,8 @@ import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.archetype.ui.ArchetypeGenerationConfigurator;
 import org.apache.maven.archetype.ui.ArchetypeSelector;
 import org.apache.maven.repository.RepositorySystem;
-import org.sonatype.gshell.VariableNames;
-import org.sonatype.gshell.Variables;
+import static org.sonatype.gshell.vars.VariableNames.*;
+import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
@@ -47,7 +47,6 @@ import java.util.Properties;
 @Command(name="archetype/realize")
 public class RealizeCommand
     extends CommandActionSupport
-    implements VariableNames
 {
     private final PlexusRuntime plexus;
 

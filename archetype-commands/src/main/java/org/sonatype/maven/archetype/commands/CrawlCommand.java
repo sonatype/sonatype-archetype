@@ -19,7 +19,6 @@ package org.sonatype.maven.archetype.commands;
 import com.google.inject.Inject;
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import org.apache.maven.archetype.repositorycrawler.RepositoryCrawler;
-import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
@@ -40,7 +39,6 @@ import java.io.File;
 @Command(name="archetype/crawl")
 public class CrawlCommand
     extends CommandActionSupport
-    implements VariableNames
 {
     private final PlexusRuntime plexus;
 
