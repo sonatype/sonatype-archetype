@@ -35,8 +35,8 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.completer.FileNameCompleter;
 import org.sonatype.gshell.plexus.PlexusRuntime;
 import org.sonatype.gshell.util.NameValue;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.vars.Variables;
 import static org.sonatype.gshell.vars.VariableNames.*;
 
@@ -59,37 +59,37 @@ public class CreateCommand
 
     private Properties props = new Properties();
 
-    @Option(name = "-b", aliases = {"--batch"})
+    @Option(name = "b", longName="batch")
     private boolean batch;
 
-    @Option(name = "-l", aliases={"--languages"})
+    @Option(name = "l", longName="languages")
     private List<String> languages = Constants.DEFAULT_LANGUAGES;
 
-    @Option(name="-x", aliases={"--filtered-extensions"})
+    @Option(name="x", longName="filtered-extensions")
     private List<String> filteredExtensions = Constants.DEFAULT_FILTERED_EXTENSIONS;
 
-    @Option(name="-r", aliases={"--registry"})
+    @Option(name="r", longName="registry")
     private File registryFile;
 
-    @Option(name="-e", aliases={"--encoding"})
+    @Option(name="e", longName="encoding")
     private String encoding = "UTF-8";
 
-    @Option(name="-R", aliases={"--partial"})
+    @Option(name="R", longName="partial")
     private boolean partial;
 
-    @Option(name="-P", aliases={"--preserve-cdata"})
+    @Option(name="P", longName="preserve-cdata")
     private boolean preserveCDATA;
 
-    @Option(name="-k", aliases={"--keep-parent"})
+    @Option(name="k", longName="keep-parent")
     private boolean keepParent = true;
 
-    @Option(name="-p", aliases={"--package"})
+    @Option(name="p", longName="package")
     private String packageName;
 
-    @Option(name = "-d", aliases = {"--directory"})
+    @Option(name = "d", longName="directory")
     private File outputDirectory;
 
-    @Option(name = "-D", aliases = {"--define"}, argumentRequired = true)
+    @Option(name = "D", longName="define", optionalArg=true)
     protected void setProperty(final String input) {
         NameValue nv = NameValue.parse(input);
         props.setProperty(nv.name, nv.value);

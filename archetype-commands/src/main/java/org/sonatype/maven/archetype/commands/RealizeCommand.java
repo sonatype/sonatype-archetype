@@ -31,8 +31,8 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.plexus.PlexusRuntime;
 import org.sonatype.gshell.util.NameValue;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.io.File;
 import java.util.Collections;
@@ -52,16 +52,16 @@ public class RealizeCommand
 
     private Properties props = new Properties();
 
-    @Option(name = "-d", aliases = {"--directory"})
+    @Option(name = "d", longName="directory")
     private File outputDirectory;
 
-    @Option(name = "-b", aliases = {"--batch"})
+    @Option(name = "b", longName="batch")
     private boolean batch;
 
-    @Option(name = "-c", aliases = {"--catalog"})
+    @Option(name = "c", longName="catalog")
     private String catalog = "remote,local";
 
-    @Option(name = "-D", aliases = {"--define"}, argumentRequired = true)
+    @Option(name = "D", longName="define", optionalArg=false)
     protected void setProperty(final String input) {
         NameValue nv = NameValue.parse(input);
         props.setProperty(nv.name, nv.value);

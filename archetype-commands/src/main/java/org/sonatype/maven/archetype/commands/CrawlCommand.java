@@ -25,8 +25,8 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.plexus.PlexusRuntime;
 import org.sonatype.gshell.util.FileAssert;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.io.File;
 
@@ -42,7 +42,7 @@ public class CrawlCommand
 {
     private final PlexusRuntime plexus;
 
-    @Option(name="-c", aliases="--catalog")
+    @Option(name="c", longName="catalog")
     private File catalogFile;
 
     @Argument(required=true)
