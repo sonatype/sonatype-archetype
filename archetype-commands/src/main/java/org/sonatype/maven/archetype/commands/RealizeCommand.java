@@ -52,16 +52,16 @@ public class RealizeCommand
 
     private Properties props = new Properties();
 
-    @Option(name = "d", longName="directory")
+    @Option(name = "d", longName="directory", args=1)
     private File outputDirectory;
 
     @Option(name = "b", longName="batch")
     private boolean batch;
 
-    @Option(name = "c", longName="catalog")
+    @Option(name = "c", longName="catalog", args=1)
     private String catalog = "remote,local";
 
-    @Option(name = "D", longName="define", optionalArg=false)
+    @Option(name = "D", longName="define", args=1)
     protected void setProperty(final String input) {
         NameValue nv = NameValue.parse(input);
         props.setProperty(nv.name, nv.value);
