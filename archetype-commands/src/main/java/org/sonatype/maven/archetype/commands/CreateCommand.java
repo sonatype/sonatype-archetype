@@ -62,16 +62,16 @@ public class CreateCommand
     @Option(name = "b", longName="batch")
     private boolean batch;
 
-    @Option(name = "l", longName="languages")
+    @Option(name = "l", longName="languages", args=1)
     private List<String> languages = Constants.DEFAULT_LANGUAGES;
 
-    @Option(name="x", longName="filtered-extensions")
+    @Option(name="x", longName="filtered-extensions", args=1)
     private List<String> filteredExtensions = Constants.DEFAULT_FILTERED_EXTENSIONS;
 
-    @Option(name="r", longName="registry")
+    @Option(name="r", longName="registry", args=1)
     private File registryFile;
 
-    @Option(name="e", longName="encoding")
+    @Option(name="e", longName="encoding", args=1)
     private String encoding = "UTF-8";
 
     @Option(name="R", longName="partial")
@@ -83,13 +83,13 @@ public class CreateCommand
     @Option(name="k", longName="keep-parent")
     private boolean keepParent = true;
 
-    @Option(name="p", longName="package")
+    @Option(name="p", longName="package", args=1)
     private String packageName;
 
-    @Option(name = "d", longName="directory")
+    @Option(name = "d", longName="directory", args=1)
     private File outputDirectory;
 
-    @Option(name = "D", longName="define", optionalArg=true)
+    @Option(name = "D", longName="define", args=1)
     protected void setProperty(final String input) {
         NameValue nv = NameValue.parse(input);
         props.setProperty(nv.name, nv.value);

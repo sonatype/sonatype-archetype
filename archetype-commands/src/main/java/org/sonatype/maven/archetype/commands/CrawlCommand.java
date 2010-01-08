@@ -42,7 +42,7 @@ public class CrawlCommand
 {
     private final PlexusRuntime plexus;
 
-    @Option(name="c", longName="catalog")
+    @Option(name="c", longName="catalog", args=1)
     private File catalogFile;
 
     @Argument(required=true)
