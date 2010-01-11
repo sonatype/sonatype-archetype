@@ -19,10 +19,10 @@
 
 package org.apache.maven.archetype.generator;
 
-import org.apache.maven.archetype.common.DefaultArchetypeFilesResolver;
-import org.apache.maven.archetype.metadata.FileSet;
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
+import org.apache.maven.archetype.common.DefaultArchetypeFilesResolver;
+import org.apache.maven.archetype.metadata.FileSet;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.repository.DefaultArtifactRepository;
 import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;

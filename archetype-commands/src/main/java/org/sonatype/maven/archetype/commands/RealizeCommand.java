@@ -23,8 +23,6 @@ import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.archetype.ui.ArchetypeGenerationConfigurator;
 import org.apache.maven.archetype.ui.ArchetypeSelector;
 import org.apache.maven.repository.RepositorySystem;
-import static org.sonatype.gshell.vars.VariableNames.*;
-import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
@@ -33,10 +31,13 @@ import org.sonatype.gshell.plexus.PlexusRuntime;
 import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
+import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.Properties;
+
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
 
 /**
  * Realize a project from an archetype.

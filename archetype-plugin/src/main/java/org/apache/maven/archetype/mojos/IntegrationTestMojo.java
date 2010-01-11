@@ -21,12 +21,6 @@ package org.apache.maven.archetype.mojos;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.maven.archetype.common.Constants;
-import org.apache.maven.archetype.exception.ArchetypeGenerationFailure;
-import org.apache.maven.archetype.exception.ArchetypeNotConfigured;
-import org.apache.maven.archetype.exception.OutputFileExists;
-import org.apache.maven.archetype.exception.PomFileExists;
-import org.apache.maven.archetype.exception.ProjectDirectoryExists;
-import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.archetype.generator.FilesetArchetypeGenerator;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;

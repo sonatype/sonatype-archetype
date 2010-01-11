@@ -19,9 +19,9 @@
 
 package org.apache.maven.archetype.mojos;
 
-import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.archetype.ArchetypeCreationRequest;
 import org.apache.maven.archetype.ArchetypeCreationResult;
+import org.apache.maven.archetype.ArchetypeManager;
 import org.apache.maven.archetype.common.Constants;
 import org.apache.maven.archetype.ui.ArchetypeCreationConfigurator;
 import org.apache.maven.artifact.repository.ArtifactRepository;

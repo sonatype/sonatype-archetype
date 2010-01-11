@@ -8,9 +8,9 @@ import org.codehaus.plexus.util.StringUtils;
 import java.io.IOException;
 import java.util.List;
 
+import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
+import static org.fusesource.jansi.Ansi.Color.RED;
 import static org.fusesource.jansi.Ansi.ansi;
-import static org.fusesource.jansi.Ansi.Color.*;
-import static org.fusesource.jansi.Ansi.Attribute.*;
 
 /**
  * Default prompter.

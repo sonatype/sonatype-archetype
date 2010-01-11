@@ -38,12 +38,13 @@ import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.vars.Variables;
-import static org.sonatype.gshell.vars.VariableNames.*;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
 
 /**
  * Create an archetype from an existing project.

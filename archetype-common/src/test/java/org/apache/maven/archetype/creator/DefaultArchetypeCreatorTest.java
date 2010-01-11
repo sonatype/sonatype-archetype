@@ -27,6 +27,7 @@ import org.apache.maven.artifact.repository.DefaultArtifactRepository;
 import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.MavenProjectBuildingResult;
 import org.apache.maven.project.ProjectBuilder;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
@@ -42,7 +43,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import org.apache.maven.project.MavenProjectBuildingResult;
 
 public class DefaultArchetypeCreatorTest
     extends AbstractMojoTestCase

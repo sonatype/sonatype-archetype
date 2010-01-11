@@ -17,10 +17,6 @@
 package org.apache.maven.archetype;
 
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
-import java.net.URL;
 import org.apache.commons.io.IOUtils;
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
 import org.apache.maven.archetype.catalog.io.xpp3.ArchetypeCatalogXpp3Writer;
@@ -35,6 +31,11 @@ import org.codehaus.cargo.container.property.ServletPropertySet;
 import org.codehaus.cargo.generic.deployable.DefaultDeployableFactory;
 import org.codehaus.cargo.generic.deployable.DeployableFactory;
 import org.codehaus.plexus.PlexusTestCase;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
+import java.net.URL;
 
 /**
  *

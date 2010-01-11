@@ -21,8 +21,8 @@ import org.apache.maven.archetype.ui.prompt.IOHandler;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
-import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.shell.ShellHolder;
 
 import java.io.IOException;
 
