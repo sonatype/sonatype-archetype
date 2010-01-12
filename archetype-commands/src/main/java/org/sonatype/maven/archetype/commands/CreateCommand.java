@@ -44,6 +44,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
 import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
 
 /**
@@ -148,6 +149,10 @@ public class CreateCommand
         if (outputDirectory != null) {
             request.setOutputDirectory(outputDirectory);
         }
+        else {
+            // HACK: Default dir is not rooted
+            System.setProperty("user.dir", vars.get(SHELL_USER_DIR, File.class).getAbsolutePath());
+        }
 
         log.debug("Creating archetype");
         ArchetypeManager archetypeManager = plexus.lookup(ArchetypeManager.class);
@@ -160,7 +165,7 @@ public class CreateCommand
         // HACK: Prompter has some issues, so add a newline
         io.out.println();
 
-        io.info("Archetype created in: {}", request.getOutputDirectory()); // TODO: i18n
+        io.info("Archetype created in: {}", request.getOutputDirectory().getAbsolutePath()); // TODO: i18n
 
         return Result.SUCCESS;
     }
