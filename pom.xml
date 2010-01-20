@@ -31,6 +31,11 @@
         <url>https://github.com/sonatype/sonatype-archetype</url>
     </scm>
     
+    <ciManagement>
+        <system>Hudson</system>
+        <url>https://grid.sonatype.org/ci/job/Sonatype_Archetype</url>
+    </ciManagement>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
