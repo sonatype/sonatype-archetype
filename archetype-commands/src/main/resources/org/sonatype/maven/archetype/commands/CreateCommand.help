@@ -16,17 +16,19 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] FILE
 
 @|bold DESCRIPTION|@
-
-    @{command.description}
-
-@|bold MANUAL|@
 
     Create a new archetype from an existing project.  The new archetype
     will be added to the local catalog.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Create a new archetype:

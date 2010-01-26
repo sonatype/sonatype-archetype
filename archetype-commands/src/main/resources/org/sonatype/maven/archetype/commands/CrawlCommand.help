@@ -16,16 +16,18 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] REPO
 
 @|bold DESCRIPTION|@
 
-    @{command.description}
-
-@|bold MANUAL|@
-
     Crawls a repository looking for archetypes and generates a catalog.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Crawl a repository:

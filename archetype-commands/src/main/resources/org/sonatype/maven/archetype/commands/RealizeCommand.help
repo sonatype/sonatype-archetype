@@ -16,20 +16,21 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] [GROUPID:ARTIFACTID:VERSION]
 
 @|bold DESCRIPTION|@
 
-    @{command.description}
-
-@|bold MANUAL|@
-
     Realize a new project from an archetype.
 
-NOTE: There is a small lag when running this command, as the underlying
-      components are attempting to fetch the remote catalog from the
-      central repository.
+    When using the remote catalog (default), there is a small lag when
+    the remote catalog is fetched from the central repository.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Select a new archetype to realize:
