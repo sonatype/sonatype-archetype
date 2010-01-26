@@ -24,12 +24,18 @@
 
 @|bold MANUAL|@
 
-    ???
+    Crawls a repository looking for archetypes and generates a catalog.
 
 @|bold EXAMPLES|@
 
-    ???
+    Crawl a repository:
+
+        archetype/crawl ./repository
+        
+    Crawl a repository and use a custom catalog file:
+
+        archetype/crawl ./repository -c catalog.xml
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold archetype/realize|@

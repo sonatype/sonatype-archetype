@@ -24,12 +24,11 @@
 
 @|bold MANUAL|@
 
-    ???
+    Create a new archetype from an existing project.  The new archetype
+    will be added to the local catalog.
 
 @|bold EXAMPLES|@
 
-    ???
+    Create a new archetype:
 
-@|bold SEE ALSO|@
-
-    ???
+        archetype/create myproject/pom.xml

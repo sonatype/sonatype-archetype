@@ -24,12 +24,26 @@
 
 @|bold MANUAL|@
 
-    ???
+    Realize a new project from an archetype.
+
+NOTE: There is a small lag when running this command, as the underlying
+      components are attempting to fetch the remote catalog from the
+      central repository.
 
 @|bold EXAMPLES|@
 
-    ???
+    Select a new archetype to realize:
+
+        archetype/realize
+
+    Realize a specific archetype:
+
+        archetype/realize org.apache.maven.archetypes:maven-archetype-quickstart:1.0
+
+    Only use the local catalog:
+
+        archetype/realize -c local
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold archetype/crawl|@
