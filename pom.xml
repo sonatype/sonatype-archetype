@@ -178,25 +178,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-core</artifactId>
-                <version>2.4</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-core</artifactId>
-                <classifier>tests</classifier>
-                <version>2.4</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-plexus</artifactId>
-                <version>2.4</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.google.inject</groupId>
                 <artifactId>guice</artifactId>
                 <version>2.0</version>
@@ -245,7 +226,6 @@
         <module>archetype-testing</module>
         -->
         <module>archetype-common</module>
-        <module>archetype-commands</module>
         <module>archetype-plugin</module>
         <module>archetype-packaging</module>
     </modules>
