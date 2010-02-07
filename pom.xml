@@ -191,19 +191,17 @@
                 <version>0.8.4-SNAPSHOT</version>
             </dependency>
 
-            <!--<dependency>-->
-                <!--<groupId>org.sonatype.maven.archetype</groupId>-->
-                <!--<artifactId>archetype-repository</artifactId>-->
-                <!--<version>1.0-SNAPSHOT</version>-->
-                <!--<type>war</type>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>org.sonatype.maven.archetype</groupId>
+                <artifactId>archetype-plugin</artifactId>
+                <version>0.8.4-SNAPSHOT</version>
+            </dependency>
 
-            <!--<dependency>-->
-                <!--<groupId>org.sonatype.maven.archetype</groupId>-->
-                <!--<artifactId>archetype-proxy</artifactId>-->
-                <!--<version>1.0-SNAPSHOT</version>-->
-                <!--<type>war</type>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>org.sonatype.maven.archetype</groupId>
+                <artifactId>archetype-packaging</artifactId>
+                <version>0.8.4-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -222,9 +220,6 @@
     </dependencies>
 
     <modules>
-        <!--
-        <module>archetype-testing</module>
-        -->
         <module>archetype-common</module>
         <module>archetype-plugin</module>
         <module>archetype-packaging</module>
