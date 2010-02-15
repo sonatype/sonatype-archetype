@@ -73,4 +73,6 @@ public interface Constants
     String TMP=".tmp";
 
     String VERSION="version";
+    
+    String REMOTE_CATALOG="http://repo1.maven.org/maven2";
 }

@@ -20,6 +20,7 @@
 package org.apache.maven.archetype;
 
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
+import org.apache.maven.archetype.common.Constants;
 import org.apache.maven.archetype.creator.ArchetypeCreator;
 import org.apache.maven.archetype.generator.ArchetypeGenerator;
 import org.apache.maven.archetype.source.ArchetypeDataSource;
@@ -162,7 +163,7 @@ public class DefaultArchetypeManager
     }
 
     public ArchetypeCatalog getRemoteCatalog() {
-        return getRemoteCatalog("http://repo1.maven.org/maven2");
+        return getRemoteCatalog(Constants.REMOTE_CATALOG);
     }
 
     public ArchetypeCatalog getRemoteCatalog(final String url) {
