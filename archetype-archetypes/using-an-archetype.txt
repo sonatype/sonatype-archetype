@@ -1,0 +1,13 @@
+An example to use the quickstart archetype from the command line in a non-interactive fasion is as follows:
+
+mvn archetype:generate \
+  -DgroupId=com.ambientideas \
+  -DartifactId=test4 \
+  -Dversion=1.0-SNAPSHOT \
+  -Dpackage=com.ambientideas.testjava \
+  -DarchetypeGroupId=org.sonatype.maven.archetype \
+  -DarchetypeArtifactId=quickstart \
+  -DarchetypeVersion=0.8.4-SNAPSHOT \
+  -DinteractiveMode=false
+
+Note that even though many documentation sources show the option as "-DpackageName", it should be just "-Dpackage" to function correctly.

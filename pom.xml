@@ -102,6 +102,12 @@
                 <artifactId>maven-compat</artifactId>
                 <version>3.0-alpha-6</version>
             </dependency>
+            
+            <dependency>
+              <groupId>org.apache.maven.plugin-testing</groupId>
+              <artifactId>maven-plugin-testing-harness</artifactId>
+              <version>2.0-alpha-1</version>
+            </dependency>
 
             <!--<dependency>-->
                 <!--<groupId>org.apache.maven.shared</groupId>-->
@@ -223,6 +229,7 @@
         <module>archetype-common</module>
         <module>archetype-plugin</module>
         <module>archetype-packaging</module>
+        <module>archetype-archetypes</module>
     </modules>
 
     <build>
