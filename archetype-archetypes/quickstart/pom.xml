@@ -38,7 +38,7 @@
           <execution>
             <id>integration-test</id>
             <goals>
-              <!-- Skipping the install of artifacts to the local repo since the overridden repo doesn't work with Maven 3.0 per below. <goal>install</goal> -->
+              <goal>install</goal>
               <goal>run</goal>
             </goals>
           </execution>
