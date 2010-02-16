@@ -48,7 +48,7 @@
           <goals>
             <goal>org.apache.maven.plugins:maven-archetype-plugin:generate</goal>
           </goals>
-          <!-- Doesn't work with Maven 3.0. Fails to copy archetype to the local repo. <localRepositoryPath>${project.build.directory}/it/repo</localRepositoryPath> -->
+          <!-- Doesn't work with Maven 3.0. Fails to copy archetype to the local repo. http://jira.codehaus.org/browse/MINVOKER-99 <localRepositoryPath>${project.build.directory}/it/repo</localRepositoryPath> -->
           <pomIncludes>
             <pomInclude>*</pomInclude>
           </pomIncludes>
