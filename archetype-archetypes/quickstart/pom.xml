@@ -31,7 +31,7 @@
         <extensions>true</extensions>
       </plugin>
 
-      <plugin>
+      <!-- <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-invoker-plugin</artifactId>
         <version>1.5</version>
@@ -48,23 +48,23 @@
           <cloneProjectsTo>${project.build.directory}/it/projects</cloneProjectsTo>
           <goals>
             <goal>org.apache.maven.plugins:maven-archetype-plugin:generate</goal>
-          </goals>
-          <!-- Doesn't work with Maven 3.0. Fails to copy archetype to the local repo. http://jira.codehaus.org/browse/MINVOKER-99 <localRepositoryPath>${project.build.directory}/it/repo</localRepositoryPath> -->
-          <pomIncludes>
-            <pomInclude>*</pomInclude>
-          </pomIncludes>
-          <projectsDirectory>${basedir}/src/it/projects</projectsDirectory>
-          <properties>
-            <archetypeArtifactId>${project.artifactId}</archetypeArtifactId>
-            <archetypeGroupId>${project.groupId}</archetypeGroupId>
-            <archetypeRepository>local</archetypeRepository>
-            <archetypeVersion>${project.version}</archetypeVersion>
-            <goals>install</goals>
-            <interactiveMode>false</interactiveMode>
-          </properties>
-          <streamLogs>true</streamLogs>
-        </configuration>
-      </plugin>
+          </goals> -->
+          <!-- Doesn't work with Maven 3.0. Fails to copy archetype to the local repo. http://jira.codehaus.org/browse/MINVOKER-99 --> <!-- <localRepositoryPath>${project.build.directory}/it/repo</localRepositoryPath> 
+                    <pomIncludes>
+                      <pomInclude>*</pomInclude>
+                    </pomIncludes>
+                    <projectsDirectory>${basedir}/src/it/projects</projectsDirectory>
+                    <properties>
+                      <archetypeArtifactId>${project.artifactId}</archetypeArtifactId>
+                      <archetypeGroupId>${project.groupId}</archetypeGroupId>
+                      <archetypeRepository>local</archetypeRepository>
+                      <archetypeVersion>${project.version}</archetypeVersion>
+                      <goals>install</goals>
+                      <interactiveMode>false</interactiveMode>
+                    </properties>
+                    <streamLogs>true</streamLogs>
+                  </configuration>
+                </plugin> -->
     </plugins>
   </build>
 </project>

@@ -33,7 +33,7 @@
     
     <ciManagement>
         <system>Hudson</system>
-        <url>https://grid.sonatype.org/ci/job/Sonatype_Archetype</url>
+        <url>https://grid.sonatype.org/ci/job/Sonatype%20Archetype</url>
     </ciManagement>
     
     <properties>
