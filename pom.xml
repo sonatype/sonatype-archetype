@@ -11,7 +11,7 @@
     
     <groupId>org.sonatype.maven.archetype</groupId>
     <artifactId>archetype</artifactId>
-    <version>0.8.4-SNAPSHOT</version>
+    <version>0.8.4</version>
     <packaging>pom</packaging>
 
     <name>Sonatype Archetype</name>
@@ -181,19 +181,19 @@
             <dependency>
                 <groupId>org.sonatype.maven.archetype</groupId>
                 <artifactId>archetype-common</artifactId>
-                <version>0.8.4-SNAPSHOT</version>
+                <version>0.8.4</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.maven.archetype</groupId>
                 <artifactId>archetype-plugin</artifactId>
-                <version>0.8.4-SNAPSHOT</version>
+                <version>0.8.4</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.maven.archetype</groupId>
                 <artifactId>archetype-packaging</artifactId>
-                <version>0.8.4-SNAPSHOT</version>
+                <version>0.8.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
