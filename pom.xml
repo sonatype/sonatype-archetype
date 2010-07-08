@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.sonatype.forge</groupId>
         <artifactId>forge-parent</artifactId>
-        <version>5</version>
+        <version>6</version>
     </parent>
 
     <groupId>org.sonatype.maven.archetype</groupId>
@@ -45,19 +45,19 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.7</version>
+                <version>4.8.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
-                <version>1.5.10</version>
+                <version>1.6.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gossip</groupId>
-                <artifactId>gossip</artifactId>
-                <version>1.4</version>
+                <artifactId>gossip-slf4j</artifactId>
+                <version>1.5</version>
             </dependency>
 
             <dependency>
@@ -207,7 +207,7 @@
 
         <dependency>
             <groupId>org.sonatype.gossip</groupId>
-            <artifactId>gossip</artifactId>
+            <artifactId>gossip-slf4j</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
